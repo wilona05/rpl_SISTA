@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="input-nilai_pembimbing.css">
+    <title>Input Nilai Pembimbing</title>
+</head>
+<body>
+    <div class="header">
+        <div class="menu-icon"></div>
+        <div class="title">Pengaturan Komponen dan Bobot Nilai</div>
+    </div>
+    <div class="container">
+        <!--section table-->
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Komponen</th>
+                    <th>Bobot</th>
+                    <th>Nilai</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Tata Tulis Laporan</td>
+                    <td>20%</td>
+                    <td><input type="number" id="nilai1" placeholder="" disabled></td>
+                </tr>
+                <tr>
+                    <td>Kelengkapan Materi</td>
+                    <td>20%</td>
+                    <td><input type="number" id="nilai2" placeholder="" disabled></td>
+                </tr>
+                <tr>
+                    <td>Penguasaan Materi</td>
+                    <td>30%</td>
+                    <td><input type="number" id="nilai3" placeholder="" disabled></td>
+                </tr>
+                <tr>
+                    <td>Proses Bimbingan</td>
+                    <td>30%</td>
+                    <td><input type="number" id="nilai4" placeholder="" disabled></td>
+                </tr>
+            </tbody>
+        </table>
+        <!--button section-->
+        <div class="buttons-container">
+            <div class="button button-save" id="saveButton">
+                <div class="text">Save</div>
+            </div>
+            <div class="button" id="editButton">
+                <div class="text">Edit</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notifikasi Data Berhasil Disimpan -->
+    <div class="notification" id="notification" style="display: none;">
+        <div class="container">
+            <div class="check-icon">
+                <div class="checkmark"></div>
+            </div>
+            <div class="success-message">Data Berhasil Disimpan</div>
+            <div class="button" id="yesButton">
+                <div>Yes</div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="input-nilai_pembimbing.js"></script>
+</body>
+</html>
+
+
+
+
+
+
+
