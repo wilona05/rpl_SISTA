@@ -11,14 +11,14 @@
 }
 
 body{
-    margin: 0;
+  margin: 0;
 }
 
 .hidden{
   visibility: hidden;
 }
 
-.sidang-container.visible {
+.visible {
   visibility: visible;
   opacity: 1;
 }
@@ -38,7 +38,6 @@ body{
     position: relative;
     top: 35%;
     margin: 0 auto;
-    visibility: hidden;
 }
 
 .sidang-item {
@@ -74,23 +73,6 @@ body{
     font-weight: bold;
 }
 
-/* lihat sidang button */
-.lihat-sidang-button{
-  position: absolute;
-    background-color: #03045e;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 18px;
-    margin-bottom: 20px; /* Add space below the button */
-    left: 4%;
-    top: 30%;
-  }
-  .lihat-sidang-button:hover {
-    background-color: #005cbf;
-  }
 
 /* Dropdown */
 .dropdown {
@@ -184,6 +166,21 @@ body{
   cursor: pointer;
   padding: 15px 30px;
   font-size: 24px;
+}
+
+/* lihat sidang button */
+.lihat-sidang-button{
+  position: relative;
+  background-color: #03045e;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  padding: 15px 15px;
+  font-size: 24px;
+  right: 22%;
+  /* margin-bottom: 20px; Add space below the button */
 }
 
 .search-button {

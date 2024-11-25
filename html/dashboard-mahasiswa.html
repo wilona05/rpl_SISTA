@@ -10,9 +10,6 @@
 <body>
     <div class="dashboard">
 
-        <!-- Button for showing sidang container -->
-        <button class="lihat-sidang-button" onclick="showSidangContainer()">Lihat Sidang</button>
-        
         <!-- Sidang Item as Button -->
         <div class="sidang-container hidden">
             <!-- sidang item -->
@@ -23,7 +20,7 @@
         </div>
 
         <!-- Dropdown -->
-        <div class="dropdown">
+        <div class="dropdown hidden">
             <select class="select-an-option">
                 <option value="" disabled selected>Pilih tahun ajaran</option>
                 <option value="1">Ganjil 20xx/20xx</option>
@@ -33,7 +30,7 @@
         </div>
 
         <!-- Search Bar -->
-        <div class="search-bar">
+        <div class="search-bar hidden">
             <input type="search" class="search-input" placeholder="Search">
             <button class="search-button">
                 <img src="../images/search.png" alt="Search Icon">
@@ -42,6 +39,8 @@
 
         <!-- Header -->
         <div class="halaman-utama">Halaman Utama
+            <!-- Button for showing sidang container -->
+            <button class="lihat-sidang-button" onclick="showSidangContainer()">Lihat Sidang</button>
             <button class="signout-button">Sign Out</button>
         </div>
 

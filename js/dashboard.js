@@ -10,6 +10,9 @@ function enableSidangContainer() {
 // Function for "Lihat Sidang" button to show the sidang container
 function showSidangContainer() {
     const sidangContainer = document.querySelector('.sidang-container');
-    const showSidangButton = document.querySelector('.lihat-sidang-button')
+    const searchBar = document.querySelector('.search-bar')
+    const dropDown = document.querySelector(".dropdown");
     sidangContainer.classList.add('visible'); 
+    searchBar.classList.add('visible'); 
+    dropDown.classList.add('visible'); 
 }
