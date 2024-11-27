@@ -1,0 +1,23 @@
+- Admins (email(pk), password
+- Mahasiswa (NPM(pk), nama, email, email, password
+- Dosen(NIK(pk), nama, email, password
+- DosenKoordinator (idDosenKoordinator(pk), NIK(fk ke dosen), periode
+- SidangTA(IDSidang, jenisTA, judulTA, jadwal, tempat,semester, tahun Ajaran, catatanRevisi, idKoordinator(fk ke coordinator), NPM(fk ke mahasiswa)
+- PembimbingSidang (NIK(fk ke dosen), urutan, idSidang(fk ke siding)
+- PengujiSidang (Nik(Fk kedosen), jabatan, idSidang(fk ke siding)
+- KomponenNilai(idKOmp(pk), komponen, bobot, role
+- NilaiSidang(idKomp(fk ke komponenNilai), idSidang(fk ke siding), nilai)
+
+notes :
+1. di erd, admin tidak ada hubnya dengan yg lain krn tidak akan ada fk
+2. dosen bisa lebih dari 1 peran sehingga spesialisasi nondisjoint dan tiap subclass memiliki relasi sendiri, namun karena pada pembimbing dan penguji tidak ada atribut tambahan, sehingga langsung dimasukkan pada relasinya dengan sidang saja.
+3. sedangkan untuk coordinator memiliki atribut tambahan sehingga memiliki relasi sendiri
+4. atribut relasi penguji-sidang adalah jabatan : ketua atau anggota
+5. atribut relasi pembimbing-sidang dalah urutan : Utama, kedua
+6. atribut coordinator adalah periode jabatan String semester/tahun ajaran - semester/tahun ajaran
+7. bap tidak memiliki entitas karena berisi data-data yang dpt "diekstrak" dari entitas lain, yaitu nilai dari NilaiSidang, nama dari Mahasiswa
+8. satu koordinator bisa mengelola banyak sidang sehingga hubungan koord dan sidang adalah 1-n
+9. bobot pada komponen nilai dibedakan berdasarkan role, dimana koord akan mengisi komponen, bobot dan role tersebut
+10. sidang dan komponen memiliki relasi m-n sehingga menghasilkan tabel nilai yang didapat dari tiap komponen berdasarkan bobot dan role
+jadi, nilainya untuk mendapatkan nilai per role harus dihitung berdasarkan role dan idsidangnya.
+11. untuk nilai pda bap nantinya, dihitung dari hasil nilai pada no 10
