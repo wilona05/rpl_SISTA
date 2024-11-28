@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.dao.DuplicateKeyException;
 
 @Repository
 public class JdbcUserRepository implements UserRepository{
@@ -68,6 +69,27 @@ public class JdbcUserRepository implements UserRepository{
             return user;
         }catch (EmptyResultDataAccessException e){
             return null;
+        }
+    }
+
+    @Override
+    public boolean register(User user){
+        String role =  user.getRole();
+        String sql = "";
+        try{
+            if(role.equals("Mahasiswa")){
+                sql = "INSERT INTO Mahasiswa (NPM, nama, email, passwords) VALUES (?,?,?,?)";
+            }else if(role.equals("Dosen")){
+                sql = "INSERT INTO Mahasiswa (NIP, nama, email, passwords) VALUES (?,?,?,?)";
+            }else if(role.equals("Koordinator")){
+                sql = "INSERT INTO Mahasiswa (NIP, nama, email, passwords) VALUES (?,?,?,?)";
+                String sql2 = "INSERT INTO dosenKoordinator (NIP, periode) VALUES (?,?)";
+                jdbcTemplate.update(sql2, user.getNoInduk(), "");
+            }
+            int rowsEffected = jdbcTemplate.update(sql, user.getNoInduk(), user.getNama(), user.getEmail(), user.getPasswords());
+            return rowsEffected>0;
+        }catch (DuplicateKeyException e){
+            return false;
         }
     }
 }

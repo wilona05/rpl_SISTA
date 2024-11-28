@@ -34,18 +34,39 @@ public class AdminController {
     }
 
     @GetMapping("/akun")
-    public String akun(@RequestParam("userID") String noInduk, Model model){
+    public String akun(@RequestParam(name="userID", required = false, defaultValue = "") String noInduk, Model model){
         User user = this.userRepo.getUserByID(noInduk);
-        model.addAttribute("user", user);
-
-        if(user == null){ //halaman untuk registrasi akun
+        
+        if(noInduk.isEmpty() || user == null){ //halaman untuk registrasi akun
             model.addAttribute("header", "Registrasi Akun");
             model.addAttribute("registrasiAkun", true);
         }else{ //halaman untuk lihat info akun
+            model.addAttribute("user", user);
             model.addAttribute("header", "Informasi Akun");
             model.addAttribute("informasiAkun", true);
         }
         
         return "akun";
+    }
+
+    @PostMapping("/akun")
+    public String register(@RequestParam("noInduk") String noInduk, @RequestParam("nama") String nama,
+        @RequestParam("email") String email, @RequestParam("passwords") String passwords,
+        @RequestParam("role") String role, Model model){
+            User user = new User(noInduk, nama, email, passwords, role);
+            model.addAttribute("user", user);
+            boolean success = this.userRepo.register(user);
+            if(success){
+                model.addAttribute("user", user);
+                model.addAttribute("header", "Informasi Akun");
+                model.addAttribute("informasiAkun", true);
+                model.addAttribute("success", "Data berhasil disimpan");
+                return "akun";
+            }else{
+                model.addAttribute("header", "Registrasi Akun");
+                model.addAttribute("registrasiAkun", true);
+                model.addAttribute("error", "Gagal menyimpan data");
+                return "akun";
+            }   
     }
 }

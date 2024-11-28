@@ -67,11 +67,11 @@
         <div class="header-right" th:text="${header}">Akun</div>
     </header>
     <div id="container" th:if="${registrasiAkun}">
-        <form id="form_container" class="hidden" th:action="@{/akun}" method="POST">
+        <form id="form_container" class="hidden" th:action="@{/sista/dashboardAdmin/akun}" method="POST">
             <div>
                 <label>
                     <span class="form_label">Nomor Induk:</span>
-                    <input class="form_control" type="text" name="nomorInduk">
+                    <input class="form_control" type="text" name="noInduk">
                 </label>
                 <label>
                     <span class="form_label">Nama:</span>
@@ -83,7 +83,7 @@
                 </label>
                 <label>
                     <span class="form_label">Password:</span>
-                    <input class="form_control" type="text" name="password">
+                    <input class="form_control" type="text" name="passwords">
                 </label>
                 <label>
                     <span class="form_label">Role:</span>
@@ -94,8 +94,10 @@
                     </div>
                 </label>
             </div>
+            <div th:if="${success}" th:text="${success}" style="color: green;"></div>
+            <div th:if="${error}" th:text="${error}" style="color: red; text-align: center;"></div>
             <div class="button-container">
-                <button>Save</button>
+                <button type="submit">Save</button>
             </div>
         </form>
     </div>
