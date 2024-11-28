@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registrasi Akun</title>
+    <title th:text="${header}">Akun</title>
     <style>
         body{
             margin: 0px;
@@ -64,10 +64,10 @@
 <body>
     <header>
         <div class="header-left"></div>
-        <div class="header-right">Registrasi Akun</div>
+        <div class="header-right" th:text="${header}">Akun</div>
     </header>
-    <div id="container">
-        <fieldset id="form_container" class="hidden">
+    <div id="container" th:if="${registrasiAkun}">
+        <form id="form_container" class="hidden" th:action="@{/akun}" method="POST">
             <div>
                 <label>
                     <span class="form_label">Nomor Induk:</span>
@@ -96,6 +96,33 @@
             </div>
             <div class="button-container">
                 <button>Save</button>
+            </div>
+        </form>
+    </div>
+
+    <div id="container" th:if="${informasiAkun}">
+        <fieldset id="form_container" class="hidden">
+            <div>
+                <label>
+                    <span class="form_label">Nomor Induk:</span>
+                    <span class="form_control" th:text="${user.noInduk}"></span>
+                </label>
+                <label>
+                    <span class="form_label">Nama:</span>
+                    <span class="form_control" th:text="${user.nama}"></span>
+                </label>
+                <label>
+                    <span class="form_label">Email:</span>
+                    <span class="form_control" th:text="${user.email}"></span>
+                </label>
+                <label>
+                    <span class="form_label">Password:</span>
+                    <span class="form_control" th:text="${user.passwords}"></span>
+                </label>
+                <label>
+                    <span class="form_label">Role:</span>
+                    <span class="form_control" th:text="${user.role}"></span>
+                </label>
             </div>
         </fieldset>
     </div>

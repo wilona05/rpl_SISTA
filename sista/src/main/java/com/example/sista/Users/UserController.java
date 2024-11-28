@@ -50,7 +50,7 @@ public class UserController {
             }else if(user.contains("@dosen.edu")){
                 return "redirect:/sista/dashboardDosen";
             }else{
-                return "redirect:/sista/dashboard-admin";
+                return "dashboard-admin";
             }
         }
     }

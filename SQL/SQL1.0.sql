@@ -190,18 +190,19 @@ INSERT INTO NilaiSidang (IDSidang, IDKomp, nilai) VALUES
 (6, 2, 87.00),
 (6, 3, 85.00);
 
+DROP VIEW IF EXISTS LISTUSER;
 CREATE VIEW listUser AS
 SELECT 
-	email, passwords
+	npm AS noInduk, nama, email, passwords
 FROM 
 	mahasiswa
 UNION ALL
 SELECT 
-	email, passwords
+	nip AS noInduk, nama, email, passwords
 FROM 
 	dosen
 UNION ALL
 SELECT 
-	nama, email, passwords
+	'0' AS noInduk, 'admin' AS nama, email, passwords
 FROM 
 	admins;
