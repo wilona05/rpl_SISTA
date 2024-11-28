@@ -3,6 +3,12 @@
 .dashboard * {
   box-sizing: border-box;
 }
+
+a{
+  text-decoration: none;
+  color: black
+}
+
 .dashboard {
   background: #ffffff;
   height: 1024px;
@@ -49,7 +55,7 @@ body{
   gap: 9px;
   align-items: flex-start;
   justify-content: flex-start;
-  width: 650px;
+  width: 600px;
   height: 150px;
   left: 59px;
   top: 429px;
