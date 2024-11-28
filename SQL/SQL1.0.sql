@@ -10,9 +10,10 @@ DROP TABLE IF EXISTS NilaiSidang CASCADE;
 DROP TABLE IF EXISTS PembimbingSidang CASCADE;
 DROP TABLE IF EXISTS PengujiSidang CASCADE;
 DROP TABLE IF EXISTS KomponenNilai CASCADE;
+
 CREATE TABLE Admins (
     email VARCHAR(50) PRIMARY KEY,
-    password VARCHAR(50) NOT NULL
+    passwords VARCHAR(50) NOT NULL
 );
 
 -- Tabel Mahasiswa
@@ -80,7 +81,7 @@ CREATE TABLE NilaiSidang (
 );
 
 -- Insert data into Admins
-INSERT INTO Admins (email, password) VALUES
+INSERT INTO Admins (email, passwords) VALUES
 ('admin@sista.edu', 'admin123');
 
 -- Insert data into Mahasiswa
@@ -188,3 +189,19 @@ INSERT INTO NilaiSidang (IDSidang, IDKomp, nilai) VALUES
 (6, 1, 84.00),
 (6, 2, 87.00),
 (6, 3, 85.00);
+
+CREATE VIEW listUser AS
+SELECT 
+	email, passwords
+FROM 
+	mahasiswa
+UNION ALL
+SELECT 
+	email, passwords
+FROM 
+	dosen
+UNION ALL
+SELECT 
+	nama, email, passwords
+FROM 
+	admins;
