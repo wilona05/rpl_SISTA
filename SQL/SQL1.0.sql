@@ -190,3 +190,19 @@ INSERT INTO NilaiSidang (IDSidang, IDKomp, nilai) VALUES
 (6, 1, 84.00),
 (6, 2, 87.00),
 (6, 3, 85.00);
+
+CREATE VIEW listUser AS
+SELECT 
+	email, passwords
+FROM 
+	mahasiswa
+UNION ALL
+SELECT 
+	email, passwords
+FROM 
+	dosen
+UNION ALL
+SELECT 
+	email, password
+FROM 
+	admins;
