@@ -10,6 +10,8 @@ DROP TABLE IF EXISTS NilaiSidang CASCADE;
 DROP TABLE IF EXISTS PembimbingSidang CASCADE;
 DROP TABLE IF EXISTS PengujiSidang CASCADE;
 DROP TABLE IF EXISTS KomponenNilai CASCADE;
+
+
 CREATE TABLE Admins (
     email VARCHAR(50) PRIMARY KEY,
     password VARCHAR(50) NOT NULL
@@ -85,19 +87,19 @@ INSERT INTO Admins (email, password) VALUES
 
 -- Insert data into Mahasiswa
 INSERT INTO Mahasiswa (NPM, nama, email, passwords) VALUES
-('2001001', 'Alice', 'alice@student.edu', 'password1'),
-('2001002', 'Bob', 'bob@student.edu', 'password2'),
-('2001003', 'Charlie', 'charlie@student.edu', 'password3'),
-('2001004', 'Diana', 'diana@student.edu', 'password4'),
-('2001005', 'Eve', 'eve@student.edu', 'password5'),
-('2001006', 'Frank', 'frank@student.edu', 'password6');
+('2001001', 'Alice Bondi', '2001001@student.edu', 'password1'),
+('2001002', 'Bob Bobby', '2001002@student.edu', 'password2'),
+('2001003', 'Charlie Coipy', '2001003@student.edu', 'password3'),
+('2001004', 'Diana Prina', '2001004@student.edu', 'password4'),
+('2001005', 'Eve Young', '2001005@student.edu', 'password5'),
+('2001006', 'Frank Stein', '2001006@student.edu', 'password6');
 
 -- Insert data into Dosen
 INSERT INTO Dosen (NIP, nama, email, passwords) VALUES
-('19810001', 'Dr. John', 'john@dosen.edu', 'password1'),
-('19810002', 'Prof. Smith', 'smith@dosen.edu', 'password2'),
-('19810003', 'Dr. Clara', 'clara@dosen.edu', 'password3'),
-('19810004', 'Dr. Brown', 'brown@dosen.edu', 'password4');
+('19810001', 'Dr. John', '19810001@dosen.edu', 'password1'),
+('19810002', 'Prof. Smith', '19810002@dosen.edu', 'password2'),
+('19810003', 'Dr. Clara', '19810003@dosen.edu', 'password3'),
+('19810004', 'Dr. Brown', '19810004@dosen.edu', 'password4');
 
 -- Insert data into DosenKoordinator
 INSERT INTO DosenKoordinator (NIP, periode) VALUES
