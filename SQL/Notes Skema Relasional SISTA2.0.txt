@@ -1,0 +1,21 @@
+- Admins (email(pk), password
+- Mahasiswa (NPM(pk), nama, email, email, password
+- Dosen(NIP(pk), nama, email, password,
+- DosenSidang(idSidang(PK DAN FK kesidangta), NIP(pk dan fk ke dosen), idRole(pk dan fk ke role)
+- RoleDosen(idRole(pk), namaRole
+- bobotDosen(idBobot(pk), jenisTA, bobot, tglBerlaku, idRole(fk ke role dosen)
+- SidangTA(IDSidang, jenisTA, judulTA, jadwal, tempat,semester, tahun Ajaran, catatanRevisi, NPM(fk ke mahasiswa), nilaiKoordinator
+- KomponenNilai(idKOmp(pk), komponen, bobotPembimbing, bobotPenguji, tglBerlaku)
+- NilaiSidang(idKomp(fk ke komponenNilai), idSidang(fk ke siding), nilaiPembimbing, nilaiPenguji1, nilaiPenguji2)
+
+notes :
+1. di erd, admin tidak ada hubnya dengan yg lain krn tidak akan ada fk
+2. role dosen berupa : penguji 1 (ketua penguji), penguji 2 (anggota penguji), pembimbing 1 (pembimbing Utama), pembimbing 2(pembimbing tambahan), koordinator
+3.bap tidak memiliki entitas karena berisi data-data yang dpt "diekstrak" dari entitas lain, yaitu nilai dari NilaiSidang, nama dari Mahasiswa, dll
+6. bobot pada komponen nilai dibedakan berdasarkan penguji/pembimbing, dimana koord akan mengisi komponen, bobot role tersebut
+7. nilai pada Nilai Sidang dibedakan berdasarkan pembimbing/penguji untuk dijoin dengan komponen
+10. sidang dan komponen memiliki relasi m-n sehingga menghasilkan tabel nilai yang didapat dari tiap komponen berdasarkan bobot dan role
+jadi, nilainya untuk mendapatkan nilai per role harus dihitung berdasarkan role dan idsidangnya.
+11. untuk nilai pda bap nantinya, dihitung dari hasil nilai pada no 10, kemudian dengan bobot per dosen dari table bobotdosen
+12. entitas yang memiliki tglBerlaku : select entitas tersebut dari most recent date untuk input.
+13. bobot dalam persen
