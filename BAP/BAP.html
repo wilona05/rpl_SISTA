@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BAP</title>
+    <link rel="stylesheet" href="./style2.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <div id="header"> 
+      <a href="halaman.html"><img class="back-button" src="back-button0.svg" /></a>
+      <div class="judul-halaman">BAP Sidang</div>
+    </div>
+    <div class="buttons">
+      <div class ="button upload">
+        <button type="button" style="background-color:#4fd800" id="upload-btn"><a href="#upload-popup"><img class="ikonUpload" src="upload1.svg" />Upload</a></button>
+      </div>
+      <div class ="button download">
+        <button type="button" style="background-color:#00b4d8" id="download-btn"><a href="#download-popup"><img class="ikonDownload" src="download0.svg" />Download</a></button>
+      </div>
+    </div>
+
+    <div id="content">
+      <div class="judulBAP">
+        <p>Berita Acara</p>
+        <p>Sidang Skripsi</p>
+        <p>Semester: <b class="semester" th:text="${semesterTahun}">Genap 2024/2025</b></p>
+      </div>
+
+      <b class="telah-diselenggarakan">
+        Telah diselenggarakan Review untuk mata kuliah 
+        <b class="kodeMatkul" th:text="${kodeMatkul}">AIF184002-05</b> 
+        <b class="jenisTA" th:text="${jenisTA}">Skripsi 2</b> 
+        bagi:
+    </b>
+    
+        
+       
+      <!-- <ul class="npm-nama-topik"> -->
+      <table class="npm-nama-topik">
+        <tr>
+          <th class="labelNPM">NPM</th>
+          <td class="inputNPM">: <span th:text="${inputValueNPM}">input value</span></td>
+
+        </tr>
+        <tr>
+          <th class="labelNama">Nama</th>
+          <td class="inputNama">: <span th:text="${inputValueNama}">input value</span></td>
+        </tr>
+        <tr>
+          <th class="labelTopik">Topik</th>
+          <td class="inputTopik">:<span th:text="${inputValueTopik}">input value</span></td>
+        </tr>
+      </table>
+        <!-- <li><p><b class="labelNPM">NPM: </b><a class="inputNPM">input value</a> </p></li>
+        <li><p><b class="labelNama">Nama: </b><a class="inputNama">input value</a> </p></li>
+        <li><p><b class="labelTopik">Topik: </b><a class="inputTopik">input value</a> </p></li>
+      </ul> -->
+
+      <p><b>dengan pembimbing dan penguji:</b></p>
+      
+      <ul class="list-dosen">
+        <li><p><b class="labelDosbimUtama">Pembimbing Utama/Tunggal*: </b><a class="inputDosbimUtama" th:text="${inputValueDosBim}">input value</a> </p></li>
+        <li><p><b class="labelDosbingPendamping">Pembimbing Pendamping: </b><a class="inputDosbimPendamping"th:text="${inputValueDosBing}">input value</a> </p></li>
+        <li><p><b class="labelKetuaDosji">Ketua Tim Penguji: </b><a class="inputKetuaDosji"th:text="${inputValueKetuaDosji}">input value</a> </p></li>
+        <li><p><b class="labelAnggotaDosji">Anggota Tim Penguji: </b><a class="inputAnggotaDosji" th:text="${inputValueAnggotaDosji}">input value</a> </p></li>
+      </ul>
+    
+      <p><b>Rekapitulasi nilai Sidang <b class="jenisTA" th:text="${jenisTA}">Skripsi 2</b> yang diberikan oleh pembimbing, penguji, & koordinator skripsi:</b> </p>
+      
+      <table border="1" class="tableNilai">
+        <tr>
+          <th>Pembimbing/Penguji</th>
+          <th>Nilai</th>
+          <th>Bobot</th>
+          <th>Nilai Akhir</th>
+        </tr>
+
+        <tr>
+          <th>Ketua Tim Penguji</th>
+          <td class="input-nilai-ketua-penguji" th:text="${nilaiKetua}">0</td>
+          <td class="bobot-nilai-ketua-penguji" th:text="${bobotKetua}">0</td>
+          <td class="nilai-akhir-ketua-penguji" th:text="${nilaiAkhirKetua}">0</td>
+      </tr>
+      
+      <tr>
+          <th>Anggota Tim Penguji</th>
+          <td class="input-nilai-anggota-penguji" th:text="${nilaiAnggota}">0</td>
+          <td class="bobot-nilai-anggota-penguji" th:text="${bobotAnggota}">0</td>
+          <td class="nilai-akhir-anggota-penguji" th:text="${nilaiAkhirAnggota}">0</td>
+      </tr>
+      
+      <tr>
+          <th>Pembimbing</th>
+          <td class="input-nilai-pembimbing" th:text="${nilaiPembimbing}">0</td>
+          <td class="bobot-nilai-pembimbing" th:text="${bobotPembimbing}">0</td>
+          <td class="nilai-akhir-pembimbing" th:text="${nilaiAkhirPembimbing}">0</td>
+      </tr>
+      
+      <tr>
+          <th>Koordinator TA</th>
+          <td class="input-nilai-koordinator" th:text="${nilaiKoordinator}">0</td>
+          <td class="bobot-nilai-koordinator" th:text="${bobotKoordinator}">0</td>
+          <td class="nilai-akhir-koordinator" th:text="${nilaiAkhirKoordinator}">0</td>
+      </tr>
+      
+      <tr>
+          <th colspan="3">Total Nilai</th>
+          <td class="total-nilai-akhir" th:text="${totalNilaiAkhir}">0</td>
+      </tr>
+      
+      </table>
+
+      <p class="ditetapkan-di">Ditetapkan di Bandung, <a class="tanggalBAP" th:text="${tanggalBAP}">input value</a></p>
+
+      <table border="1" class="tableTTD">
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>Ketua Tim Penguji</th>
+          <th>Anggota Tim Penguji</th>
+          <th>Pembimbing</th>
+          <th>Mahasiswa</th>
+          <th>Koordinator Skripsi</th>
+        </tr>
+      </table>
+    </div>
+
+    <div id="upload-popup">
+      
+      <img class="check-icon"  src="check-icon.png">
+      <p class="desc-upload-popup">BAP berhasil diunggah!</p>
+      <button class="ok-btn">OK</button>
+    </div>
+
+    <!-- Download Popup -->
+    <div id="download-popup">
+      <img src="check-icon.png" alt="Check Icon" class="check-icon">
+      <p class="desc-download-popup">BAP berhasil diunduh!</p>
+      <button class="ok-btn" id="close-download-popup">OK</button>
+    </div>
+</body>
+</html>
