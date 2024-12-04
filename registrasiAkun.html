@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrasi Akun</title>
+    <style>
+        body{
+            margin: 0px;
+        }
+
+        header{
+            padding: 5px;
+            background-color: #03045e;
+            text-align: right;
+        }
+
+        header div{
+            color: white;
+            margin-right: 15px;
+        }
+
+        #container{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #form_container{
+            display: inline-block;
+            width: 90%;
+            margin: 10px;
+        }
+
+        #container label{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .form_label{
+            width: 100px;
+            margin: 10px;
+        }
+
+        .form_control{
+            width: 300px;
+            margin: 10px;
+        }
+
+        .button-container {      
+            display: flex;
+            justify-content: flex-end; 
+            margin-top: 5px;       
+        }
+
+        button{
+            padding: 5px;
+            padding-left: 30px;
+            padding-right: 30px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-left"></div>
+        <div class="header-right">Registrasi Akun</div>
+    </header>
+    <div id="container">
+        <fieldset id="form_container" class="hidden">
+            <div>
+                <label>
+                    <span class="form_label">Nomor Induk:</span>
+                    <input class="form_control" type="text" name="nomorInduk">
+                </label>
+                <label>
+                    <span class="form_label">Nama:</span>
+                    <input class="form_control" type="text" name="nama">
+                </label>
+                <label>
+                    <span class="form_label">Email:</span>
+                    <input class="form_control" type="text" name="email">
+                </label>
+                <label>
+                    <span class="form_label">Password:</span>
+                    <input class="form_control" type="text" name="password">
+                </label>
+                <label>
+                    <span class="form_label">Role:</span>
+                    <div class="form_control">
+                        <input type="radio" name="role" value="Koordinator">Koordinator
+                        <input type="radio" name="role" value="Dosen">Dosen
+                        <input type="radio" name="role" value="Mahasiswa">Mahasiswa
+                    </div>
+                </label>
+            </div>
+            <div class="button-container">
+                <button>Save</button>
+            </div>
+        </fieldset>
+    </div>
+</body>
+</html>
