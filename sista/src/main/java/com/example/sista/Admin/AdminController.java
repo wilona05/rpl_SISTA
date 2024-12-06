@@ -22,8 +22,9 @@ public class AdminController {
     private UserRepository userRepo;
 
     @GetMapping()
-    public String login(){
-        return "dashboard-admin";
+    public String dashboard(){
+        return "admin/dashboardAdmin";
+//        return "dosen/dashboardDosen";
     }
 
     @GetMapping("/daftarPengguna")

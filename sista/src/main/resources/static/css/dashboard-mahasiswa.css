@@ -3,6 +3,12 @@
 .dashboard * {
   box-sizing: border-box;
 }
+
+a{
+  text-decoration: none;
+  color: black
+}
+
 .dashboard {
   background: #ffffff;
   height: 1024px;

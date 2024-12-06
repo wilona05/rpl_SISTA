@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" th:href="@{/css/dashboardDosen.css}">
+    <link rel="stylesheet" href="../css/dashboardDosen.css">
     <script src="../js/dashboard.js" defer></script>
     <title>Dashboard</title>
 </head>
@@ -13,10 +13,10 @@
         <!-- Sidang Item as Button -->
         <div class="sidang-container hidden">
             <!-- sidang item -->
-             <a th:href="@{/sista/infoSidang}" class="sidang-item">
+            <button class="sidang-item" onclick="window.location.href='/sista/dashDosen/infoSidang'">
                 <div class="nama-peserta-sidang">Nama Peserta Sidang</div>
                 <div class="tanggal-sidang">dd/mm/yyyy</div>
-             </a>
+            </button>
         </div>
 
         <!-- Dropdown -->

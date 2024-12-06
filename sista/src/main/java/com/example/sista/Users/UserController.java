@@ -23,18 +23,6 @@ public class UserController {
         return "index";
     }
 
-    //halaman info sidang untuk dosen
-    @GetMapping("/infoSidang")
-    public String redirectToInfoSidang(){
-        return "infoSidang";
-    }
-
-    //halaman dashboard dosen
-    @GetMapping("/dashboardDosen")
-    public String redirectToDashboardDosen(){
-        return "dashboardDosen";
-    }
-    
     //terima submission login
     @PostMapping("/login")
     public String handleLogin(@RequestParam String email, @RequestParam String passwords, Model model){
@@ -46,11 +34,11 @@ public class UserController {
             return "index";
         }else{ //user ditemukan
             if(user.contains("@student.edu")){
-                return "redirect:/sista/dashboard-mahasiswa";
+                return "redirect:/sista/dashboardMahasiswa";
             }else if(user.contains("@dosen.edu")){
                 return "redirect:/sista/dashboardDosen";
             }else{
-                return "dashboard-admin";
+                return "redirect:/sista/dashboardAdmin";
             }
         }
     }
