@@ -13,7 +13,7 @@
         <!-- Sidang Item as Button -->
         <div class="sidang-container hidden">
             <!-- sidang item -->
-            <button class="sidang-item" onclick="window.location.href='/sista/dashDosen/infoSidang'">
+            <button class="sidang-item" onclick="window.location.href='/sista/dashboardDosen/infoSidang'">
                 <div class="nama-peserta-sidang">Nama Peserta Sidang</div>
                 <div class="tanggal-sidang">dd/mm/yyyy</div>
             </button>
@@ -40,19 +40,22 @@
         <!-- Header -->
         <div class="halaman-utama">Halaman Utama
             <!-- Button for showing sidang container -->
-            <button class="lihat-sidang-button" onclick="showSidangContainer()">Lihat Sidang</button>
             <button class="signout-button" onclick="window.location.href='/sista/login'">Sign Out</button>
         </div>
 
-        <!-- Button pemilihan role -->
-         <div class="role-pick"> 
-            <select class="select-an-option hidden">
+<!--     Lihat Sidang-->
+        <form action="lihatSidang" method="post">
+            <!-- Button pemilihan role -->
+         <div class="role-pick">
+            <select class="select-an-option" name="pickRole">
                 <option value="" disabled selected>Lihat sebagai:</option>
                 <option value="1">Penguji</option>
                 <option value="2">Pembimbing</option>
-                <option value="3">Koordinator</option>
+<!--                <option value="3">Koordinator</option>-->
             </select>
          </div>
+            <button class="lihat-sidang-button" onclick="showSidangContainer()">Lihat Sidang</button>
+        </form>
     </div>
 </body>
 </html>

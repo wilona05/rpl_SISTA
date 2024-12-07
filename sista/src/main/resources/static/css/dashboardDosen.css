@@ -129,8 +129,7 @@ body{
   align-items: center;
   width: 200px;
   position: absolute;
-  left: 55%;
-  top: 20%;
+  left: 20%;
   cursor: pointer;
 }
 
@@ -179,12 +178,11 @@ body{
   background-color: #03045e;
   color: white;
   border: none;
-  padding: 10px 20px;
   border-radius: 5px;
   cursor: pointer;
-  padding: 15px 15px;
+  padding: 10px 10px;
   font-size: 24px;
-  right: 22%;
+  left: 5%
 }
 
 .search-button {

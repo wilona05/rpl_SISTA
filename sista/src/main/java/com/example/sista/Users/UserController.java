@@ -1,5 +1,7 @@
 package com.example.sista.Users;
 
+import com.example.sista.dosen.DosenRepository;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,6 +20,9 @@ public class UserController {
     @Autowired
     private UserRepository repo;
 
+    @Autowired
+    private DosenRepository dosenRepo;
+
     @GetMapping("/login")
     public String login(){
         return "index";
@@ -25,7 +30,7 @@ public class UserController {
 
     //terima submission login
     @PostMapping("/login")
-    public String handleLogin(@RequestParam String email, @RequestParam String passwords, Model model){
+    public String handleLogin(@RequestParam String email, @RequestParam String passwords, Model model, HttpSession httpSession){
         String user = this.repo.login(email, passwords);
         if(user == null){ //user tidak ditemukan
             model.addAttribute("email", email);
@@ -33,9 +38,18 @@ public class UserController {
             model.addAttribute("error", "Email atau password salah");
             return "index";
         }else{ //user ditemukan
+
+            //simpan informasi user di session
+            httpSession.setAttribute("email", user);
+
             if(user.contains("@student.edu")){
                 return "redirect:/sista/dashboardMahasiswa";
             }else if(user.contains("@dosen.edu")){
+                Boolean isKoordinator = dosenRepo.checkStatusKoord(user);
+
+                if (isKoordinator) {
+
+                }
                 return "redirect:/sista/dashboardDosen";
             }else{
                 return "redirect:/sista/dashboardAdmin";
