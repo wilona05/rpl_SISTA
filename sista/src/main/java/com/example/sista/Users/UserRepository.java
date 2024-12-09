@@ -6,5 +6,6 @@ public interface UserRepository {
     String login(String email, String password);
     List<User> findAll();
     User getUserByID(String noInduk);
+    boolean getStatusKoordinator(String email);
     boolean register(User user);
 }

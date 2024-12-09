@@ -13,25 +13,47 @@
     </header>
     
     <div class="container">
-        <div class="search-bar">
-            <input type="search" class="search-input" placeholder="Cari pengguna...">
-            <button class="search-button">
-                <img th:src="@{/images/search.png}" alt="Search Icon">
-            </button>
-        </div>
         
-        <div class="dropdown role-pick">
-            <select class="select">
-                <option value="" disabled selected>Pilih role:</option>
-                <option value="1">Koordinator</option>
-                <option value="2">Dosen</option>
-                <option value="3">Mahasiswa</option>
-            </select>
+        <form method="POST" th:action="@{/sista/dashboardAdmin/daftarPengguna}">
+            <div class="search-bar">
+                <input type="search" class="search-input" placeholder="Cari pengguna (nomor induk) ..." name="noInduk" th:value="${noInduk}">
+                <button class="search-button">
+                    <img th:src="@{/images/search.png}" alt="Search Icon">
+                </button>
+            </div>
+
+            <div class="dropdown role-pick">
+                <select class="select" name="role" th:value="${role}" onchange="this.form.submit()">
+                    <option value="" disabled selected>Pilih role:</option>
+                    <option value="">Semua</option>
+                    <option th:selected="${role=='Koordinator'}">Koordinator</option>
+                    <option th:selected="${role=='Dosen'}">Dosen</option>
+                    <option th:selected="${role=='Mahasiswa'}">Mahasiswa</option>
+                </select>
+            </div>
+        </form>
+    </div>
+
+    <div class="error" th:if="${error != null}">
+        <p th:text="${error}"></p>
+    </div>
+
+    <!-- daftar pengguna berdasarkan search noInduk -->
+    <div id="list-users" th:if="${searchedUser != null}">
+        <div class="users">
+            <img src="/images/Profile Pict.png">
+            <a th:href="@{akun?userID={id}(id=${searchedUser.noInduk})}">
+                <div class="data">
+                    <p th:text="${searchedUser.email}"></p>
+                    <p th:text="${searchedUser.role}"></p>
+                </div>
+            </a>
         </div>
     </div>
     
-    <div id="list-users">
-        <div class="users" th:each="u : ${user}">
+    <!-- daftar pengguna tanpa search noInduk -->
+    <div id="list-users" th:if="${searchedUser == null}">
+        <div class="users" th:each="u : ${users}">
             <img src="/images/Profile Pict.png">
             <a th:href="@{akun?userID={id}(id=${u.noInduk})}">
                 <div class="data">

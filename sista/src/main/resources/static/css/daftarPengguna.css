@@ -139,3 +139,8 @@ p{
     font-family: "Epilogue-Regular", sans-serif;
     font-size: 20px;
 } 
+
+.error{
+    color: red;
+    margin-left: 20px;
+}

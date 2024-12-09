@@ -55,7 +55,9 @@ public class JdbcUserRepository implements UserRepository{
         if(email.endsWith("@student.edu")){
             return "mahasiswa";
         }else if(email.endsWith("@dosen.edu")){
-            return "dosen";
+            boolean statusKoordinator = getStatusKoordinator(email);
+            if(statusKoordinator) return "koordinator";
+            else return "dosen";
         }else{
             return "admin";
         }
@@ -73,18 +75,24 @@ public class JdbcUserRepository implements UserRepository{
     }
 
     @Override
+    public boolean getStatusKoordinator(String email){
+        String sql = "SELECT statusKoordinator FROM dosen WHERE email=?";
+        return jdbcTemplate.queryForObject(sql, boolean.class, email);
+    }
+
+    @Override
     public boolean register(User user){
         String role =  user.getRole();
         String sql = "";
         int rowsEffected = 0;
         try{
-            if(role.equals("Mahasiswa")){
+            if(role.equalsIgnoreCase("Mahasiswa")){
                 sql = "INSERT INTO Mahasiswa (NPM, nama, email, passwords) VALUES (?,?,?,?)";
                 rowsEffected = jdbcTemplate.update(sql, user.getNoInduk(), user.getNama(), user.getEmail(), user.getPasswords());
-            }else if(role.equals("Dosen")){
+            }else if(role.equalsIgnoreCase("Dosen")){
                 sql = "INSERT INTO Dosen (NIP, nama, email, passwords, statusKoordinator) VALUES (?,?,?,?,?)";
                 rowsEffected = jdbcTemplate.update(sql, user.getNoInduk(), user.getNama(), user.getEmail(), user.getPasswords(), false);
-            }else if(role.equals("Koordinator")){
+            }else if(role.equalsIgnoreCase("Koordinator")){
                 sql = "INSERT INTO Dosen (NIP, nama, email, passwords, statusKoordinator) VALUES (?,?,?,?,?)";
                 rowsEffected = jdbcTemplate.update(sql, user.getNoInduk(), user.getNama(), user.getEmail(), user.getPasswords(), true);
             }
