@@ -48,7 +48,7 @@ public class UserController {
                 Boolean isKoordinator = dosenRepo.checkStatusKoord(user);
 
                 if (isKoordinator) {
-
+                    return "redirect:/sista/dashboardKoordinator";
                 }
                 return "redirect:/sista/dashboardDosen";
             }else{

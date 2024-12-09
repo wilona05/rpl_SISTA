@@ -202,3 +202,9 @@ body{
   width: 30px; 
   height: 30px; 
 }
+
+form{
+  position: absolute;
+  width: 100%;
+  top: 150px;
+}

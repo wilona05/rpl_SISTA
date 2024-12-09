@@ -18,7 +18,7 @@ public class JdbcSidangRepository implements SidangRepository{
     public Sidang mapRowToSidang(ResultSet rs, int rowNum) throws SQLException {
         return new Sidang(
                 rs.getInt("idsidang"),
-                rs.getInt("jenita"),
+                rs.getInt("jenista"),
                 rs.getString("judulta"),
                 rs.getDate("jadwal"),
                 rs.getString("tempat"),
@@ -33,23 +33,23 @@ public class JdbcSidangRepository implements SidangRepository{
     public List<Sidang> findByRole(int idrole, String nip) {
         String sql = "";
         if (idrole == 1) {
-            sql = "SELECT sidangta.* " +
+            sql = "SELECT sidangta.*  " +
                     "FROM sidangta " +
                     "JOIN dosensidang ON sidangta.idsidang = dosensidang.idsidang " +
-                    "WHERE dosensidang.nip = 2 OR dosensidang.nip = 3  AND dosensidang.role = ?";
+                    "WHERE (dosensidang.idrole = 2 OR dosensidang.idrole = 3)  AND dosensidang.nip = ?";
         }else{
             sql = "SELECT sidangta.* " +
                     "FROM sidangta " +
                     "JOIN dosensidang ON sidangta.idsidang = dosensidang.idsidang " +
-                    "WHERE dosensidang.nip = 4 OR dosensidang.nip = 5  AND dosensidang.role = ?";
+                    "WHERE (dosensidang.idrole = 4 OR dosensidang.idrole = 5)  AND dosensidang.nip = ?";
         }
 
-        return jdbcTemplate.query(sql, this::mapRowToSidang, nip, idrole);
+        return jdbcTemplate.query(sql, this::mapRowToSidang, nip);
     }
 
     @Override
     public List<Sidang> getAllSidang() {
-        String sql = "SELECT * FROM sidang";
+        String sql = "SELECT * FROM sidangta";
         return jdbcTemplate.query(sql, this::mapRowToSidang);
     }
 

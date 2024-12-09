@@ -1,6 +1,9 @@
 package com.example.sista.dosen;
 
+import com.example.sista.Sidang.Sidang;
+import com.example.sista.Sidang.SidangRepository;
 import com.example.sista.Users.UserRepository;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,23 +12,58 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 @Controller
 @RequestMapping("/sista/dashboardDosen")
 public class DosenController {
 
+    @Autowired
+    SidangRepository repoSidang;
+
     @GetMapping()
-    public String dashboard(){
+    public String dashboard(Model model, HttpSession httpSession){
+        // String emial = (String) httpSession.getAttribute("email");
+        List<Sidang> listSidang = repoSidang.getAllSidang();
+        model.addAttribute("listSidang", listSidang);
         return "dosen/dashboardDosen";
     }
 
-    @GetMapping("/infoSidang")
-    public String infoSidang(){
-        return "dosen/infoSidang";
-    }
+    // @GetMapping("/infoSidang")
+    // public String infoSidang(){
+    //     return "dosen/infoSidang";
+    // }
 
     @PostMapping("/lihatSidang")
-    public String lihatSidang(@RequestParam(name="pickRole", required = true, defaultValue = "")String role, Model model){
-        // TO-DO
-        return "dashboardDosen";
+    public String lihatSidang(@RequestParam(name = "pickRole", required = false) Integer role, 
+                            Model model, 
+                            HttpSession httpSession) {
+        // Validate if role is selected
+        if (role == null) {
+            model.addAttribute("errorMessage", "Please select a role first.");
+            model.addAttribute("showContainer", false);
+            return "dosen/dashboardDosen"; // Reload dashboard with error
+        }
+
+        // Fetch email from session
+        String email = (String) httpSession.getAttribute("email");
+
+        // Retrieve Sidang items for the selected role
+        List<Sidang> listSidang = repoSidang.getSidangItemsByRole(role, email);
+        
+        // Debug dengan hardcoded
+        // List<Sidang> listSidang = new ArrayList<>();
+        // Date date = new Date(2024, 12, 21, 12 , 23);
+        // Sidang sidang = new Sidang(1, 1, "asdas", date, "temapt", "2", "2024", "note", "1234", 100);
+        // listSidang.add(sidang);
+
+        // Add attributes to the model
+        model.addAttribute("listSidang", listSidang);
+        model.addAttribute("showContainer", true); // Indicate to show the container
+        return "dosen/dashboardDosen";
     }
+
 }

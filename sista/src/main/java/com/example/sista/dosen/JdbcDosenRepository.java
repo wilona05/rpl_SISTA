@@ -15,7 +15,7 @@ public class JdbcDosenRepository implements DosenRepository{
     @Override
     public Boolean checkStatusKoord(String email){
 //        String email = (String) httpSession.getAttribute("email");
-        String sql = "SELECT statuskoordinator FROM dosen WHERE nip = ?";
+        String sql = "SELECT statuskoordinator FROM dosen WHERE email = ?";
 
         if (email == null || email.isEmpty()) {
             // Return false or handle the case where the email is missing
