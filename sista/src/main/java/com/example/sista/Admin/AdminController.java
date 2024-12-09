@@ -6,7 +6,6 @@ import com.example.sista.Users.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,19 +33,18 @@ public class AdminController {
     }
 
     @GetMapping("/akun")
-    public String akun(@RequestParam(name = "userID", required = false, defaultValue = "") String noInduk,
-            Model model) {
-        User user = this.userRepo.getUserByID(noInduk);
-
-        if (noInduk.isEmpty() || user == null) { // halaman untuk registrasi akun
+    public String akun(@RequestParam(name="userID", required = false, defaultValue = "") String noInduk, Model model){
+        
+        if(noInduk == null || noInduk.isEmpty()){ //halaman untuk registrasi akun
             model.addAttribute("header", "Registrasi Akun");
             model.addAttribute("registrasiAkun", true);
-        } else { // halaman untuk lihat info akun
+        }else{ //halaman untuk lihat info akun
+            User user = this.userRepo.getUserByID(noInduk);
             model.addAttribute("user", user);
             model.addAttribute("header", "Informasi Akun");
             model.addAttribute("informasiAkun", true);
         }
-
+        
         return "admin/Akun";
     }
 

@@ -3,56 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" th:href="@{/css/dashboardDosen.css}">
-    <script src="../js/dashboard.js" defer></script>
+    <link rel="stylesheet" th:href="@{/css/dashboard.css}">
+    <script th:src="@{/js/dashboard.js}" defer></script>
     <title>Dashboard</title>
 </head>
 <body>
-    <div class="dashboard">
+    <header class="header halaman-utama">
+        <h1 class="title">Halaman Utama</h1>
+        <button class="lihat-sidang-button button" onclick="showSidangContainer()">Lihat Sidang</button>
+        <button class="signout-button button" onclick="window.location.href='/sista/login'">Sign Out</button>
+    </header>
 
-        <!-- Sidang Item as Button -->
-        <div class="sidang-container hidden">
-            <!-- sidang item -->
-             <a th:href="@{/sista/infoSidang}" class="sidang-item">
-                <div class="nama-peserta-sidang">Nama Peserta Sidang</div>
-                <div class="tanggal-sidang">dd/mm/yyyy</div>
-             </a>
+    <div class="container hidden">
+        <div class="search-bar">
+            <input type="search" class="search-input" placeholder="Cari sidang...">
+            <button class="search-button">
+                <img th:src="@{/images/search.png}" alt="Search Icon">
+            </button>
         </div>
-
-        <!-- Dropdown -->
-        <div class="dropdown hidden">
-            <select class="select-an-option">
+        
+        <div class="dropdown role-pick">
+            <select class="select">
+                <option value="" disabled selected>Lihat sebagai:</option>
+                <option value="1">Penguji</option>
+                <option value="2">Pembimbing</option>
+                <option value="3">Koordinator</option>
+            </select>
+        </div>
+            
+        <div class="dropdown semester">
+            <select class="select">
                 <option value="" disabled selected>Pilih tahun ajaran</option>
                 <option value="1">Ganjil 20xx/20xx</option>
                 <option value="2">Genap 20xx/20xx</option>
                 <option value="3">Ganjil 20xx/20xx</option>
             </select>
         </div>
+    </div>
 
-        <!-- Search Bar -->
-        <div class="search-bar hidden">
-            <input type="search" class="search-input" placeholder="Search">
-            <button class="search-button">
-                <img src="../images/search.png" alt="Search Icon">
-            </button>
+    <div class="sidang-container hidden">
+        <div class="sidang" th:each="sidang : ${sidangTA}">
+            <a th:href="@{daftarsidang?sidangID={id}(id=${sidang.idsidang})}" class="menu-item">
+                <p class="nama-peserta-sidang title" th:text="${sidang.namaPeserta}">Nama Peserta Sidang</div>
+                <!-- <p class="tanggal-sidang subtitle" th:text="${#dates.format(sidang.jadwal, 'dd-MM-yyyy HH:mm')}">dd/mm/yyyy</div> -->
+            </a>
         </div>
-
-        <!-- Header -->
-        <div class="halaman-utama">Halaman Utama
-            <!-- Button for showing sidang container -->
-            <button class="lihat-sidang-button" onclick="showSidangContainer()">Lihat Sidang</button>
-            <button class="signout-button" onclick="window.location.href='/sista/login'">Sign Out</button>
-        </div>
-
-        <!-- Button pemilihan role -->
-         <div class="role-pick"> 
-            <select class="select-an-option hidden">
-                <option value="" disabled selected>Lihat sebagai:</option>
-                <option value="1">Penguji</option>
-                <option value="2">Pembimbing</option>
-                <option value="3">Koordinator</option>
-            </select>
-         </div>
     </div>
 </body>
 </html>

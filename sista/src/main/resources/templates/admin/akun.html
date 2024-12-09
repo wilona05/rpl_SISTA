@@ -1,130 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="UTF-8">
     <title th:text="${header}">Akun</title>
-    <style>
-        body{
-            margin: 0px;
-        }
-
-        header{
-            padding: 5px;
-            background-color: #03045e;
-            text-align: right;
-        }
-
-        header div{
-            color: white;
-            margin-right: 15px;
-        }
-
-        #container{
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        #form_container{
-            display: inline-block;
-            width: 90%;
-            margin: 10px;
-        }
-
-        #container label{
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .form_label{
-            width: 100px;
-            margin: 10px;
-        }
-
-        .form_control{
-            width: 300px;
-            margin: 10px;
-        }
-
-        .button-container {      
-            display: flex;
-            justify-content: flex-end; 
-            margin-top: 5px;       
-        }
-
-        button{
-            padding: 5px;
-            padding-left: 30px;
-            padding-right: 30px;
-        }
-    </style>
+    <link rel="stylesheet" th:href="@{/css/style-akun.css}">
 </head>
 <body>
-    <header>
-        <div class="header-left"></div>
-        <div class="header-right" th:text="${header}">Akun</div>
+    <header class="header">
+        <div class="menu-icon"><a th:href="@{/sista/dashboardAdmin}"><img th:src="@{/images/logo-sista.png}" class="logo"></a></div>
+        <div class="title" th:text="${header}">Akun</div>
     </header>
-    <div id="container" th:if="${registrasiAkun}">
-        <form id="form_container" class="hidden" th:action="@{/sista/dashboardAdmin/akun}" method="POST">
-            <div>
-                <label>
-                    <span class="form_label">Nomor Induk:</span>
-                    <input class="form_control" type="text" name="noInduk">
-                </label>
-                <label>
-                    <span class="form_label">Nama:</span>
-                    <input class="form_control" type="text" name="nama">
-                </label>
-                <label>
-                    <span class="form_label">Email:</span>
-                    <input class="form_control" type="text" name="email">
-                </label>
-                <label>
-                    <span class="form_label">Password:</span>
-                    <input class="form_control" type="text" name="passwords">
-                </label>
-                <label>
-                    <span class="form_label">Role:</span>
-                    <div class="form_control">
-                        <input type="radio" name="role" value="Koordinator">Koordinator
-                        <input type="radio" name="role" value="Dosen">Dosen
-                        <input type="radio" name="role" value="Mahasiswa">Mahasiswa
-                    </div>
-                </label>
-            </div>
-            <div th:if="${success}" th:text="${success}" style="color: green;"></div>
-            <div th:if="${error}" th:text="${error}" style="color: red; text-align: center;"></div>
-            <div class="button-container">
-                <button type="submit">Save</button>
-            </div>
-        </form>
+        
+    <div class="container" th:if="${registrasiAkun}">
+        <form class="form" th:action="@{/sista/dashboardAdmin/akun}" method="post" th:object="${user}">
+          <div class="form_group">
+              <label>Nomor Induk</label>
+              <input type="text" class="form_control" name="noInduk" required>
+          </div>
+          <div class="form_group">
+              <label>Nama</label>
+              <input type="text" class="form_control" name="nama" required>
+          </div>
+          <div class="form_group">
+              <label>Email</label>
+              <input type="text" class="form_control" name="email" required>
+          </div>
+          <div class="form_group">
+              <label>Password</label>
+              <input type="password" class="form_control" name="passwords" required>
+          </div>
+          <div class="form_group">
+              <label>Role</label>
+              <div class="radio_group">
+                  <label><input type="radio" class="form_control" name="role" value="koordinator">Koordinator</label><br>
+                  <label><input type="radio" class="form_control" name="role" value="dosen">Dosen</label><br>
+                  <label><input type="radio" class="form_control" name="role" value="mahasiswa">Mahasiswa</label>
+              </div>
+          </div>
+          <div class="buttons-container">
+            <button class="button" type="submit" value="Register">Register</button>
+           </div>
+         </form>
+         <div th:if="${success}" th:text="${success}" style="color: green;"></div>
+         <div th:if="${error}" th:text="${error}" style="color: red; text-align: center;"></div>
     </div>
-
-    <div id="container" th:if="${informasiAkun}">
-        <fieldset id="form_container" class="hidden">
-            <div>
-                <label>
-                    <span class="form_label">Nomor Induk:</span>
-                    <span class="form_control" th:text="${user.noInduk}"></span>
-                </label>
-                <label>
-                    <span class="form_label">Nama:</span>
-                    <span class="form_control" th:text="${user.nama}"></span>
-                </label>
-                <label>
-                    <span class="form_label">Email:</span>
-                    <span class="form_control" th:text="${user.email}"></span>
-                </label>
-                <label>
-                    <span class="form_label">Password:</span>
-                    <span class="form_control" th:text="${user.passwords}"></span>
-                </label>
-                <label>
-                    <span class="form_label">Role:</span>
-                    <span class="form_control" th:text="${user.role}"></span>
-                </label>
+    
+    <div class="container" th:if="${informasiAkun}">
+        <fieldset class="form-container">
+            <div class="form_group">
+                <label>Nomor Induk</label>
+                <span class="error" th:text="${user.noInduk}"></span>
+            </div>
+            <div class="form_group">
+                <label>Nama</label>
+                <span class="error" th:text="${user.nama}"></span>
+            </div>
+            <div class="form_group">
+                <label>Email</label>
+                <span class="error" th:text="${user.email}"></span>
+            </div>
+            <div class="form_group">
+                <label>Password</label>
+                <span class="error" th:text="${user.passwords}"></span>
+            </div>
+            <div class="form_group">
+                <label>Role</label>
+                <span class="error" th:text="${user.role}"></span>
             </div>
         </fieldset>
     </div>
