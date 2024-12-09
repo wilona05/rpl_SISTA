@@ -12,12 +12,12 @@ public class User {
     private String passwords;
     private String role;
 
-    public User(String email, String passwords) {
+    public User(String email, String passwords){
         this.email = email;
         this.passwords = passwords;
     }
 
-    public User(String noInduk, String email, String role) {
+    public User(String noInduk, String email, String role){
         this.noInduk = noInduk;
         this.email = email;
         this.role = role;

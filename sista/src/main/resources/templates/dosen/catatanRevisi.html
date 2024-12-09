@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Popup Notification</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+          <div class="icon">
+            <div class="icon-inner"></div>
+          </div>
+          <div class="title">Catatan Revisi Sidang TA</div>
+        </div>
+        
+        <!-- Content -->
+        <div class="content">
+          <!-- Text Area Container -->
+          <div class="text-area-container">
+            <!-- Text Area -->
+            <textarea id="textArea" class="input-box" placeholder="Input Here" disabled></textarea>
+            
+            <!-- Buttons -->
+            <div class="buttons">
+              <button class="button edit" id="editButton">Edit</button>
+              <button class="button save" id="saveButton">Save</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+  </div>
+
+  <!-- Popup -->
+  <div id="popup" class="popup hidden">
+    <div class="popup-content">
+      <!-- Gambar Check Mark -->
+      <img src="images/green-mark.png" alt="Check Mark" class="check-image">
+      <p>Data Berhasil Disimpan</p>
+      <button id="closePopup">Yes</button>
+    </div>
+  </div>
+  
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,6 +1,7 @@
 -- DROP DATABASE IF EXISTS SistaDB;
 -- CREATE DATABASE SistaDB;
 
+DROP VIEW IF EXISTS listUser;
 DROP TABLE IF EXISTS Admins CASCADE;
 DROP TABLE IF EXISTS Mahasiswa CASCADE;
 DROP TABLE IF EXISTS Dosen CASCADE;
@@ -14,7 +15,7 @@ DROP TABLE IF EXISTS KomponenNilai CASCADE;
 
 CREATE TABLE Admins (
     email VARCHAR(50) PRIMARY KEY,
-    password VARCHAR(50) NOT NULL
+    passwords VARCHAR(50) NOT NULL
 );
 
 -- Tabel Mahasiswa
@@ -82,7 +83,7 @@ CREATE TABLE NilaiSidang (
 );
 
 -- Insert data into Admins
-INSERT INTO Admins (email, password) VALUES
+INSERT INTO Admins (email, passwords) VALUES
 ('admin@sista.edu', 'admin123');
 
 -- Insert data into Mahasiswa
@@ -193,16 +194,16 @@ INSERT INTO NilaiSidang (IDSidang, IDKomp, nilai) VALUES
 
 CREATE VIEW listUser AS
 SELECT 
-	email, passwords
+	npm AS noInduk, nama, email, passwords
 FROM 
 	mahasiswa
 UNION ALL
 SELECT 
-	email, passwords
+	nip AS noInduk, nama, email, passwords
 FROM 
 	dosen
 UNION ALL
 SELECT 
-	email, password
+	'0' AS noInduk, 'admin' AS nama, email, passwords
 FROM 
 	admins;
