@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/dashboard.css}">
+    <script src="dashboard.js" defer></script>
+    <title>Dashboard</title>
+</head>
+<body>
+    <header class="header halaman-utama">
+        <h1 class="title">Halaman Utama</h1>
+        <button class="lihat-sidang-button button" onclick="showSidangContainer()">Lihat Sidang</button>
+        <button class="signout-button button" onclick="window.location.href='/sista/login'">Sign Out</button>
+    </header>
+
+    <div class="container hidden">
+        <div class="search-bar">
+            <input type="search" class="search-input" placeholder="Search">
+            <button class="search-button">
+                <img th:src="@{/images/search.png}" alt="Search Icon">
+            </button>
+        </div>
+            
+        <div class="dropdown semester">
+            <select class="select">
+                <option value="" disabled selected>Pilih tahun ajaran</option>
+                <option value="1">Ganjil 20xx/20xx</option>
+                <option value="2">Genap 20xx/20xx</option>
+                <option value="3">Ganjil 20xx/20xx</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="sidang-container hidden">
+        <a th:href="@{/sista/infoSidang}" class="menu-item">
+            <div class="nama-peserta-sidang title">Nama Peserta Sidang</div>
+            <div class="tanggal-sidang subtitle">dd/mm/yyyy</div>
+        </a>
+    </div>
+</body>
+</html>

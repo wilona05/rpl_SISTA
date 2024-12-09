@@ -19,40 +19,39 @@ public class UserController {
     private UserRepository repo;
 
     @GetMapping("/login")
-    public String login(){
-        return "index";
+    public String login() {
+        return "Login";
     }
 
-    //halaman info sidang untuk dosen
+    // halaman info sidang untuk dosen
     @GetMapping("/infoSidang")
-    public String redirectToInfoSidang(){
-        return "infoSidang";
+    public String redirectToInfoSidang() {
+        return "dosen/InfoSidang";
     }
 
-    //halaman dashboard dosen
+    // halaman dashboard dosen
     @GetMapping("/dashboardDosen")
-    public String redirectToDashboardDosen(){
-        return "dashboardDosen";
+    public String redirectToDashboardDosen() {
+        return "dosen/DashboardDosen";
     }
-    
-    //terima submission login
+
+    // terima submission login
     @PostMapping("/login")
-    public String handleLogin(@RequestParam String email, @RequestParam String passwords, Model model){
+    public String handleLogin(@RequestParam String email, @RequestParam String passwords, Model model) {
         String user = this.repo.login(email, passwords);
-        if(user == null){ //user tidak ditemukan
+        if (user == null) { // user tidak ditemukan
             model.addAttribute("email", email);
             model.addAttribute("passwords", passwords);
             model.addAttribute("error", "Email atau password salah");
-            return "index";
-        }else{ //user ditemukan
-            if(user.contains("@student.edu")){
-                return "redirect:/sista/dashboard-mahasiswa";
-            }else if(user.contains("@dosen.edu")){
-                return "redirect:/sista/dashboardDosen";
-            }else{
-                return "dashboard-admin";
+            return "Login";
+        } else { // user ditemukan
+            if (user.contains("@student.edu")) {
+                return "mahasiswa/DashboardMahasiswa";
+            } else if (user.contains("@dosen.edu")) {
+                return "dosen/DashboardDosen";
+            } else {
+                return "admin/DashboardAdmin";
             }
         }
     }
-
 }

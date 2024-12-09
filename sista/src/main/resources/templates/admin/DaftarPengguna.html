@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daftar Pengguna</title>
+    <link rel="stylesheet" type="text/css" href="daftarpengguna.css">
+</head>
+<body>
+    <header>
+        <div class="menu-icon"><a href=""><img th:src="@{/images/logo-sista.png}" class="logo"></a></div>
+        <div class="title">Daftar Pengguna</div>
+    </header>
+    
+    <div class="container">
+        <div class="search-bar">
+            <input type="search" class="search-input" placeholder="Cari pengguna...">
+            <button class="search-button">
+                <img th:src="@{/images/search.png}" alt="Search Icon">
+            </button>
+        </div>
+        
+        <div class="dropdown role-pick">
+            <select class="select">
+                <option value="" disabled selected>Lihat sebagai:</option>
+                <option value="1">Koordinator</option>
+                <option value="2">Dosen</option>
+                <option value="3">Mahasiswa</option>
+            </select>
+        </div>
+    </div>
+    
+    <div id="list-users">
+        <div class="users" th:each="u : ${user}">
+            <img src="/images/Profile Pict.png">
+            <a th:href="@{akun?userID={id}(id=${u.noInduk})}">
+                <div class="data">
+                    <p th:text="${u.email}"></p>
+                    <p th:text="${u.role}"></p>
+                </div>
+            </a>
+        </div>
+    </div>
+</body>
+</html>

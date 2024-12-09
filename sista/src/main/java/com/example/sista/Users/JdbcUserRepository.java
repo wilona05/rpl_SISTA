@@ -76,17 +76,18 @@ public class JdbcUserRepository implements UserRepository{
     public boolean register(User user){
         String role =  user.getRole();
         String sql = "";
+        int rowsEffected = 0;
         try{
             if(role.equals("Mahasiswa")){
                 sql = "INSERT INTO Mahasiswa (NPM, nama, email, passwords) VALUES (?,?,?,?)";
+                rowsEffected = jdbcTemplate.update(sql, user.getNoInduk(), user.getNama(), user.getEmail(), user.getPasswords());
             }else if(role.equals("Dosen")){
-                sql = "INSERT INTO Mahasiswa (NIP, nama, email, passwords) VALUES (?,?,?,?)";
+                sql = "INSERT INTO Dosen (NIP, nama, email, passwords, statusKoordinator) VALUES (?,?,?,?,?)";
+                rowsEffected = jdbcTemplate.update(sql, user.getNoInduk(), user.getNama(), user.getEmail(), user.getPasswords(), false);
             }else if(role.equals("Koordinator")){
-                sql = "INSERT INTO Mahasiswa (NIP, nama, email, passwords) VALUES (?,?,?,?)";
-                String sql2 = "INSERT INTO dosenKoordinator (NIP, periode) VALUES (?,?)";
-                jdbcTemplate.update(sql2, user.getNoInduk(), "");
+                sql = "INSERT INTO Dosen (NIP, nama, email, passwords, statusKoordinator) VALUES (?,?,?,?,?)";
+                rowsEffected = jdbcTemplate.update(sql, user.getNoInduk(), user.getNama(), user.getEmail(), user.getPasswords(), true);
             }
-            int rowsEffected = jdbcTemplate.update(sql, user.getNoInduk(), user.getNama(), user.getEmail(), user.getPasswords());
             return rowsEffected>0;
         }catch (DuplicateKeyException e){
             return false;
