@@ -55,7 +55,9 @@ public class JdbcUserRepository implements UserRepository{
         if(email.endsWith("@student.edu")){
             return "mahasiswa";
         }else if(email.endsWith("@dosen.edu")){
-            return "dosen";
+            boolean statusKoordinator = getStatusKoordinator(email);
+            if(statusKoordinator) return "koordinator";
+            else return "dosen";
         }else{
             return "admin";
         }
@@ -73,23 +75,50 @@ public class JdbcUserRepository implements UserRepository{
     }
 
     @Override
+    public boolean getStatusKoordinator(String email){
+        String sql = "SELECT statusKoordinator FROM dosen WHERE email=?";
+        return jdbcTemplate.queryForObject(sql, boolean.class, email);
+    }
+
+    @Override
     public boolean register(User user){
         String role =  user.getRole();
         String sql = "";
         int rowsEffected = 0;
         try{
-            if(role.equals("Mahasiswa")){
+            if(role.equalsIgnoreCase("Mahasiswa")){
                 sql = "INSERT INTO Mahasiswa (NPM, nama, email, passwords) VALUES (?,?,?,?)";
                 rowsEffected = jdbcTemplate.update(sql, user.getNoInduk(), user.getNama(), user.getEmail(), user.getPasswords());
-            }else if(role.equals("Dosen")){
+            }else if(role.equalsIgnoreCase("Dosen")){
                 sql = "INSERT INTO Dosen (NIP, nama, email, passwords, statusKoordinator) VALUES (?,?,?,?,?)";
                 rowsEffected = jdbcTemplate.update(sql, user.getNoInduk(), user.getNama(), user.getEmail(), user.getPasswords(), false);
-            }else if(role.equals("Koordinator")){
+            }else if(role.equalsIgnoreCase("Koordinator")){
+                jdbcTemplate.update("UPDATE dosen SET statusKoordinator = false WHERE statusKoordinator = true");
                 sql = "INSERT INTO Dosen (NIP, nama, email, passwords, statusKoordinator) VALUES (?,?,?,?,?)";
                 rowsEffected = jdbcTemplate.update(sql, user.getNoInduk(), user.getNama(), user.getEmail(), user.getPasswords(), true);
             }
             return rowsEffected>0;
         }catch (DuplicateKeyException e){
+            return false;
+        }
+    }
+
+    @Override
+    public boolean editRoleDosen(String noInduk, String newRole){ 
+        String sql;
+        int rowsEffected = 0;
+        try{
+            if(newRole.equalsIgnoreCase("dosen")){ //koordinator --> dosen
+                sql = "UPDATE dosen SET statusKoordinator = false WHERE nip = ?";
+                rowsEffected = jdbcTemplate.update(sql, noInduk);
+            }else{ //dosen --> koordinator
+                sql = "UPDATE dosen SET statusKoordinator = false WHERE statusKoordinator = true";
+                jdbcTemplate.update(sql);
+                sql = "UPDATE dosen SET statusKoordinator = true WHERE nip = ?";
+                rowsEffected = jdbcTemplate.update(sql, noInduk);
+            }
+            return rowsEffected>0;
+        }catch(Exception e){
             return false;
         }
     }

@@ -8,11 +8,11 @@
 <body>
     <header class="header">
         <div class="menu-icon"><a th:href="@{/sista/dashboardAdmin}"><img th:src="@{/images/logo-sista.png}" class="logo"></a></div>
-        <div class="title">Akun</div>
+        <div class="title">Register Akun</div>
     </header>
         
-    <div class="container" th:if="${registrasiAkun}">
-        <form class="form" th:action="@{/sista/dashboardAdmin/akun}" method="post" th:object="${user}">
+    <div class="container">
+        <form class="form" th:action="@{/sista/dashboardAdmin/registerAkun}" method="POST" th:object="${user}">
           <div class="form_group">
               <label>Nomor Induk</label>
               <input type="text" class="form_control" name="noInduk" required>
@@ -21,14 +21,14 @@
               <label>Nama</label>
               <input type="text" class="form_control" name="nama" required>
           </div>
-          <div class="form_group">
+          <!-- <div class="form_group">
               <label>Email</label>
               <input type="text" class="form_control" name="email" required>
           </div>
           <div class="form_group">
               <label>Password</label>
               <input type="password" class="form_control" name="passwords" required>
-          </div>
+          </div> -->
           <div class="form_group">
               <label>Role</label>
               <div class="radio_group">
@@ -39,35 +39,10 @@
           </div>
           <div class="buttons-container">
             <button class="button" type="submit" value="Register">Register</button>
-           </div>
-         </form>
-         <div th:if="${success}" th:text="${success}" style="color: green;"></div>
-         <div th:if="${error}" th:text="${error}" style="color: red; text-align: center;"></div>
-    </div>
-    
-    <div class="container" th:if="${informasiAkun}">
-        <fieldset class="form-container">
-            <div class="form_group">
-                <label>Nomor Induk</label>
-                <span class="error" th:text="${user.noInduk}"></span>
-            </div>
-            <div class="form_group">
-                <label>Nama</label>
-                <span class="error" th:text="${user.nama}"></span>
-            </div>
-            <div class="form_group">
-                <label>Email</label>
-                <span class="error" th:text="${user.email}"></span>
-            </div>
-            <div class="form_group">
-                <label>Password</label>
-                <span class="error" th:text="${user.passwords}"></span>
-            </div>
-            <div class="form_group">
-                <label>Role</label>
-                <span class="error" th:text="${user.role}"></span>
-            </div>
-        </fieldset>
+          </div>
+        </form>
+        <div th:if="${success}" th:text="${success}" style="color: green;"></div>
+        <div th:if="${error}" th:text="${error}" style="color: red; text-align: center;"></div>
     </div>
 </body>
 </html>
