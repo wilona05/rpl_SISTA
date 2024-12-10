@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="UTF-8">
+    <title th:text="${header}">Akun</title>
+    <link rel="stylesheet" th:href="@{/css/style-akun.css}">
+</head>
+<body>
+    <header class="header">
+        <div class="menu-icon"><a th:href="@{/sista/dashboardAdmin/daftarPengguna}"><img th:src="@{/images/logo-sista.png}" class="logo"></a></div>
+        <div class="title">Informasi Akun</div>
+    </header>
+    
+    <div class="container">
+        <fieldset class="form-container">
+            <div class="form_group">
+                <label>Nomor Induk</label>
+                <span class="error" th:text="${user.noInduk}"></span>
+            </div>
+            <div class="form_group">
+                <label>Nama</label>
+                <span class="error" th:text="${user.nama}"></span>
+            </div>
+            <div class="form_group">
+                <label>Email</label>
+                <span class="error" th:text="${user.email}"></span>
+            </div>
+            <div class="form_group">
+                <label>Password</label>
+                <span class="error" th:text="${user.passwords}"></span>
+            </div>
+            <div class="form_group" th:if="!${editRole}">
+                <label>Role</label>
+                <span class="error" th:text="${user.role}"></span>
+            </div>
+            <form action="/sista/dashboardAdmin/editAkun" method="POST" th:if="${editRole}">
+                <div class="form_group">
+                    <label>Role</label>
+                    <div class="radio_group">
+                        <label><input type="radio" class="form_control" name="role" value="koordinator">Koordinator</label><br>
+                        <label><input type="radio" class="form_control" name="role" value="dosen">Dosen</label><br>
+                        <!-- <label><input type="radio" class="form_control" name="role" value="mahasiswa">Mahasiswa</label> -->
+                    </div>
+                </div>
+                <div class="buttons-container">
+                    <a th:href="@{/sista/dashboardAdmin/informasiAkun(userID=${user.noInduk})}" class="button">Cancel</a>
+                    <input type="hidden" name="userID" th:value="${user.noInduk}">
+                    <button class="button" type="submit" value="Save">Save</button>
+                </div>
+            </form>
+            <form action="/sista/dashboardAdmin/editAkun" method="GET" th:if="!${editRole}">
+                <input type="hidden" name="userID" th:value="${user.noInduk}">
+                <div class="buttons-container" th:if="${user.role} != 'mahasiswa'">
+                    <button class="button" type="submit">Edit</button>
+                </div>
+            </form>
+        </fieldset>
+        <div th:if="${error}" th:text="${error}" style="color: red; text-align: center;"></div>
+    </div>
+</body>
+</html>
