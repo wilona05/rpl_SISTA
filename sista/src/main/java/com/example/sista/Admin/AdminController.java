@@ -31,7 +31,7 @@ public class AdminController {
     public String daftarPengguna(Model model){
         List<User> user = this.userRepo.findAll();
         model.addAttribute("users", user);
-        return "admin/daftarPengguna";
+        return "admin/DaftarPengguna";
     }
 
     @PostMapping("/daftarPengguna")
@@ -43,7 +43,7 @@ public class AdminController {
             if(role!=null && !role.isEmpty()){ //ada filter role
                 if(user==null || !user.getRole().equalsIgnoreCase(role)){
                     model.addAttribute("error", String.format("Pengguna dengan role '%s' dan nomor induk '%s' tidak ditemukan.", role, noInduk));
-                    return "admin/daftarPengguna";
+                    return "admin/DaftarPengguna";
                 } 
             }
             
@@ -68,12 +68,12 @@ public class AdminController {
 
         model.addAttribute("noInduk", noInduk);
         model.addAttribute("role", role);
-        return "admin/daftarPengguna";
+        return "admin/DaftarPengguna";
     }
 
     @GetMapping("/registerAkun")
     public String register(){
-        return "admin/register";
+        return "admin/RegisterAkun";
     }
 
     @PostMapping("/registerAkun")
@@ -91,10 +91,10 @@ public class AdminController {
             if(success){
                 model.addAttribute("user", user);
                 model.addAttribute("editRole", false);
-                return "admin/infoAkun";
+                return "admin/InfoAkun";
             }else{
                 model.addAttribute("error", "Gagal menyimpan data");
-                return "admin/registerAkun";
+                return "admin/RegisterAkun";
             } 
         }
 
@@ -103,7 +103,7 @@ public class AdminController {
             User user = this.userRepo.getUserByID(noInduk);
             model.addAttribute("user", user);
             model.addAttribute("editRole", false);
-        return "admin/infoAkun";
+        return "admin/InfoAkun";
     }
 
     @GetMapping("/editAkun")
@@ -111,7 +111,7 @@ public class AdminController {
         User user = this.userRepo.getUserByID(noInduk);
         model.addAttribute("user", user);
         model.addAttribute("editRole", true);
-        return "admin/infoAkun";
+        return "admin/InfoAkun";
     }
 
     @PostMapping("/editAkun")
@@ -120,7 +120,7 @@ public class AdminController {
         if(success){
             User user = this.userRepo.getUserByID(noInduk);
             model.addAttribute("user", user);
-            return "admin/infoAkun";
+            return "admin/InfoAkun";
         }else{
             model.addAttribute("error", "Edit role gagal");
             return "admin/editAkun";

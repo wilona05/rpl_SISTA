@@ -199,3 +199,8 @@ header {
     font-weight: 400;
     line-height: 28px;
 }
+
+.deleteBtn{
+    width: 15px;
+    object-fit: contain;
+}
