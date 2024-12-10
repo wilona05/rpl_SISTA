@@ -42,7 +42,7 @@
     <div id="list-users" th:if="${searchedUser != null}">
         <div class="users">
             <img src="/images/Profile Pict.png">
-            <a th:href="@{akun?userID={id}(id=${searchedUser.noInduk})}">
+            <a th:href="@{informasiAkun?userID={id}(id=${searchedUser.noInduk})}">
                 <div class="data">
                     <p th:text="${searchedUser.email}"></p>
                     <p th:text="${searchedUser.role}"></p>
@@ -55,7 +55,7 @@
     <div id="list-users" th:if="${searchedUser == null}">
         <div class="users" th:each="u : ${users}">
             <img src="/images/Profile Pict.png">
-            <a th:href="@{akun?userID={id}(id=${u.noInduk})}">
+            <a th:href="@{informasiAkun?userID={id}(id=${u.noInduk})}">
                 <div class="data">
                     <p th:text="${u.email}"></p>
                     <p th:text="${u.role}"></p>

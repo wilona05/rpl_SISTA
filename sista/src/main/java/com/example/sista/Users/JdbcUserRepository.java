@@ -93,11 +93,32 @@ public class JdbcUserRepository implements UserRepository{
                 sql = "INSERT INTO Dosen (NIP, nama, email, passwords, statusKoordinator) VALUES (?,?,?,?,?)";
                 rowsEffected = jdbcTemplate.update(sql, user.getNoInduk(), user.getNama(), user.getEmail(), user.getPasswords(), false);
             }else if(role.equalsIgnoreCase("Koordinator")){
+                jdbcTemplate.update("UPDATE dosen SET statusKoordinator = false WHERE statusKoordinator = true");
                 sql = "INSERT INTO Dosen (NIP, nama, email, passwords, statusKoordinator) VALUES (?,?,?,?,?)";
                 rowsEffected = jdbcTemplate.update(sql, user.getNoInduk(), user.getNama(), user.getEmail(), user.getPasswords(), true);
             }
             return rowsEffected>0;
         }catch (DuplicateKeyException e){
+            return false;
+        }
+    }
+
+    @Override
+    public boolean editRoleDosen(String noInduk, String newRole){ 
+        String sql;
+        int rowsEffected = 0;
+        try{
+            if(newRole.equalsIgnoreCase("dosen")){ //koordinator --> dosen
+                sql = "UPDATE dosen SET statusKoordinator = false WHERE nip = ?";
+                rowsEffected = jdbcTemplate.update(sql, noInduk);
+            }else{ //dosen --> koordinator
+                sql = "UPDATE dosen SET statusKoordinator = false WHERE statusKoordinator = true";
+                jdbcTemplate.update(sql);
+                sql = "UPDATE dosen SET statusKoordinator = true WHERE nip = ?";
+                rowsEffected = jdbcTemplate.update(sql, noInduk);
+            }
+            return rowsEffected>0;
+        }catch(Exception e){
             return false;
         }
     }

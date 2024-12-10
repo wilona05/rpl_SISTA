@@ -71,23 +71,12 @@ public class AdminController {
         return "admin/daftarPengguna";
     }
 
-    @GetMapping("/akun")
-    public String akun(@RequestParam(name="userID", required = false, defaultValue = "") String noInduk, Model model){
-        
-        if(noInduk == null || noInduk.isEmpty()){ //halaman untuk registrasi akun
-            model.addAttribute("header", "Registrasi Akun");
-            model.addAttribute("registrasiAkun", true);
-        }else{ //halaman untuk lihat info akun
-            User user = this.userRepo.getUserByID(noInduk);
-            model.addAttribute("user", user);
-            model.addAttribute("header", "Informasi Akun");
-            model.addAttribute("informasiAkun", true);
-        }
-        
-        return "admin/akun";
+    @GetMapping("/registerAkun")
+    public String register(){
+        return "admin/register";
     }
 
-    @PostMapping("/akun")
+    @PostMapping("/registerAkun")
     public String register(@RequestParam("noInduk") String noInduk, @RequestParam("nama") String nama,
     @RequestParam("role") String role, Model model) {
         String email = noInduk;
@@ -101,16 +90,41 @@ public class AdminController {
             boolean success = this.userRepo.register(user);
             if(success){
                 model.addAttribute("user", user);
-                model.addAttribute("header", "Informasi Akun");
-                model.addAttribute("informasiAkun", true);
-                model.addAttribute("success", "Data berhasil disimpan");
-                return "admin/akun";
+                model.addAttribute("editRole", false);
+                return "admin/infoAkun";
             }else{
-                model.addAttribute("header", "Registrasi Akun");
-                model.addAttribute("registrasiAkun", true);
                 model.addAttribute("error", "Gagal menyimpan data");
-                return "admin/akun";
+                return "admin/registerAkun";
             } 
+        }
+
+    @GetMapping("/informasiAkun")
+    public String akun(@RequestParam(name="userID") String noInduk, Model model){
+            User user = this.userRepo.getUserByID(noInduk);
+            model.addAttribute("user", user);
+            model.addAttribute("editRole", false);
+        return "admin/infoAkun";
+    }
+
+    @GetMapping("/editAkun")
+    public String editAkun(@RequestParam(name="userID") String noInduk, Model model){
+        User user = this.userRepo.getUserByID(noInduk);
+        model.addAttribute("user", user);
+        model.addAttribute("editRole", true);
+        return "admin/infoAkun";
+    }
+
+    @PostMapping("/editAkun")
+    public String editAkun(@RequestParam(name="userID") String noInduk, @RequestParam("role") String role,  Model model){
+        boolean success = this.userRepo.editRoleDosen(noInduk, role);
+        if(success){
+            User user = this.userRepo.getUserByID(noInduk);
+            model.addAttribute("user", user);
+            return "admin/infoAkun";
+        }else{
+            model.addAttribute("error", "Edit role gagal");
+            return "admin/editAkun";
+        }
     }
 
     private String randomPassword(){
