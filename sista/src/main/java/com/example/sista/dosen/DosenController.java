@@ -1,5 +1,6 @@
 package com.example.sista.dosen;
 
+import com.example.sista.Sidang.InfoSidang;
 import com.example.sista.Sidang.Sidang;
 import com.example.sista.Sidang.SidangRepository;
 import com.example.sista.Users.UserRepository;
@@ -65,15 +66,33 @@ public class DosenController {
         // listSidang.add(sidang);
 
         // Log the role and email values
-        Logger logger = LoggerFactory.getLogger(DosenController.class);
+//        Logger logger = LoggerFactory.getLogger(DosenController.class);
         // logger.info("Role: {}", role);
         // logger.info("Email: {}", email);
-        logger.info("Email: {}", listSidang);
+//        logger.info("Email: {}", listSidang);
 
         // Add attributes to the model
         model.addAttribute("showContainer", true); // Indicate to show the container
         model.addAttribute("listSidang", listSidang);
         return "dosen/dashboardDosen";
     }
+
+    @GetMapping("/infoSidang")
+    public String getInfoSidang(@RequestParam("id") int id, Model model) {
+        // Simulated service call to fetch sidang details by ID
+        List<InfoSidang> listSidang = repoSidang.getInfoSidangById(id);
+
+        if (listSidang == null) {
+            // Handle case where the sidang is not found
+            model.addAttribute("errorMessage", "Sidang not found");
+            return "error-page"; // Replace with the appropriate error page
+        }
+
+        InfoSidang sidang = listSidang.get(0);
+        // Add the sidang details to the model for rendering in the Thymeleaf template
+        model.addAttribute("sidang", sidang);
+        return "dosen/infoSidang"; // Return the Thymeleaf template name
+    }
+
 
 }

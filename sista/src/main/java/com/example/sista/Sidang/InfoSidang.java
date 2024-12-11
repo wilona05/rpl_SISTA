@@ -9,8 +9,9 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @Builder
-public class Sidang {
-//    String nama;
+public class InfoSidang {
+    String namamahasiswa;
+    String email;
     int idsidang;
     int jenista;
     String judulta;
@@ -20,5 +21,8 @@ public class Sidang {
     String tahunajaran;
     String catatanrevisi;
     String npm;
-    int nilaikoordinator;
+    String pembimbingutama;
+    String pembimbingtambahan;
+    String ketuapenguji;
+    String anggotapenguji;
 }
