@@ -20,10 +20,13 @@ public class SidangTA {
     private String dosenPenguji1;
     private String dosenPenguji2;
 
-    public SidangTA(int jenisTA, String judulTA, Timestamp jadwal, String tempat, String dosenPembimbing,
-            String dosenPenguji1, String dosenPenguji2) {
-        this.jenisTA = jenisTA;
+    public SidangTA(String nama, String npm, String email, int jenisTA, String judulTA, Timestamp jadwal, String tempat,
+            String dosenPembimbing, String dosenPenguji1, String dosenPenguji2) {
+        this.nama = nama;
+        this.npm = npm;
+        this.email = email;
         this.judulTA = judulTA;
+        this.jenisTA = jenisTA;
         this.jadwal = jadwal;
         this.tempat = tempat;
         this.dosenPembimbing = dosenPembimbing;
