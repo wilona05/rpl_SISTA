@@ -4,6 +4,9 @@ import com.example.sista.Sidang.Sidang;
 import com.example.sista.Sidang.SidangRepository;
 import com.example.sista.Users.UserRepository;
 import jakarta.servlet.http.HttpSession;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -42,6 +45,7 @@ public class DosenController {
                             Model model, 
                             HttpSession httpSession) {
         // Validate if role is selected
+        role = 1;
         if (role == null) {
             model.addAttribute("errorMessage", "Please select a role first.");
             model.addAttribute("showContainer", false);
@@ -60,9 +64,15 @@ public class DosenController {
         // Sidang sidang = new Sidang(1, 1, "asdas", date, "temapt", "2", "2024", "note", "1234", 100);
         // listSidang.add(sidang);
 
+        // Log the role and email values
+        Logger logger = LoggerFactory.getLogger(DosenController.class);
+        // logger.info("Role: {}", role);
+        // logger.info("Email: {}", email);
+        logger.info("Email: {}", listSidang);
+
         // Add attributes to the model
-        model.addAttribute("listSidang", listSidang);
         model.addAttribute("showContainer", true); // Indicate to show the container
+        model.addAttribute("listSidang", listSidang);
         return "dosen/dashboardDosen";
     }
 
