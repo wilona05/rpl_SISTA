@@ -45,7 +45,7 @@ public class DosenController {
                             Model model, 
                             HttpSession httpSession) {
         // Validate if role is selected
-        role = 1;
+        // role = 1;
         if (role == null) {
             model.addAttribute("errorMessage", "Please select a role first.");
             model.addAttribute("showContainer", false);
