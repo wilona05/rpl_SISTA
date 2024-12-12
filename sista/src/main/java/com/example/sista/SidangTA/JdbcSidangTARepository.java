@@ -8,10 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-import org.springframework.dao.DuplicateKeyException;
 
 @Repository
-public class JdbcSidangRepository implements SidangRepository {
+public class JdbcSidangTARepository implements SidangRepository {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
