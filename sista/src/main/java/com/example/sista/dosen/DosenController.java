@@ -28,10 +28,13 @@ public class DosenController {
     @Autowired
     SidangRepository repoSidang;
 
+    @Autowired
+    DosenRepository repoDosen;
+
     @GetMapping()
     public String dashboard(Model model, HttpSession httpSession){
-        // String emial = (String) httpSession.getAttribute("email");
-        List<Sidang> listSidang = repoSidang.getAllSidang();
+        String email = (String) httpSession.getAttribute("email");
+        List<Sidang> listSidang = repoSidang.getSidangByDosen(repoDosen.getNipDosen(email));
         model.addAttribute("listSidang", listSidang);
         return "dosen/dashboardDosen";
     }

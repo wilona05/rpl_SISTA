@@ -2,6 +2,7 @@ package com.example.sista.Koordinator;
 
 import java.util.List;
 
+import com.example.sista.dosen.DosenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,9 +21,13 @@ public class KoordinatorController {
     @Autowired
     SidangRepository repoSidang;
 
+    @Autowired
+    DosenRepository repoDosen;
+
     @GetMapping
     public String dashboard(Model model, HttpSession httpSession){
-        List<Sidang> listSidang = repoSidang.getAllSidang();
+        String email = (String) httpSession.getAttribute("email");
+        List<Sidang> listSidang = repoSidang.getSidangByDosen(repoDosen.getNipDosen(email));
         model.addAttribute("listSidang", listSidang);
         return "dosen/dashboardKoordinator";
     }

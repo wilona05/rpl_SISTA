@@ -18,7 +18,6 @@ public class JdbcDosenRepository implements DosenRepository{
         String sql = "SELECT statuskoordinator FROM dosen WHERE email = ?";
 
         if (email == null || email.isEmpty()) {
-            // Return false or handle the case where the email is missing
             return false;
         }
 
@@ -28,6 +27,23 @@ public class JdbcDosenRepository implements DosenRepository{
         } catch (EmptyResultDataAccessException e) {
             // Handle the case where no record is found
             return false;
+        }
+    }
+
+    @Override
+    public String getNipDosen(String email){
+        String sql = "SELECT nip FROM dosen WHERE email = ?";
+
+        if (email == null || email.isEmpty()) {
+            return null;
+        }
+
+        try {
+            // Execute the query and return the result as a Boolean
+            return jdbcTemplate.queryForObject(sql, String.class, email);
+        } catch (EmptyResultDataAccessException e) {
+            // Handle the case where no record is found
+            return null;
         }
     }
 }

@@ -1,5 +1,6 @@
 package com.example.sista.Sidang;
 
+import com.example.sista.dosen.JdbcDosenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -15,9 +16,12 @@ public class JdbcSidangRepository implements SidangRepository{
     @Autowired
     JdbcTemplate jdbcTemplate;
 
+    @Autowired
+    JdbcDosenRepository dosenRepo;
+
     public Sidang mapRowToSidang(ResultSet rs, int rowNum) throws SQLException {
         return new Sidang(
-//                rs.getString("namamahasiswa"),
+                rs.getString("nama"),
                 rs.getInt("idsidang"),
                 rs.getInt("jenista"),
                 rs.getString("judulta"),
@@ -52,15 +56,38 @@ public class JdbcSidangRepository implements SidangRepository{
     public List<Sidang> getAllSidang() {
         String sql = "SELECT \n" +
                 "    s.*,\n" +
-                "    m.nama AS mahasiswaNama -- Get the name of the mahasiswa\n" +
+                "    m.nama \n" +
                 "FROM \n" +
-                "    SidangTA s\n" +
+                "    Sidangta s\n" +
                 "JOIN \n" +
-                "    Mahasiswa m ON s.npm = m.npm; -- Join using the npm column";
+                "    mahasiswa m ON s.npm = m.npm;";
         return jdbcTemplate.query(sql, this::mapRowToSidang);
     }
 
-    public List<>
+    @Override
+    public List<Sidang> getSidangByDosen(String nip){
+        String sql = "SELECT\n" +
+                "    s.idsidang,\n" +
+                "    m.nama,\n" +
+                "    s.jenista,\n" +
+                "    s.judulta,\n" +
+                "    s.jadwal,\n" +
+                "    s.tempat,\n" +
+                "    s.semester,\n" +
+                "    s.tahunajaran,\n" +
+                "    s.catatanrevisi,\n" +
+                "    s.npm,\n" +
+                "    s.nilaikoordinator\n" +
+                "FROM\n" +
+                "    sidangta s\n" +
+                "JOIN\n" +
+                "    dosensidang ds ON s.idsidang = ds.idsidang\n" +
+                "JOIN\n" +
+                "    mahasiswa m ON s.npm = m.npm\n" +
+                "WHERE\n" +
+                "    ds.nip = ?";
+        return jdbcTemplate.query(sql,this::mapRowToSidang, nip);
+    }
 
     public List<Sidang> getSidangItemsByRole(int idrole, String nip) {
         if (idrole == 2 || idrole == 3) { //jika role penguji

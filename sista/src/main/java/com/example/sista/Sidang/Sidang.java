@@ -10,7 +10,7 @@ import java.util.Date;
 @AllArgsConstructor
 @Builder
 public class Sidang {
-//    String nama;
+    String nama;
     int idsidang;
     int jenista;
     String judulta;

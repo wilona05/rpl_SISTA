@@ -17,7 +17,7 @@
         <div class="sidang-container" th:classappend="${showContainer} ? '' : 'hidden'">
             <div th:each="sidang : ${listSidang}">
                 <button class="sidang-item" th:onclick="'window.location.href=\'/sista/dashboardDosen/infoSidang?id=' + ${sidang.idsidang} + '\''">
-                    <div class="nama-peserta-sidang" th:text="${sidang.npm}">Nama Peserta Sidang</div>
+                    <div class="nama-peserta-sidang" th:text="${sidang.nama}">Nama Peserta Sidang</div>
                     <div class="tanggal-sidang" th:text="${#dates.format(sidang.jadwal, 'dd/MM/yyyy')}">dd/mm/yyyy</div>
                 </button>
             </div>

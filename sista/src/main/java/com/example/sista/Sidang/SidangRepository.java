@@ -7,4 +7,5 @@ public interface SidangRepository {
     List<Sidang> getAllSidang();
     List<Sidang> getSidangItemsByRole(int idrole, String nip);
     List<InfoSidang> getInfoSidangById(int id);
+    List<Sidang> getSidangByDosen(String nip);
 }
