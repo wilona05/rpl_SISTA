@@ -24,15 +24,15 @@ public class UserController {
     private DosenRepository dosenRepo;
 
     @GetMapping("/login")
-    public String login(){
-        return "index";
+    public String login() {
+        return "Login";
     }
 
     //terima submission login
     @PostMapping("/login")
     public String handleLogin(@RequestParam String email, @RequestParam String passwords, Model model, HttpSession httpSession){
         String user = this.repo.login(email, passwords);
-        if(user == null){ //user tidak ditemukan
+        if (user == null) { // user tidak ditemukan
             model.addAttribute("email", email);
             model.addAttribute("passwords", passwords);
             model.addAttribute("error", "Email atau password salah");
@@ -56,5 +56,4 @@ public class UserController {
             }
         }
     }
-
 }

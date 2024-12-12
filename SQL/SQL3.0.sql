@@ -118,8 +118,6 @@ INSERT INTO RoleDosen (namaRole) VALUES
 ('Pembimbing 1'),
 ('Pembimbing 2');
 
-
-
 INSERT INTO bobotDosen (jenisTA, bobot, tglBerlaku, idRole) VALUES
 (2, 35.00, '2023-01-01', 2),
 (2, 35.00, '2023-01-01', 3),
@@ -128,7 +126,6 @@ INSERT INTO bobotDosen (jenisTA, bobot, tglBerlaku, idRole) VALUES
 (1, 50.00, '2023-01-01', 2),
 (1, 30.00, '2023-01-01', 4),
 (1, 20.00, '2023-01-01', 1);
-
 
 -- Insert data into SidangTA (3 in semester Ganjil, 3 in semester Genap)
 INSERT INTO SidangTA (jenisTA, judulTA, jadwal, tempat, semester, tahunAjaran, catatanRevisi, NPM, nilaiKoordinator) VALUES
