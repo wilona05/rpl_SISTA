@@ -24,7 +24,7 @@
         </div>
 
         <!-- Role Selection Form -->
-        <form class="lihat-sidang-form" th:action="@{/sista/dashboardDosen/lihatSidang}" method="post">
+        <form class="lihat-sidang-form" th:action="@{/sista/dahsboardKoordinator/lihatSidang}" method="post">
             <div class="role-pick">
                 <select class="select-an-option" name="pickRole">
                     <option value="" disabled selected>Lihat sebagai:</option>
@@ -39,7 +39,7 @@
     <div class="halaman-utama">
         <div class="header-container">
             <span>Halaman Utama</span>
-            <button class="signout-button" onclick="window.location.href='/sista/login'">Sign Out</button>
+            <button class="signout-button" onclick="window.location.href='dashboardKoordinator/logout'">Sign Out</button>
         </div>
         <!-- Container for buttons below the title -->
         <div class="header-buttons">
