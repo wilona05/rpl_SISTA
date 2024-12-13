@@ -37,16 +37,20 @@ public class JdbcSidangRepository implements SidangRepository{
 
     public List<Sidang> findByRole(int idrole, String nip) {
         String sql = "";
+        //jika dosen penguji
         if (idrole == 1) {
-            sql = "SELECT sidangta.*  " +
+            sql = "SELECT sidangta.*, mahasiswa.nama " +
                     "FROM sidangta " +
                     "JOIN dosensidang ON sidangta.idsidang = dosensidang.idsidang " +
-                    "WHERE (dosensidang.idrole = 2 OR dosensidang.idrole = 3)  AND dosensidang.nip = ?";
+                    "JOIN mahasiswa ON sidangta.npm = mahasiswa.npm " +
+                    "WHERE (dosensidang.idrole = 2 OR dosensidang.idrole = 3) AND dosensidang.nip = ?";
+//            Jika disen pembimbing
         }else{
-            sql = "SELECT sidangta.* " +
+            sql = "SELECT sidangta.*, mahasiswa.nama " +
                     "FROM sidangta " +
                     "JOIN dosensidang ON sidangta.idsidang = dosensidang.idsidang " +
-                    "WHERE (dosensidang.idrole = 4 OR dosensidang.idrole = 5)  AND dosensidang.nip = ?";
+                    "JOIN mahasiswa ON sidangta.npm = mahasiswa.npm " +
+                    "WHERE (dosensidang.idrole = 4 OR dosensidang.idrole = 5) AND dosensidang.nip = ?";
         }
 
         return jdbcTemplate.query(sql, this::mapRowToSidang, nip);
@@ -90,9 +94,9 @@ public class JdbcSidangRepository implements SidangRepository{
     }
 
     public List<Sidang> getSidangItemsByRole(int idrole, String nip) {
-        if (idrole == 2 || idrole == 3) { //jika role penguji
+        if (idrole == 1) { //jika role penguji
             return findByRole(1, nip);
-        } else if (idrole == 4 || idrole == 5) { //jika role pembimbing
+        } else if (idrole == 2) { //jika role pembimbing
             return findByRole(2, nip);
         } else {
             return Collections.emptyList();

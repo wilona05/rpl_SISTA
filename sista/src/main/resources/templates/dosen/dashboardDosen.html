@@ -10,9 +10,8 @@
 <body>
     <div class="dashboard">
 
-        
         <!-- Sidang Container -->
-        <div class="sidang-container" th:classappend="${showContainer} ? '' : 'hidden'">
+        <div class="sidang-container" th:if="${showContainer}">
             <div th:each="sidang : ${listSidang}">
                 <button class="sidang-item" th:onclick="'window.location.href=\'/sista/dashboardDosen/infoSidang?id=' + ${sidang.idsidang} + '\''">
                     <div class="nama-peserta-sidang" th:text="${sidang.nama}">Nama Peserta Sidang</div>
@@ -22,7 +21,7 @@
         </div>
         
         <!-- Error Message -->
-        <div class="error-message" th:if="${errorMessage}" th:text="${errorMessage}" style="color: red;"></div>
+        <div class="error-message" th:if="${error}" th:text="${errorMessage}" style="color: red;"></div>
         
         <!-- Role Selection Form -->
         <form class="lihat-sidang-form" th:action="@{/sista/dashboardDosen/lihatSidang}" method="post">
@@ -39,7 +38,7 @@
     <!-- Header -->
     <div class="halaman-utama">Halaman Utama
         <!-- Button for showing sidang container -->
-        <button class="signout-button" onclick="window.location.href='/sista/login'">Sign Out</button>
+        <button class="signout-button" onclick="window.location.href='dashboardDosen/logout'">Sign Out</button>
     </div>
 </body>
 </html>

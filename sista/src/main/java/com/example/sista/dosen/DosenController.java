@@ -35,32 +35,29 @@ public class DosenController {
     public String dashboard(Model model, HttpSession httpSession){
         String email = (String) httpSession.getAttribute("email");
         List<Sidang> listSidang = repoSidang.getSidangByDosen(repoDosen.getNipDosen(email));
+        model.addAttribute("showContainer", false);
         model.addAttribute("listSidang", listSidang);
         return "dosen/dashboardDosen";
     }
 
-    // @GetMapping("/infoSidang")
-    // public String infoSidang(){
-    //     return "dosen/infoSidang";
-    // }
-
     @PostMapping("/lihatSidang")
-    public String lihatSidang(@RequestParam(name = "pickRole", required = false) Integer role, 
+    public String lihatSidang(@RequestParam(name = "pickRole", required = false) Integer role,
                             Model model, 
                             HttpSession httpSession) {
-        // Validate if role is selected
-        // role = 1;
+
+        // Debug
+//        role = 2;
         if (role == null) {
+            model.addAttribute("error", "true");
             model.addAttribute("errorMessage", "Please select a role first.");
-            model.addAttribute("showContainer", false);
+            model.addAttribute("showContainer", "false");
             return "dosen/dashboardDosen"; // Reload dashboard with error
         }
 
         // Fetch email from session
         String email = (String) httpSession.getAttribute("email");
-
-        // Retrieve Sidang items for the selected role
-        List<Sidang> listSidang = repoSidang.getSidangItemsByRole(role, email);
+        String nip = repoDosen.getNipDosen(email);
+        List<Sidang> listSidang = repoSidang.getSidangItemsByRole(role, nip);
         
         // Debug dengan hardcoded
         // List<Sidang> listSidang = new ArrayList<>();
@@ -69,10 +66,10 @@ public class DosenController {
         // listSidang.add(sidang);
 
         // Log the role and email values
-//        Logger logger = LoggerFactory.getLogger(DosenController.class);
-        // logger.info("Role: {}", role);
+        Logger logger = LoggerFactory.getLogger(DosenController.class);
+        logger.info("Role: {}", role);
         // logger.info("Email: {}", email);
-//        logger.info("Email: {}", listSidang);
+        logger.info("Sidang: {}", listSidang);
 
         // Add attributes to the model
         model.addAttribute("showContainer", true); // Indicate to show the container
@@ -95,6 +92,14 @@ public class DosenController {
         // Add the sidang details to the model for rendering in the Thymeleaf template
         model.addAttribute("sidang", sidang);
         return "dosen/infoSidang"; // Return the Thymeleaf template name
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpSession httpSession) {
+
+        httpSession.invalidate();
+
+        return "redirect:/sista/login";
     }
 
 
