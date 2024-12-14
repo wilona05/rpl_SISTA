@@ -24,14 +24,14 @@ public class AdminController {
 
     @GetMapping()
     public String login() {
-        return "admin/DashboardAdmin";
+        return "admin/dashboardAdmin";
     }
 
     @GetMapping("/daftarPengguna")
     public String daftarPengguna(Model model){
         List<User> user = this.userRepo.findAll();
         model.addAttribute("users", user);
-        return "admin/DaftarPengguna";
+        return "admin/daftarPengguna";
     }
 
     @PostMapping("/daftarPengguna")
@@ -43,7 +43,7 @@ public class AdminController {
             if(role!=null && !role.isEmpty()){ //ada filter role
                 if(user==null || !user.getRole().equalsIgnoreCase(role)){
                     model.addAttribute("error", String.format("Pengguna dengan role '%s' dan nomor induk '%s' tidak ditemukan.", role, noInduk));
-                    return "admin/DaftarPengguna";
+                    return "admin/daftarPengguna";
                 } 
             }
             
@@ -68,12 +68,12 @@ public class AdminController {
 
         model.addAttribute("noInduk", noInduk);
         model.addAttribute("role", role);
-        return "admin/DaftarPengguna";
+        return "admin/daftarPengguna";
     }
 
     @GetMapping("/registerAkun")
     public String register(){
-        return "admin/RegisterAkun";
+        return "admin/registerAkun";
     }
 
     @PostMapping("/registerAkun")
@@ -91,10 +91,10 @@ public class AdminController {
             if(success){
                 model.addAttribute("user", user);
                 model.addAttribute("editRole", false);
-                return "admin/InfoAkun";
+                return "admin/infoAkun";
             }else{
                 model.addAttribute("error", "Gagal menyimpan data");
-                return "admin/RegisterAkun";
+                return "admin/registerAkun";
             } 
         }
 

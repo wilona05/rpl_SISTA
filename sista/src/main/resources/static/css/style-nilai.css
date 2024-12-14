@@ -200,7 +200,7 @@ header {
     line-height: 28px;
 }
 
-.deleteBtn{
+.deleteBtn, .editBtn, .addBtn{
     width: 15px;
     object-fit: contain;
 }

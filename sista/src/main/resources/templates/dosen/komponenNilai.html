@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="CONTENT-TYPE" content="text/html, charset=UTF-8">
+    <link rel="stylesheet" th:href="@{/css/style-nilai.css}">
+    <title>Komponen Bobot Nilai</title>
+</head>
+<body>
+    <header class="header">
+        <div class="menu-icon"><a th:href="@{/sista/dashboardKoordinator}"><img th:src="@{/images/logo-sista.png}" class="logo"></a></div>
+        <div class="title">Pengaturan Komponen dan Bobot Nilai</div>
+    </header>
+    <div class="container">
+        <table class="table">
+            <thead>
+                <tr>
+                    <td style="border:none;"></td>
+                    <th>Komponen</th>
+                    <th>Bobot Penguji</th>
+                    <th>Bobot Pembimbing</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="k : ${komponenNilai}">
+                    <td style="border:none;"><a><img src="/images/icon_delete.png" class="deleteBtn"></a></td>
+                    <td th:text="${k.komponen}">Komponen Nilai</td>
+                    <td th:text="${k.bobotPenguji}">Bobot Penguji</td>
+                    <td th:text="${k.bobotPembimbing}">Bobot Pembimbing</td>
+                    <td style="border:none;"><a><img src="/images/icon_edit.png" class="editBtn"></a></td>
+                </tr>
+                <tr>
+                    <td style="border:none;"></td>
+                    <td><input type="text"></td>
+                    <td><input type="text"></td>
+                    <td><input type="text"></td>
+                    <td style="border: none;"><a><img src="/images/icon_add.png" class="addBtn"></a></td>
+                </tr>
+            <tbody>
+        </table>
+        <div class="buttons-container">
+            <button class="button">Save</button>
+            <button class="button" onclick="window.location.href='/sista/dashboardKoordinator/bobotDosen'">Bobot Dosen</button>
+        </div>
+    </div>
+</body>
+</html>
