@@ -22,10 +22,10 @@
                 </thead>
                 <tbody>
                     <tr th:each="b : ${bobotDosen}">
-                            <td th:text="${b.jenisTA}">Jenis TA</td>
-                            <td th:text="${b.namaRole}">Dosen</td>
-                            <td th:text="${b.bobot}" th:if="!${edit}">Bobot</td>
-                            <td th:if="${edit}"><input type="number" th:attr="name=${'bobot' + b.idBobot}" th:value="${b.bobot}"></td>
+                        <td th:text="${b.jenisTA}">Jenis TA</td>
+                        <td th:text="${b.namaRole}">Dosen</td>
+                        <td th:if="!${edit}" th:text="${b.bobot}">Bobot</td>
+                        <td th:if="${edit}"><input type="number" th:attr="name=${'bobot' + b.idBobot}" th:value="${b.bobot}"></td>
                     </tr>
                 <tbody>
             </table>
