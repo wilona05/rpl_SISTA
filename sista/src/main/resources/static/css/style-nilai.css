@@ -200,7 +200,16 @@ header {
     line-height: 28px;
 }
 
-.deleteBtn{
+.iconDelete, .iconAdd{
     width: 15px;
     object-fit: contain;
+}
+
+.deleteBtn, .addBtn{
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    &:hover{
+        background-color: #f7f7f7;
+    }
 }

@@ -1,6 +1,8 @@
 -- DROP DATABASE IF EXISTS SistaDB;
 -- CREATE DATABASE SistaDB;
 
+DROP VIEW IF EXISTS listBobotDosen;
+DROP VIEW IF EXISTS listUser;
 DROP TABLE IF EXISTS Admins CASCADE;
 DROP TABLE IF EXISTS Mahasiswa CASCADE;
 DROP TABLE IF EXISTS Dosen CASCADE;
@@ -200,3 +202,13 @@ SELECT
 	'0' AS noInduk, 'admin' AS nama, email, passwords
 FROM 
 	admins;
+
+CREATE VIEW listBobotDosen AS
+SELECT 
+	jenista,
+	idBobot,
+	bobot,
+	b.idrole,
+	namarole
+FROM bobotDosen b
+JOIN roleDosen r ON b.idrole = r.idrole;
