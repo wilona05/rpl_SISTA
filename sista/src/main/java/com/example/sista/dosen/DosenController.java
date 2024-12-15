@@ -56,17 +56,17 @@ public class DosenController {
         String email = (String) httpSession.getAttribute("email");
         String nip = repoDosen.getNipDosen(email);
         List<Sidang> listSidang = repoSidang.getSidangItemsByRole(role, nip);
-
+  
         model.addAttribute("showContainer", true);
         model.addAttribute("listSidang", listSidang);
         return "dosen/dashboardDosen";
     }
 
     @GetMapping("/infoSidang")
-    public String getInfoSidang(@RequestParam("id") int id, Model model) {
+    public String getInfoSidang(@RequestParam("id") int id, Model model, HttpSession httpSession) {
         // Simulated service call to fetch sidang details by ID
         List<InfoSidang> listSidang = repoSidang.getInfoSidangById(id);
-
+        httpSession.setAttribute("idSidang", id);
         if (listSidang == null) {
             // Handle case where the sidang is not found
             model.addAttribute("errorMessage", "Sidang not found");
@@ -90,5 +90,4 @@ public class DosenController {
         model.addAttribute("listSidang", listSidang);
         return "dosen/dashboardDosen";
     }
-
 }

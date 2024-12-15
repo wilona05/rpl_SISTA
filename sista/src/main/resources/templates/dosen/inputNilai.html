@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="CONTENT-TYPE" content="text/html, charset=UTF-8">
+    <link rel="stylesheet" th:href="@{/css/style-nilai.css}">
+    <title>Input Nilai</title>
+</head>
+<body>
+    <header class="header">
+        <div class="menu-icon"><a th:href="@{/sista/dashboardDosen}"><img th:src="@{/images/logo-sista.png}" class="logo"></a></div>
+        <div class="title">Input Nilai</div>
+    </header>
+    <div class="container">
+        <form method="POST" action="/sista/dashboardDosen/saveNilai">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Komponen</th>
+                        <th>Bobot</th>
+                        <th>Nilai</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="n : ${nilai}">
+                        <td th:text="${n.komponen}"></td>
+                        <td th:text="${n.bobot}"></td>
+                        <td th:if="!${edit}" th:text="${n.nilai}"></td>
+                        <td th:if="${edit}"><input type="number" th:attr="name=${'nilai' + n.idKomp}" th:value="${n.nilai}"></td>
+                    </tr>
+                </tbody>
+            </table>
+        
+            <div class="buttons-container">
+                <a th:if="!${edit}" class="button" onclick="window.location.href='/sista/dashboardDosen/editNilai'">Edit</a>
+                <a th:if="${edit}" class="button" onclick="window.location.href='/sista/dashboardDosen/kelolaNilai'">Cancel</a>
+                <button th:if="${edit}" type="submit" class="button">Save</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="notification" id="notification" style="display: none;">
+        <div class="container">
+            <div class="check-icon">
+                <div class="checkmark"></div>
+            </div>
+            <div class="success-message">Data Berhasil Disimpan</div>
+            <div class="button" id="yesButton">
+                <div>Yes</div>
+            </div>
+        </div>
+    </div>
+    <script th:src="@{/js/input-nilai_pembimbing.js}"></script>
+</body>
+</html>

@@ -1,6 +1,9 @@
 -- DROP DATABASE IF EXISTS SistaDB;
 -- CREATE DATABASE SistaDB;
 
+DROP VIEW IF EXISTS nilaiDosen;
+DROP VIEW IF EXISTS nilaiSemuaDosen;
+DROP VIEW IF EXISTS cekRoleDosen;
 DROP VIEW IF EXISTS listBobotDosen;
 DROP VIEW IF EXISTS listUser;
 DROP TABLE IF EXISTS Admins CASCADE;
@@ -212,3 +215,43 @@ SELECT
 	namarole
 FROM bobotDosen b
 JOIN roleDosen r ON b.idrole = r.idrole;
+
+CREATE VIEW cekRoleDosen AS
+SELECT 
+	idSidang, nip, namarole
+FROM 
+	dosenSidang d
+JOIN 
+	roleDosen r ON d.idRole = r.idRole;
+	
+CREATE VIEW nilaiSemuaDosen AS
+SELECT 
+	n.idSidang, r.idRole, namarole, nilaipenguji1, nilaipenguji2, nilaipembimbing, 
+	k.idKomp, komponen, bobotPenguji, bobotPembimbing
+FROM 
+	komponenNilai k
+JOIN
+	nilaiSidang n ON k.idKomp = n.idKomp
+JOIN
+	dosenSidang d ON n.idSidang = d.idSidang
+JOIN 
+	roleDosen r ON d.idRole = r.idRole;
+
+CREATE VIEW nilaiDosen AS
+SELECT 
+    idSidang,
+	idKomp,
+    namaRole,
+    CASE 
+        WHEN namaRole = 'Penguji 1' THEN nilaiPenguji1
+        WHEN namaRole = 'Penguji 2' THEN nilaiPenguji2
+        WHEN namaRole = 'Pembimbing 1' OR namaRole = 'Pembimbing 2' THEN nilaiPembimbing
+        ELSE NULL
+    END AS nilai,
+	komponen,
+	CASE
+		WHEN namaRole = 'Penguji 1' OR namaRole = 'Penguji 2' THEN bobotPenguji
+		WHEN namaRole = 'Pembimbing 1' OR namaRole = 'Pembimbing 2' THEN bobotPembimbing
+		ELSE NULL
+	END AS bobot
+FROM nilaiSemuaDosen;
