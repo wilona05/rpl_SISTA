@@ -27,6 +27,12 @@ public class UserController {
         return "Login";
     }
 
+    @GetMapping("/logout")
+    public String logout(HttpSession httpSession) {
+        httpSession.invalidate();
+        return "redirect:/sista/login";
+    }
+
     // terima submission login
     @PostMapping("/login")
     public String handleLogin(@RequestParam String email, @RequestParam String passwords, Model model,

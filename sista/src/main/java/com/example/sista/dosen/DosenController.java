@@ -5,6 +5,7 @@ import com.example.sista.SidangTA.InfoSidang;
 import com.example.sista.SidangTA.SidangTA;
 
 import jakarta.servlet.http.HttpSession;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,9 +30,9 @@ public class DosenController {
     @GetMapping()
     public String dashboard(Model model, HttpSession httpSession) {
         String email = (String) httpSession.getAttribute("email");
-        // List<SidangTA> listSidang =
-        // repoSidang.getSidangByDosen(repoDosen.getNipDosen(email));
-        // model.addAttribute("listSidang", listSidang);
+        List<SidangTA> listSidang = repoSidang.getSidangByDosen(repoDosen.getNipDosenbyEmail(email));
+        model.addAttribute("showContainer", false);
+        model.addAttribute("listSidang", listSidang);
         return "dosen/dashboardDosen";
     }
 
@@ -39,31 +40,48 @@ public class DosenController {
     public String lihatSidang(@RequestParam(name = "pickRole", required = false) Integer role,
             Model model,
             HttpSession httpSession) {
+
         if (role == null) {
+            model.addAttribute("error", true);
             model.addAttribute("errorMessage", "Please select a role first.");
             model.addAttribute("showContainer", false);
             return "dosen/dashboardDosen";
         }
 
-        // String email = (String) httpSession.getAttribute("email");
-        // List<SidangTA> listSidang = repoSidang.getSidangItemsByRole(role, email);
-        // model.addAttribute("showContainer", true); // Indicate to show the container
-        // model.addAttribute("listSidang", listSidang);
+        String email = (String) httpSession.getAttribute("email");
+        String nip = repoDosen.getNipDosenbyEmail(email);
+        List<SidangTA> listSidang = repoSidang.getSidangItemsByRole(role, nip);
+
+        model.addAttribute("showContainer", true);
+        model.addAttribute("listSidang", listSidang);
         return "dosen/dashboardDosen";
     }
 
     @GetMapping("/infoSidang")
     public String getInfoSidang(@RequestParam("id") int id, Model model) {
 
-        List<InfoSidang> listSidang = repoSidang.getInfoSidangById(id);
+        List<SidangTA> listSidang = repoSidang.getInfoSidangById(id);
 
         if (listSidang == null) {
             model.addAttribute("errorMessage", "Sidang not found");
             return "error-page";
         }
 
-        InfoSidang sidang = listSidang.get(0);
+        SidangTA sidang = listSidang.get(0);
         model.addAttribute("sidang", sidang);
         return "dosen/infoSidang";
+    }
+
+    @GetMapping("/filteredSidang")
+    public String getFilteredSidang(@RequestParam(value = "filter", required = false) String keyword, Model model,
+            HttpSession httpSession) {
+
+        String email = (String) httpSession.getAttribute("email");
+        String nip = repoDosen.getNipDosenbyEmail(email);
+        List<SidangTA> listSidang = repoSidang.getFilteredSidang(nip, keyword, keyword);
+
+        model.addAttribute("showContainer", true);
+        model.addAttribute("listSidang", listSidang);
+        return "dosen/dashboardDosen";
     }
 }

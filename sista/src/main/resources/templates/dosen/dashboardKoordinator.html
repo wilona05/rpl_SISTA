@@ -31,10 +31,14 @@
         
         <div class="sidang-container" th:classappend="${showContainer} ? '' : 'hidden'">
             <div class="sidang" th:each="info : ${listSidang}">
-                <button class="menu-item" th:onclick="'window.location.href=\'/sista/dashboardKoordinator/infoSidang?id=' + ${info.id} + '\''">
-                    <p class="nama-peserta-sidang title" th:text="${info.nama}">Nama Peserta Sidang</p>
+                <img src="/images/Profile Pict.png">
+                <a class="menu-item" th:onclick="'window.location.href=\'/sista/dashboardKoordinator/infoSidang?id=' + ${info.id} + '\''">
+                    <div class>
+                        <p class="nama-peserta-sidang title" th:text="${info.nama}">Nama Peserta Sidang</p>
+                    <p class="npm-peserta-sidang" th:text="${info.npm}">NPM</p>
                     <p class="tanggal-sidang subtitle" th:text="${#dates.format(info.jadwal, 'dd/MM/yyyy')}">dd/mm/yyyy</p>
-                </button>
+                    </div>
+                </a>
             </div>
         </div>
     </div>

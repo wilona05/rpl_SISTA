@@ -24,12 +24,6 @@ public class JdbcSidangTARepository implements SidangTARepository {
     @Autowired
     JdbcDosenRepository repoDosen;
 
-    @Override
-    public List<SidangTA> findAll() {
-        String sql = "SELECT * FROM sidangta";
-        return jdbcTemplate.query(sql, this::mapRowToSidang);
-    }
-
     // public SidangTA mapRowToSidang(ResultSet rs, int rowNum) throws SQLException
     // {
     // return new SidangTA(rs.getString("nama"), rs.getString("npm"),
@@ -42,6 +36,12 @@ public class JdbcSidangTARepository implements SidangTARepository {
 
     public SidangTA mapRowToSidang(ResultSet rs, int rowNum) throws SQLException {
         return new SidangTA(rs.getString("nama"), rs.getTimestamp("jadwal"));
+    }
+
+    @Override
+    public List<SidangTA> findAll() {
+        String sql = "SELECT * FROM sidangta";
+        return jdbcTemplate.query(sql, this::mapRowToSidang);
     }
 
     @Override
@@ -80,29 +80,6 @@ public class JdbcSidangTARepository implements SidangTARepository {
         }
     }
 
-    @Override
-    public SidangTA getSidangByNama(String nama) {
-        String sql = "SELECT * FROM listSidang WHERE nama = ?";
-        try {
-            SidangTA sidangTA = jdbcTemplate.queryForObject(sql, new Object[] { nama }, this::mapRowToSidang);
-            return sidangTA;
-        } catch (EmptyResultDataAccessException e) {
-            return null;
-        }
-    }
-
-    @Override
-    public List<SidangTA> getAllSidang() {
-        String sql = "SELECT * FROM mahasiswasidang";
-        return jdbcTemplate.query(sql, this::mapRowToSidang);
-    }
-
-    @Override
-    public List<SidangTA> getSidangByDosen(String nip) {
-        String sql = "SELECT * FROM listSidang WHERE nip = ?";
-        return jdbcTemplate.query(sql, this::mapRowToSidang, nip);
-    }
-
     public List<SidangTA> findByRole(int idrole, String nip) {
         String sql = "";
         if (idrole == 1) {
@@ -112,6 +89,23 @@ public class JdbcSidangTARepository implements SidangTARepository {
         }
 
         return jdbcTemplate.query(sql, this::mapRowToSidang, nip);
+    }
+
+    @Override
+    public List<SidangTA> getAllSidang() {
+        String sql = "SELECT * FROM mahasiswasidang";
+        return jdbcTemplate.query(sql, this::mapRowToSidang);
+    }
+
+    @Override
+    public SidangTA getSidangByNama(String nama) {
+        String sql = "SELECT * FROM listSidang WHERE nama = ?";
+        try {
+            SidangTA sidangTA = jdbcTemplate.queryForObject(sql, new Object[] { nama }, this::mapRowToSidang);
+            return sidangTA;
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
     }
 
     public List<SidangTA> getSidangItemsByRole(int idrole, String nip) {
@@ -124,11 +118,17 @@ public class JdbcSidangTARepository implements SidangTARepository {
         }
     }
 
-    public InfoSidang mapRowToInfoSidang(ResultSet rs, int rowNum) throws SQLException {
-        return new InfoSidang(
+    @Override
+    public List<SidangTA> getSidangByDosen(String nip) {
+        String sql = "SELECT * FROM listSidang WHERE nip = ?";
+        return jdbcTemplate.query(sql, this::mapRowToSidang, nip);
+    }
+
+    public SidangTA mapRowToInfoSidang(ResultSet rs, int rowNum) throws SQLException {
+        return new SidangTA(
+                rs.getInt("id"),
                 rs.getString("nama"),
                 rs.getString("npm"),
-                rs.getInt("idsidang"),
                 rs.getString("judulTA"),
                 rs.getInt("jenisTA"),
                 rs.getTimestamp("jadwal"),
@@ -136,15 +136,32 @@ public class JdbcSidangTARepository implements SidangTARepository {
                 rs.getString("semester"),
                 rs.getString("tahunAjaran"),
                 rs.getString("catatanRevisi"),
-                rs.getString("pembimbingUtama"),
-                rs.getString("pembimbingTambahan"),
-                rs.getString("ketuaPenguji"),
-                rs.getString("anggotaPenguji"));
+                rs.getInt("nilaiKoordinator"),
+                rs.getString("dosenPembimbing1"),
+                rs.getString("dosenPembimbing2"),
+                rs.getString("dosenPenguji1"),
+                rs.getString("dosenPenguji2"));
     }
 
     @Override
-    public List<InfoSidang> getInfoSidangById(int id) {
+    public List<SidangTA> getFilteredSidang(String nip, String keyword, String keyword2) {
+        String sql = "SELECT * FROM filterSidang WHERE nip = ? AND (npm ILIKE ? OR nama ILIKE ?)";
+
+        String keywordWildcard = "%" + keyword + "%";
+        String keyword2Wildcard = "%" + keyword2 + "%";
+
+        return jdbcTemplate.query(sql, this::mapRowToInfoSidang, nip, keywordWildcard, keyword2Wildcard);
+    }
+
+    @Override
+    public List<SidangTA> getInfoSidangById(int id) {
         String sql = "SELECT * FROM infosidang WHERE idsidang = ?";
         return jdbcTemplate.query(sql, this::mapRowToInfoSidang, id);
+    }
+
+    @Override
+    public List<SidangTA> getSidangByMahasiswa(String npm) {
+        String sql = "SELECT sidangta.*, mahasiswa.nama FROM sidangta JOIN mahasiswa on sidangta.npm = mahasiswa.npm WHERE sidangta.npm = ?";
+        return jdbcTemplate.query(sql, this::mapRowToInfoSidang, npm);
     }
 }

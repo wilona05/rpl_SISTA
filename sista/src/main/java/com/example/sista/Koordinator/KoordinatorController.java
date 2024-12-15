@@ -14,10 +14,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.sista.Dosen.DosenRepository;
 import com.example.sista.SidangTA.SidangTARepository;
+import com.example.sista.SidangTA.InfoSidang;
 import com.example.sista.SidangTA.SidangTA;
 import com.example.sista.Users.User;
 import com.example.sista.Users.UserService;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
@@ -37,6 +40,7 @@ public class KoordinatorController {
     public String dashboard(Model model, HttpSession httpSession) {
         String email = (String) httpSession.getAttribute("email");
         List<SidangTA> listSidang = repoSidang.getSidangByDosen(repoDosen.getNipDosenbyEmail(email));
+        model.addAttribute("showContainer", false);
         model.addAttribute("listSidang", listSidang);
         return "dosen/dashboardKoordinator";
     }
@@ -57,7 +61,6 @@ public class KoordinatorController {
             @RequestParam("dosenPembimbing2") String dosenPembimbing2,
             @RequestParam("dosenPenguji1") String dosenPenguji1, @RequestParam("dosenPenguji2") String dosenPenguji2,
             Model model) {
-        String email = npm + "@student.edu";
         LocalDateTime jadwalDateTime = LocalDateTime.parse(jadwalString);
         Timestamp jadwal = Timestamp.valueOf(jadwalDateTime);
         String semester = "";
@@ -71,7 +74,7 @@ public class KoordinatorController {
         int nilaiKoordinator = 100;
         int id = 0;
 
-        SidangTA sidangTA = new SidangTA(id, nama, npm, email, judulTA, jenisTA, jadwal, tempat, semester,
+        SidangTA sidangTA = new SidangTA(id, nama, npm, judulTA, jenisTA, jadwal, tempat, semester,
                 tahunAjaran, catatanRevisi, nilaiKoordinator, dosenPembimbing1, dosenPembimbing2, dosenPenguji1,
                 dosenPenguji2);
         boolean success = this.repoSidang.registerSidang(sidangTA);
@@ -101,4 +104,39 @@ public class KoordinatorController {
         model.addAttribute("listSidang", listSidang);
         return "dosen/dashboardKoordinator";
     }
+
+    @GetMapping("/infoSidang")
+    public String getInfoSidang(@RequestParam("id") int id, Model model) {
+        // Simulated service call to fetch sidang details by ID
+        List<SidangTA> listSidang = repoSidang.getInfoSidangById(id);
+
+        if (listSidang == null) {
+            // Handle case where the sidang is not found
+            model.addAttribute("errorMessage", "Sidang not found");
+            return "error-page"; // Replace with the appropriate error page
+        }
+
+        SidangTA sidang = listSidang.get(0);
+        // Add the sidang details to the model for rendering in the Thymeleaf template
+        model.addAttribute("sidang", sidang);
+        return "dosen/infoSidang"; // Return the Thymeleaf template name
+    }
+
+    @GetMapping("/filteredSidang")
+    public String getFilteredSidang(@RequestParam(value = "filter", required = false) String keyword, Model model,
+            HttpSession httpSession) {
+
+        String email = (String) httpSession.getAttribute("email");
+        String nip = repoDosen.getNipDosenbyEmail(email);
+        List<SidangTA> listSidang = repoSidang.getFilteredSidang(nip, keyword, keyword);
+
+        Logger logger = LoggerFactory.getLogger(KoordinatorController.class);
+        logger.info("Sidang: {}", listSidang);
+        logger.info("keyword: {}", keyword);
+
+        model.addAttribute("showContainer", true);
+        model.addAttribute("listSidang", listSidang);
+        return "dosen/dashboardKoordinator";
+    }
+
 }

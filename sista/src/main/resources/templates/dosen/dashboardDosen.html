@@ -7,7 +7,7 @@
     <script src="@{/js/dashboard.js}" defer></script>
     <title>Dashboard</title>
 </head>
-<body>
+<body>        
     <header class="header halaman-utama">
         <h1 class="title">Halaman Utama</h1>
         <!-- <form th:action="@{/sista/dashboardDosen/lihatSidang}" method="post"><button class="lihat-sidang-button button" onclick="showSidangContainer()">Lihat Sidang</button></form> -->
@@ -18,6 +18,17 @@
         <div class="error-message" th:if="${errorMessage}" th:text="${errorMessage}" style="color: red;"></div>
         
         <div class="sidang-container" th:classappend="${showContainer} ? '' : 'hidden'">
+    <div class="dashboard">
+
+        <form class="search-bar" action="/sista/dashboardDosen/filteredSidang" method="get">
+            <input type="search" class="search-input" name="filter" placeholder="Search by name or NPM">
+            <button class="search-button" type="submit">
+                <img th:src="@{/images/search.png}" alt="Search Icon">
+            </button>
+        </form>
+
+        <!-- Sidang Container -->
+        <div class="sidang-container">
             <div th:each="sidang : ${listSidang}">
                 <button class="sidang-item" th:onclick="'window.location.href=\'/sista/dashboardDosen/infoSidang?id=' + ${sidang.idsidang} + '\''">
                     <div class="nama-peserta-sidang" th:text="${sidang.nama}">Nama Peserta Sidang</div>
@@ -26,12 +37,16 @@
             </div>
         </div>
         
+        <!-- Error Message -->
+        <div class="error-message" th:if="${error}" th:text="${errorMessage}" style="color: red;"></div>
+        
+        <!-- Role Selection Form -->
         <form class="lihat-sidang-form" th:action="@{/sista/dashboardDosen/lihatSidang}" method="post">
             <div class="dropdown role-pick" name="pickRole">
                 <select class="select">
                     <option value="" disabled selected>Lihat sebagai:</option>
-                    <option value="1">Penguji</option>
-                    <option value="2">Pembimbing</option>
+                    <option value=1>Penguji</option>
+                    <option value=2>Pembimbing</option>
                 </select>
                 <button class="button">Lihat Sidang</button>
             </div>

@@ -12,7 +12,7 @@ public class SidangTA {
     public Integer id;
     private String nama;
     private String npm;
-    private String email;
+    // private String email;
     private String judulTA;
     private int jenisTA;
     private Timestamp jadwal;
@@ -26,14 +26,14 @@ public class SidangTA {
     private String dosenPenguji1; // ketua penguji
     private String dosenPenguji2; // anggota penguji
 
-    public SidangTA(Integer id, String nama, String npm, String email, int jenisTA, String judulTA, Timestamp jadwal,
+    public SidangTA(Integer id, String nama, String npm, int jenisTA, String judulTA, Timestamp jadwal,
             String tempat, String semester, String tahunAjaran, String catatanRevisi, int nilaiKoordinator,
             String dosenPembimbing1, String dosenPembimbing2, String dosenPenguji1,
             String dosenPenguji2) {
         this.id = id;
         this.nama = nama;
         this.npm = npm;
-        this.email = email;
+        // this.email = email;
         this.judulTA = judulTA;
         this.jenisTA = jenisTA;
         this.jadwal = jadwal;
