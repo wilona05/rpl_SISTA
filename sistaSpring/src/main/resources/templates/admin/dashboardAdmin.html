@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/dashboard-admin.css}">
+    <script th:src="@{/js/dashboard.js}" defer></script>
+    <title>Dashboard</title>
+</head>
+<body>
+    <header class="header halaman-utama">
+        <h1 class="title">Halaman Utama</h1>
+        <button class="signout-button button" onclick="window.location.href='/sista/login'">Sign Out</button>
+    </header>
+    
+    <div class="container">
+        <a class="menu-item" onclick="window.location.href='/sista/dashboardAdmin/registerAkun'">
+            <div class="subtitle">Registrasi Pengguna</div>
+        </a>
+        <a class="menu-item" onclick="window.location.href='/sista/dashboardAdmin/daftarPengguna'">
+            <div class="subtitle">Lihat Daftar Pengguna</div>
+        </a>
+    </div>
+</body>
+</html>
