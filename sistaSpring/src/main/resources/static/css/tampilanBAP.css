@@ -1,0 +1,311 @@
+body {
+    font-family: "Epilogue", sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+}
+
+.sticky-container {
+    position: -webkit-sticky;
+    /* For Safari support */
+    position: sticky;
+    top: 0;
+    /* Makes it stick to the top of the page */
+    z-index: 999;
+    /* Ensures it stays on top of other elements */
+
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #03045E;
+    color: #fff;
+    margin-bottom: 10px;
+    width: 100%;
+    box-sizing: border-box;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    /* Ensures the header stays above other elements */
+}
+
+.buttons-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 50px;
+    /* Adjust based on the header height */
+    z-index: 9;
+    /* Stays below the header */
+
+}
+
+.buttons {
+
+    display: flex;
+    justify-content: space-evenly;
+    width: 60%;
+
+    border-radius: 15px;
+    align-items: center;
+
+    box-sizing: border-box;
+
+}
+
+.buttons img {
+    width: 20px;
+}
+
+.upload-btn-container {
+    background-color: #e0fffd;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 5px 10px;
+    display: flex;
+    align-items: center;
+    border-radius: 15px;
+    box-sizing: border-box;
+}
+
+.upload-btn::file-selector-button {
+    background-color: #90E0EF;
+    font-family: "Epilogue", sans-serif;
+    /* White text color */
+    /* Padding for the button */
+    border: none;
+    /* Remove border */
+    border-radius: 8px;
+    padding: 4px;
+    /* Rounded corners */
+    cursor: pointer;
+    /* Pointer cursor on hover */
+    font-size: 18px;
+    /* Font size */
+    margin-right: 10px;
+    margin-left: 10px;
+    box-sizing: border-box;
+    /* Spacing between button and file name */
+
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
+}
+
+button,
+input {
+    cursor: pointer;
+}
+
+.upload-btn::file-selector-button:hover {
+    background-color: #68b1c1;
+    /* Slightly darker green on hover */
+}
+
+.upload-btn-container button {
+    font-family: "Epilogue", sans-serif;
+    background-color: #90E0EF;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    padding: 4px;
+
+}
+
+.upload-btn-container button:hover {
+    background-color: #68b1c1;
+}
+
+#download-btn {
+    background-color: none;
+    border: none;
+    background-color: #68df4d;
+    font-family: "Epilogue", sans-serif;
+    font-size: 18px;
+    display: flex;
+    gap: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 10px 15px;
+    border-radius: 15px;
+
+
+}
+
+
+#download-btn:hover {
+    background-color: #45a049;
+}
+
+.main-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    height: 297mm;
+}
+
+.upload-btn-container button,
+input {
+    background-color: none;
+    border: none;
+    font-size: 18px;
+}
+
+.lembar-BAP-file {
+    width: 210mm;
+
+    height: 297mm;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+}
+
+.lembar-BAP.hidden {
+    display: none;
+}
+
+.lembar-BAP p {
+    font-weight: 600;
+}
+
+.lembar-BAP-file {
+    height: 297mm;
+}
+
+.title-BAP {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.title-BAP p {
+    margin: 5px;
+}
+
+.lembar-BAP {
+    page-break-inside: avoid;
+    /* Avoid splitting this container */
+}
+
+.list-dosen {
+    margin: 0;
+}
+
+/* List Pembimbing dan Penguji */
+
+ul.list-dosen {
+    margin-left: 10%;
+}
+
+ul {
+    margin: 0;
+    padding-left: 20px;
+}
+
+ul li {
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+
+li span {
+    font-weight: normal;
+}
+
+/* List nama-npm-topik
+ul.npm-nama-topik {
+    list-style: none;
+} */
+
+/* Table Rekapitulasi */
+.tableNilai {
+    width: 60%;
+    border-collapse: collapse;
+    margin: 20px auto;
+    text-align: center;
+    font-size: 14px;
+}
+
+table.npm-nama-topik {
+    border: none;
+}
+
+table td.label {
+    font-weight: 600;
+    width: 100px;
+}
+
+.tableNilai th,
+.tableNilai td {
+    border: 1px solid #000;
+    padding: 8px;
+}
+
+.tableNilai th {
+    color: black;
+    font-weight: bold;
+}
+
+.tableNilai tr:first-child {
+    background-color: #d8d0d0;
+}
+
+/* Table Tanda Tangan */
+.tableTTD {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+.tableTTD th,
+.tableTTD td {
+    border: 1px solid #000;
+    padding: 8px;
+    text-align: center;
+    width: 20%;
+}
+
+.tableTTD tr:first-child td {
+    height: 100px;
+
+}
+
+/* #download-btn{
+    background-color: #00b4d8;
+}
+
+#upload-btn{
+    background-color: #4fd800;
+} */
+
+.ditetapkan-di {
+    text-align: center;
+}
+
+
+
+#lembar-BAP {
+    width: 210mm;
+    /* A4 width */
+    height: 297mm;
+    /* A4 height */
+    overflow: hidden;
+    /* Ensure content beyond this height is cut off */
+    padding: 20mm;
+    padding-bottom: 0;
+    /* Optional: Adjust padding for spacing */
+    box-sizing: border-box;
+    /* Include padding in width and height */
+    background: white;
+    /* Ensure a proper background for the PDF */
+    position: relative;
+}
+
+.menu-icon img {
+    width: 40px;
+}
+
+.icon-upload {
+    width: 20px;
+}

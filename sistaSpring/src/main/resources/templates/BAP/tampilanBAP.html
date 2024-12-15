@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BAP</title>
+    <link rel="stylesheet" href="/css/tampilanBAP.css">
+    <script src="https://raw.githack.com/eKoopmans/html2pdf/master/dist/html2pdf.bundle.js"></script>
+</head>
+<body>
+    <div class="page-container">
+        <div class="sticky-container">
+            <header class="header">
+                <div class="menu-icon"><a href=""><img src="/images/logo-sista.png" class="logo"></a></div>
+                <div class="title">BAP</div>
+            </header>
+        </div>
+            <div class="buttons-container">
+                <div class="buttons">
+                    <form th:action="@{/bap/upload}" method="post" enctype="multipart/form-data" class="upload-btn-container">
+                        <input type="file" name="file" accept="application/pdf" required class="upload-btn">
+                        <input type="hidden" name="idSidang"  th:value="${idSidang}"> <!-- Replace with dynamic idSidang if available -->
+                        <button type="submit"><img src="/images/upload.svg" class="icon-upload">Submit File</button>
+                    </form>
+                
+                    <div class="download-btn-container"  th:if="${latestFilePath == null}">
+                        <button id="download-btn" onclick="generatePDF()"><img src="/images/download.svg">Download</button>
+                    </div>
+                </div>
+            </div>
+        
+
+        <main class="main-content" id="main-content">
+            <!-- Replaceable BAP Content -->
+            <div class="lembar-BAP" id="lembar-BAP" th:if="${latestFilePath == null}" th:object="${isiBAP}">
+                <div class="title-BAP">
+                    <p>Berita Acara</p>
+                    <p>Sidang Skripsi</p>
+                    <p>Semester: <span th:text="${isiBAP.semester}"></span> <span th:text="${isiBAP.tahunajaran}"></span></p>
+                </div>
+                <p> Telah diselenggarakan Review untuk Skripsi <span th:text="${isiBAP.jenista}"></span> bagi:</p>
+                <table class="npm-nama-topik">
+                    <tr>
+                      <td class="label">NPM</td>
+                      <td class="inputNPM">: <span th:text="${isiBAP.npm}"></span></td>
+                    </tr>
+                    <tr>
+                      <td class="label">Nama</td>
+                      <td class="inputNama">: <span th:text="${isiBAP.nama}"></span></td>
+                    </tr>
+                    <tr>
+                      <td class="label">Topik</td>
+                      <td class="inputTopik">: <span th:text="${isiBAP.judulta}"></span></td>
+                    </tr>
+                </table>
+                <p class="title-list-dosen">dengan pembimbing dan penguji:</p>
+                <ul class="list-dosen">
+                    <li><p class="labelDosbimUtama">Pembimbing Utama/Tunggal: <span class="inputDosbimUtama" th:text="${isiBAP.dosbim1}"></span> </p></li>
+                    <li><p class="labelDosbingPendamping">Pembimbing Pendamping: <span class="inputDosbimPendamping" th:text="${isiBAP.dosbim2}"></span> </p></li>
+                    <li><p class="labelKetuaDosji">Ketua Tim Penguji: <span class="inputKetuaDosji" th:text="${isiBAP.dosji1}"></span> </p></li>
+                    <li><p class="labelAnggotaDosji">Anggota Tim Penguji: <span class="inputAnggotaDosji" th:text="${isiBAP.dosji2}"></span> </p></li>
+                </ul>
+                <p class="title-rekap-nilai">
+                 Rekapitulasi nilai Sidang Skripsi <span th:text="${isiBAP.jenista}"></span> yang diberikan oleh pembimbing, penguji, & koordinator skripsi:
+                </p>
+                <table class="tableNilai" th:object="${nilai}">
+                    <tr>
+                      <th>Pembimbing/Penguji</th>
+                      <th>Nilai</th>
+                      <th>Bobot</th>
+                      <th>Nilai Akhir</th>
+                    </tr>
+                    
+                    <tr>
+                      <th>Ketua Tim Penguji</th>
+                      <td class="input-nilai-ketua-penguji" th:text="${nilai.nilaiKetua}"></td>
+                      <td class="bobot-nilai-ketua-penguji" th:text="${nilai.bobotKetua}"></td>
+                      <td class="nilai-akhir-ketua-penguji" th:text="${nilai.nilaiAkhirKetua}"></td>
+                  </tr>
+                  
+                  <tr>
+                      <th>Anggota Tim Penguji</th>
+                      <td class="input-nilai-anggota-penguji" th:text="${nilai.nilaiAnggota == 0 ? '-' : nilai.nilaiAnggota}"></td>
+                      <td class="bobot-nilai-anggota-penguji" th:text="${nilai.bobotAnggota == 0 ? '-' : nilai.bobotAnggota}"></td>
+                      <td class="nilai-akhir-anggota-penguji" th:text="${nilai.nilaiAkhirAnggota == 0 ? '-' : nilai.nilaiAkhirAnggota}"></td>
+                  </tr>
+                  
+                  <tr>
+                      <th>Pembimbing</th>
+                      <td class="input-nilai-pembimbing" th:text="${nilai.nilaiPembimbing}"></td>
+                      <td class="bobot-nilai-pembimbing" th:text="${nilai.bobotPembimbing}"></td>
+                      <td class="nilai-akhir-pembimbing" th:text="${nilai.nilaiAkhirPembimbing}"></td>
+                  </tr>
+                  
+                  <tr>
+                      <th>Koordinator TA</th>
+                      <td class="input-nilai-koordinator" th:text="${nilai.nilaiKoordinator}"></td>
+                      <td class="bobot-nilai-koordinator" th:text="${nilai.bobotKoordinator}"></td>
+                      <td class="nilai-akhir-koordinator" th:text="${nilai.nilaiAkhirKoordinator}"></td>
+                  </tr>
+                  
+                  <tr>
+                      <th colspan="3">Total Nilai</th>
+                      <td class="total-nilai-akhir" th:text="${nilai.totalNilaiAkhir}"></td>
+                  </tr>
+                </table>
+                <p class="ditetapkan-di">Ditetapkan di Bandung, <span class="tanggalBAP" th:text="${isiBAP.tanggalsidang}"></span></p>
+
+                <table class="tableTTD">
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>Ketua Tim Penguji</th>
+                    <th>Anggota Tim Penguji</th>
+                    <th>Pembimbing</th>
+                    <th>Mahasiswa</th>
+                    <th>Koordinator Skripsi</th>
+                </tr>..  .
+                </table>
+            </div>
+            <div class="lembar-BAP-file" th:if="${latestFilePath!=null}">
+                <iframe th:if="${latestFilePath != null}" th:src="${latestFilePath}" width="100%" height="100%" frameborder="0"></iframe>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        document.getElementById('upload-pdf').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+          
+                const fileURL = URL.createObjectURL(file);
+                const lembarBAP = document.getElementById('lembar-BAP');
+                
+                        // Adjust styles to remove padding and margin
+                lembarBAP.style.height = '80vh'; // Adjust iframe height
+                lembarBAP.style.padding = '0';
+                lembarBAP.style.margin = '0';
+
+
+                // Replace #lembar-BAP with an iframe showing the uploaded PDF
+                lembarBAP.innerHTML = `<iframe src="${fileURL}" width="100%" height="100%" frameborder="0"></iframe>`;
+                lembarBAP.style.height = '80vh'; // Adjust iframe height
+            
+        });
+
+        function generatePDF() {
+            const element = document.getElementById("lembar-BAP");
+
+            // Dynamically limit height to A4 page size
+            element.style.height = '297mm';
+            element.style.overflow = 'hidden';
+
+            const options = {
+                margin: [0, 0, 0, 0],
+                filename: 'BAP.pdf',
+                html2canvas: {
+                    scale: 2,
+                    useCORS: true,
+                },
+                jsPDF: {
+                    unit: 'mm',
+                    format: 'a4',
+                    orientation: 'portrait',
+                },
+            };
+
+            html2pdf()
+                .set(options)
+                .from(element)
+                .save();
+        }
+    </script>
+</body>
+</html>
