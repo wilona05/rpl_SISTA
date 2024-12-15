@@ -16,7 +16,8 @@ import com.example.sista.Sidang.Sidang;
 import com.example.sista.Sidang.SidangRepository;
 import com.example.sista.Sidang.InfoSidang;
 
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
@@ -33,6 +34,7 @@ public class KoordinatorController {
     public String dashboard(Model model, HttpSession httpSession){
         String email = (String) httpSession.getAttribute("email");
         List<Sidang> listSidang = repoSidang.getSidangByDosen(repoDosen.getNipDosen(email));
+        model.addAttribute("showContainer", false);
         model.addAttribute("listSidang", listSidang);
         return "dosen/dashboardKoordinator";
     }
@@ -41,36 +43,21 @@ public class KoordinatorController {
     public String lihatSidang(@RequestParam(name = "pickRole", required = false) Integer role,
                               Model model,
                               HttpSession httpSession) {
-        // Validate if role is selected
-        // role = 1;
+
         if (role == null) {
+            model.addAttribute("error", true);
             model.addAttribute("errorMessage", "Please select a role first.");
             model.addAttribute("showContainer", false);
-            return "dosen/dashboard"; // Reload dashboard with error
+            return "dosen/dashboardKoordinator"; // Reload dashboard with error
         }
 
-        // Fetch email from session
         String email = (String) httpSession.getAttribute("email");
+        String nip = repoDosen.getNipDosen(email);
+        List<Sidang> listSidang = repoSidang.getSidangItemsByRole(role, nip);
 
-        // Retrieve Sidang items for the selected role
-        List<Sidang> listSidang = repoSidang.getSidangItemsByRole(role, email);
-
-        // Debug dengan hardcoded
-        // List<Sidang> listSidang = new ArrayList<>();
-        // Date date = new Date(2024, 12, 21, 12 , 23);
-        // Sidang sidang = new Sidang(1, 1, "asdas", date, "temapt", "2", "2024", "note", "1234", 100);
-        // listSidang.add(sidang);
-
-        // Log the role and email values
-//        Logger logger = LoggerFactory.getLogger(DosenController.class);
-        // logger.info("Role: {}", role);
-        // logger.info("Email: {}", email);
-//        logger.info("Email: {}", listSidang);
-
-        // Add attributes to the model
-        model.addAttribute("showContainer", true); // Indicate to show the container
+        model.addAttribute("showContainer", true);
         model.addAttribute("listSidang", listSidang);
-        return "dosen/dashboardkoordinator";
+        return "dosen/dashboardKoordinator";
     }
 
     @GetMapping("/infoSidang")
@@ -90,12 +77,21 @@ public class KoordinatorController {
         return "dosen/infoSidang"; // Return the Thymeleaf template name
     }
 
-    @GetMapping("/logout")
-    public String logout(HttpSession httpSession) {
+    @GetMapping("/filteredSidang")
+    public String getFilteredSidang(@RequestParam(value = "filter", required = false) String keyword, Model model, HttpSession httpSession) {
 
-        httpSession.invalidate();
+        String email = (String) httpSession.getAttribute("email");
+        String nip = repoDosen.getNipDosen(email);
+        List<Sidang> listSidang = repoSidang.getFilteredSidang(nip, keyword, keyword);
 
-        return "redirect:/sista/login";
+        Logger logger = LoggerFactory.getLogger(KoordinatorController.class);
+        logger.info("Sidang: {}", listSidang);
+        logger.info("keyword: {}", keyword);
+
+        model.addAttribute("showContainer", true);
+        model.addAttribute("listSidang", listSidang);
+        return "dosen/dashboardKoordinator";
     }
+
 }
 

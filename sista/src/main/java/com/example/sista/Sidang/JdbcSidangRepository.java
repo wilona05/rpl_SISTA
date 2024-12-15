@@ -1,6 +1,7 @@
 package com.example.sista.Sidang;
 
 import com.example.sista.dosen.JdbcDosenRepository;
+import com.example.sista.mahasiswa.JdbcMahasiswaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -18,6 +19,9 @@ public class JdbcSidangRepository implements SidangRepository{
 
     @Autowired
     JdbcDosenRepository dosenRepo;
+
+    @Autowired
+    JdbcMahasiswaRepository mahasiswaRepo;
 
     public Sidang mapRowToSidang(ResultSet rs, int rowNum) throws SQLException {
         return new Sidang(
@@ -173,5 +177,41 @@ public class JdbcSidangRepository implements SidangRepository{
                 "        s.idSidang=?";
         return jdbcTemplate.query(sql, this::mapRowToInfoSidang, id);
 
+    }
+
+    @Override
+    public List<Sidang> getSidangByMahasiswa(String npm){
+        String sql = "SELECT sidangta.*, mahasiswa.nama FROM sidangta JOIN mahasiswa on sidangta.npm = mahasiswa.npm WHERE sidangta.npm = ?";
+        return jdbcTemplate.query(sql,this::mapRowToSidang, npm);
+    }
+
+    @Override
+    public List<Sidang> getFilteredSidang(String nip, String keyword, String keyword2){
+        String sql = "SELECT\n" +
+                "    s.idsidang,\n" +
+                "    m.nama,\n" +
+                "    s.jenista,\n" +
+                "    s.judulta,\n" +
+                "    s.jadwal,\n" +
+                "    s.tempat,\n" +
+                "    s.semester,\n" +
+                "    s.tahunajaran,\n" +
+                "    s.catatanrevisi,\n" +
+                "    s.npm,\n" +
+                "    s.nilaikoordinator\n" +
+                "FROM\n" +
+                "    sidangta s\n" +
+                "JOIN\n" +
+                "    dosensidang ds ON s.idsidang = ds.idsidang\n" +
+                "JOIN\n" +
+                "    mahasiswa m ON s.npm = m.npm\n" +
+                "WHERE\n" +
+                "    ds.nip = ?"
+                + " AND (s.npm ILIKE ? OR m.nama ILIKE ?)";
+
+        String keywordWildcard = "%" + keyword + "%";
+        String keyword2Wildcard = "%" + keyword2 + "%";
+
+        return jdbcTemplate.query(sql, this::mapRowToSidang, nip, keywordWildcard, keyword2Wildcard);
     }
 }

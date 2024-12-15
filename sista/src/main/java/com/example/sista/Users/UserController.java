@@ -28,6 +28,12 @@ public class UserController {
         return "Login";
     }
 
+    @GetMapping("/logout")
+    public String logout(HttpSession httpSession) {
+        httpSession.invalidate();
+        return "redirect:/sista/login";
+    }
+
     //terima submission login
     @PostMapping("/login")
     public String handleLogin(@RequestParam String email, @RequestParam String passwords, Model model, HttpSession httpSession){
@@ -36,7 +42,7 @@ public class UserController {
             model.addAttribute("email", email);
             model.addAttribute("passwords", passwords);
             model.addAttribute("error", "Email atau password salah");
-            return "index";
+            return "Login";
         }else{ //user ditemukan
 
             //simpan informasi user di session

@@ -42,7 +42,7 @@ body{
     overflow-x: hidden;
     width: 80%; 
     position: relative;
-    top: 35%;
+    top: 40%;
     margin: 0 auto;
 }
 
@@ -108,9 +108,10 @@ body{
   border-radius: 28px;
   padding: 10px;
   position: absolute;
-  left: 4%;
-  top: 20%;
+  left: 30%;
+  top: 28%;
   width: 360px;
+  z-index: 10;
 }
 .search-input {
   flex: 1;
@@ -131,6 +132,7 @@ body{
   position: absolute;
   left: 20%;
   cursor: pointer;
+    margin-left: -5%;
 }
 
 .select-an-option {
@@ -218,6 +220,14 @@ form{
 .halaman-utama span {
     display: block;
     margin-bottom: 10px; /* Space below the title */
+    margin-left: -60%;
+}
+
+.logo{
+    height: 40px;
+    width: auto;
+    float: left;
+    margin-right: 10px;
 }
 
 .header-buttons {
@@ -225,14 +235,14 @@ form{
     justify-content: space-between;
     width: 100%;
     gap: 30px;
-    /* margin-top: 10px; */
 }
 
 .header-container{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    width: 100%;    
+    width: 100%;
+    align-items: center;
 }
 
 .daftarkan-sidang-button,

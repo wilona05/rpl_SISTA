@@ -8,4 +8,6 @@ public interface SidangRepository {
     List<Sidang> getSidangItemsByRole(int idrole, String nip);
     List<InfoSidang> getInfoSidangById(int id);
     List<Sidang> getSidangByDosen(String nip);
+    List<Sidang> getSidangByMahasiswa(String npm);
+    List<Sidang> getFilteredSidang(String nip, String keyword, String keyword2);
 }
