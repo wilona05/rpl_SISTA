@@ -3,48 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" th:href="@{/css/dashboardKoordinator.css}">
-    <script src="../js/dashboard.js" defer></script>
+    <link rel="stylesheet" th:href="@{/css/dashboard.css}">
+    <script src="@{/js/dashboard.js}" defer></script>
     <title>Dashboard</title>
 </head>
 <body>
-    <div class="dashboard">
-
-        <!-- Error Message -->
+    <header class="header halaman-utama">
+        <h1 class="title">Halaman Utama</h1>
+        <button class="daftarkan-sidang-button button" th:onclick="window.location.href='/sista/dashboardKoordinator/daftarSidang'">Daftarkan Sidang Baru</button>
+        <button class="komponen-nilai-button button" th:onclick="window.location.href='/sista/dashboardKoordinator/komponenNilai'">Komponen Nilai</button>
+        <button class="signout-button button" th:onclick="window.location.href='/sista/login'">Sign Out</button>
+    </header>
+    
+    <div class="container">
         <div class="error-message" th:if="${errorMessage}" th:text="${errorMessage}" style="color: red;"></div>
 
-        <!-- Sidang Container -->
+        <form class="lihat-sidang-form" th:action="@{/sista/dashboardKoordinator/lihatSidang}" method="POST">
+            <div class="dropdown role-pick">
+                <select class="select" name="pickRole">
+                    <option value="" disabled selected>Lihat sebagai:</option>
+                    <option value=1>Penguji</option>
+                    <option value=2>Pembimbing</option>
+                </select>
+                <button class="button" type="submit">Lihat Sidang</button>
+            </div>
+        </form>
+        
         <div class="sidang-container" th:classappend="${showContainer} ? '' : 'hidden'">
-            <div th:each="sidang : ${listSidang}">
-                <button class="sidang-item" th:onclick="'window.location.href=\'/sista/dashboardDosen/infoSidang?id=' + ${sidang.idsidang} + '\''">
-                    <div class="nama-peserta-sidang" th:text="${sidang.nama}">Nama Peserta Sidang</div>
-                    <div class="tanggal-sidang" th:text="${#dates.format(sidang.jadwal, 'dd/MM/yyyy')}">dd/mm/yyyy</div>
+            <div class="sidang" th:each="info : ${listSidang}">
+                <button class="menu-item" th:onclick="'window.location.href=\'/sista/dashboardKoordinator/infoSidang?id=' + ${info.id} + '\''">
+                    <p class="nama-peserta-sidang title" th:text="${info.nama}">Nama Peserta Sidang</p>
+                    <p class="tanggal-sidang subtitle" th:text="${#dates.format(info.jadwal, 'dd/MM/yyyy')}">dd/mm/yyyy</p>
                 </button>
             </div>
-        </div>
-
-        <!-- Role Selection Form -->
-        <form class="lihat-sidang-form" th:action="@{/sista/dashboardDosen/lihatSidang}" method="post">
-            <div class="role-pick">
-                <select class="select-an-option" name="pickRole">
-                    <option value="" disabled selected>Lihat sebagai:</option>
-                    <option value="1">Penguji</option>
-                    <option value="2">Pembimbing</option>
-                </select>
-            </div>
-            <button class="lihat-sidang-button">Lihat Sidang</button>
-        </form>
-    </div>
-    <!-- Header -->
-    <div class="halaman-utama">
-        <div class="header-container">
-            <span>Halaman Utama</span>
-            <button class="signout-button" onclick="window.location.href='/sista/login'">Sign Out</button>
-        </div>
-        <!-- Container for buttons below the title -->
-        <div class="header-buttons">
-            <button class="daftarkan-sidang-button" onclick="window.location.href='/sista/dashboardKoordinator/daftarkanSidang'">Daftarkan Sidang Baru</button>
-            <button class="komponen-nilai-button" onclick="window.location.href='/sista/dashboardKoordinator/komponenNilai'">Komponen Nilai</button>
         </div>
     </div>
 </body>

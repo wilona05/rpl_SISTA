@@ -1,8 +1,9 @@
-package com.example.sista.dosen;
-
-import jakarta.servlet.http.HttpSession;
+package com.example.sista.Dosen;
 
 public interface DosenRepository {
     public Boolean checkStatusKoord(String email);
-    String getNipDosen(String email);
+
+    String getNipDosenbyEmail(String email);
+
+    String getNipDosenbyNama(String nama);
 }

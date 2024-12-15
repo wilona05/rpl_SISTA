@@ -74,6 +74,10 @@ form{
   border-radius: 5px;
 }
 
+.default{
+  color: #efefef;
+}
+
 .buttons-container{
   display: flex;
   justify-content: flex-end;

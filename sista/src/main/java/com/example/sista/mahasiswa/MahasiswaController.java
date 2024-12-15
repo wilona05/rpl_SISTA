@@ -1,4 +1,4 @@
-package com.example.sista.mahasiswa;
+package com.example.sista.Mahasiswa;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,13 +9,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class MahasiswaController {
 
     @GetMapping()
-    public String dashboard(){
+    public String dashboard() {
         return "mahasiswa/dashboardMahasiswa";
     }
 
-    //halaman infosidang mahasiswa
+    // halaman infosidang mahasiswa
     @GetMapping("infoSidangMahasiswa")
-    public String infoSidang(){
+    public String infoSidang() {
         return "mahasiswa/infoSidangMahasiswa";
     }
 }
