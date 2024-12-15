@@ -10,11 +10,18 @@
 <body>
     <div class="dashboard">
 
+        <form class="search-bar" action="/sista/dashboardKoordinator/filteredSidang" method="get">
+            <input type="search" class="search-input" name="filter" placeholder="Search by name or NPM">
+            <button class="search-button" type="submit">
+                <img th:src="@{/images/search.png}" alt="Search Icon">
+            </button>
+        </form>
+
         <!-- Error Message -->
         <div class="error-message" th:if="${errorMessage}" th:text="${errorMessage}" style="color: red;"></div>
 
         <!-- Sidang Container -->
-        <div class="sidang-container" th:classappend="${showContainer} ? '' : 'hidden'">
+        <div class="sidang-container" th:if="${showContainer}">
             <div th:each="sidang : ${listSidang}">
                 <button class="sidang-item" th:onclick="'window.location.href=\'/sista/dashboardDosen/infoSidang?id=' + ${sidang.idsidang} + '\''">
                     <div class="nama-peserta-sidang" th:text="${sidang.nama}">Nama Peserta Sidang</div>
@@ -24,7 +31,7 @@
         </div>
 
         <!-- Role Selection Form -->
-        <form class="lihat-sidang-form" th:action="@{/sista/dahsboardKoordinator/lihatSidang}" method="post">
+        <form class="lihat-sidang-form" th:action="@{/sista/dashboardKoordinator/lihatSidang}" method="post">
             <div class="role-pick">
                 <select class="select-an-option" name="pickRole">
                     <option value="" disabled selected>Lihat sebagai:</option>
@@ -35,11 +42,13 @@
             <button class="lihat-sidang-button">Lihat Sidang</button>
         </form>
     </div>
+
     <!-- Header -->
     <div class="halaman-utama">
         <div class="header-container">
-            <span>Halaman Utama</span>
-            <button class="signout-button" onclick="window.location.href='dashboardKoordinator/logout'">Sign Out</button>
+            <div class="menu-icon"><a href=""><img th:src="@{/images/logo-sista.png}" class="logo"></a></div>
+            <span class="title-text">Halaman Utama</span>
+            <button class="signout-button" onclick="window.location.href='/sista/logout'">Sign Out</button>
         </div>
         <!-- Container for buttons below the title -->
         <div class="header-buttons">

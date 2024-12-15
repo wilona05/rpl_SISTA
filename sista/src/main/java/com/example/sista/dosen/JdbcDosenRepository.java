@@ -39,10 +39,8 @@ public class JdbcDosenRepository implements DosenRepository{
         }
 
         try {
-            // Execute the query and return the result as a Boolean
             return jdbcTemplate.queryForObject(sql, String.class, email);
         } catch (EmptyResultDataAccessException e) {
-            // Handle the case where no record is found
             return null;
         }
     }

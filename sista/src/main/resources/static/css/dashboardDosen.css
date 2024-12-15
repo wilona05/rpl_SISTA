@@ -44,6 +44,7 @@ body{
     position: relative;
     top: 35%;
     margin: 0 auto;
+    height: auto;
 }
 
 .sidang-item {
@@ -64,8 +65,8 @@ body{
   cursor: pointer;
   flex: 0 1 calc(50% - 20px); /* Two items per row */
   box-sizing: border-box;
-
 }
+
 .sidang-item:hover {
   background: #e0e0e0;
 }
@@ -108,9 +109,10 @@ body{
   border-radius: 28px;
   padding: 10px;
   position: absolute;
-  left: 4%;
-  top: 20%;
+  left: 11%;
+  top: 25%;
   width: 360px;
+
 }
 .search-input {
   flex: 1;
@@ -131,6 +133,8 @@ body{
   position: absolute;
   left: 20%;
   cursor: pointer;
+    margin-left: -5%;
+
 }
 
 .select-an-option {
@@ -195,7 +199,7 @@ body{
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 0; 
+  padding: 0;
 }
 
 .search-button img {
@@ -207,4 +211,15 @@ form{
   position: absolute;
   width: 100%;
   top: 150px;
+}
+
+.logo{
+  height: 40px;
+  width: auto;
+  float: left;
+  margin-right: 10px;
+}
+
+#header-text{
+  margin-left: -60%;
 }

@@ -5,6 +5,7 @@ import com.example.sista.Sidang.Sidang;
 import com.example.sista.Sidang.SidangRepository;
 import com.example.sista.Users.UserRepository;
 import jakarta.servlet.http.HttpSession;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,34 +46,18 @@ public class DosenController {
                             Model model, 
                             HttpSession httpSession) {
 
-        // Debug
-//        role = 2;
         if (role == null) {
-            model.addAttribute("error", "true");
+            model.addAttribute("error", true);
             model.addAttribute("errorMessage", "Please select a role first.");
-            model.addAttribute("showContainer", "false");
+            model.addAttribute("showContainer", false);
             return "dosen/dashboardDosen"; // Reload dashboard with error
         }
 
-        // Fetch email from session
         String email = (String) httpSession.getAttribute("email");
         String nip = repoDosen.getNipDosen(email);
         List<Sidang> listSidang = repoSidang.getSidangItemsByRole(role, nip);
-        
-        // Debug dengan hardcoded
-        // List<Sidang> listSidang = new ArrayList<>();
-        // Date date = new Date(2024, 12, 21, 12 , 23);
-        // Sidang sidang = new Sidang(1, 1, "asdas", date, "temapt", "2", "2024", "note", "1234", 100);
-        // listSidang.add(sidang);
 
-        // Log the role and email values
-        Logger logger = LoggerFactory.getLogger(DosenController.class);
-        logger.info("Role: {}", role);
-        // logger.info("Email: {}", email);
-        logger.info("Sidang: {}", listSidang);
-
-        // Add attributes to the model
-        model.addAttribute("showContainer", true); // Indicate to show the container
+        model.addAttribute("showContainer", true);
         model.addAttribute("listSidang", listSidang);
         return "dosen/dashboardDosen";
     }
@@ -94,13 +79,16 @@ public class DosenController {
         return "dosen/infoSidang"; // Return the Thymeleaf template name
     }
 
-    @GetMapping("/logout")
-    public String logout(HttpSession httpSession) {
+    @GetMapping("/filteredSidang")
+    public String getFilteredSidang(@RequestParam(value = "filter", required = false) String keyword, Model model, HttpSession httpSession) {
 
-        httpSession.invalidate();
+        String email = (String) httpSession.getAttribute("email");
+        String nip = repoDosen.getNipDosen(email);
+        List<Sidang> listSidang = repoSidang.getFilteredSidang(nip, keyword, keyword);
 
-        return "redirect:/sista/login";
+        model.addAttribute("showContainer", true);
+        model.addAttribute("listSidang", listSidang);
+        return "dosen/dashboardDosen";
     }
-
 
 }
