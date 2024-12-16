@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.sista.Dosen.DosenRepository;
 import com.example.sista.SidangTA.SidangTARepository;
-import com.example.sista.SidangTA.InfoSidang;
 import com.example.sista.SidangTA.SidangTA;
 import com.example.sista.Users.User;
 import com.example.sista.Users.UserService;
@@ -107,19 +106,16 @@ public class KoordinatorController {
 
     @GetMapping("/infoSidang")
     public String getInfoSidang(@RequestParam("id") int id, Model model) {
-        // Simulated service call to fetch sidang details by ID
         List<SidangTA> listSidang = repoSidang.getInfoSidangById(id);
 
         if (listSidang == null) {
-            // Handle case where the sidang is not found
             model.addAttribute("errorMessage", "Sidang not found");
-            return "error-page"; // Replace with the appropriate error page
+            return "error-page";
         }
 
-        SidangTA sidang = listSidang.get(0);
-        // Add the sidang details to the model for rendering in the Thymeleaf template
-        model.addAttribute("sidang", sidang);
-        return "dosen/infoSidang"; // Return the Thymeleaf template name
+        SidangTA sidangTA = listSidang.get(0);
+        model.addAttribute("sidangTA", sidangTA);
+        return "dosen/infoSidang";
     }
 
     @GetMapping("/filteredSidang")
@@ -139,4 +135,11 @@ public class KoordinatorController {
         return "dosen/dashboardKoordinator";
     }
 
+    @GetMapping("/editSidang")
+    public String editSidang(@RequestParam(name = "idsidang") int idsidang, Model model) {
+        SidangTA sidangTA = this.repoSidang.getInfoSidangById(idsidang).get(0);
+        model.addAttribute("sidangTA", sidangTA);
+        model.addAttribute("editSidang", true);
+        return "dosen/infoSidang";
+    }
 }

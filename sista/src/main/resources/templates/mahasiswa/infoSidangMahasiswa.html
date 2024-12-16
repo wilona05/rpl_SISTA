@@ -8,7 +8,7 @@
 </head>
 <body>
     <header class="header">
-        <div class="menu-icon"><a th:onclick="javascript:history.back()"><img th:src="@{/images/logo-sista.png}" class="logo"></a></div>
+        <div class="menu-icon"><a th:href="@{/sista/dashboardMahasiswa}"><img th:src="@{/images/logo-sista.png}" class="logo"></a></div>
         <div class="title">Informasi Sidang</div>
     </header>
     <main class="container">
@@ -63,15 +63,11 @@
             </table>
         </section>
         <div class="buttons-container">
-            <form action="/sista/dashboardKoordinator/editSidang" method="GET" th:if="!${editSidang}">
-                <button class="button" type="submit">Edit</button>
-                <input type="hidden" name="idsidang" th:value="${sidangTA.idsidang}">
-            </form>
+            <a class="button" th:onclick="javascript:history.back()" id="back-button">Kembali</a>
             <form method="GET">
-                <!-- <input type="hidden" name="idSidang" th:value="${sidang.idsidang}" /> -->
-                <a class="button" th:action="@{/sista/dashboardDosen/catatanRevisi}" id="catatan-revisi-button">Catatan Revisi</a>
-                <a class="button" th:action="@{/sista/dashboardDosen/lihatBAP}" id="bap-button">Lihat BAP</a>
-                <a class="button" th:href="@{/sista/dashboardDosen/kelolaNilai}" id="nilai-button">Kelola Nilai</a>
+                <a class="button" id="catatan-revisi-button">Catatan Revisi</a>
+                <a class="button" th:href="@{/sista/dashboardMahasiswa/lihatBAP}" id="bap-button">Lihat BAP</a>
+                <a class="button" id="nilai-button" th:onclick="'window.location.href=\'/sista/dashboardMahasiswa/lihatNilai?id=' + ${sidangTA.idsidang} + '\''">Lihat Nilai</a>
             </form>                
       </div>
     </main>

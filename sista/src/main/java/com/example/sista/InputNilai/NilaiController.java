@@ -16,13 +16,13 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/sista/dashboardDosen")
-public class InputNilaiController {
-    
+public class NilaiController {
+
     @Autowired
-    InputNilaiRepository repo; 
+    NilaiRepository repo;
 
     @GetMapping("/kelolaNilai")
-    public String kelolaNilai(HttpSession httpSession, Model model){
+    public String kelolaNilai(HttpSession httpSession, Model model) {
         Integer idSidang = (Integer) httpSession.getAttribute("idSidang");
         String nip = ((String) httpSession.getAttribute("email")).replace("@dosen.edu", "");
         String namaRole = this.repo.getNamaRole(idSidang, nip);
@@ -34,7 +34,7 @@ public class InputNilaiController {
     }
 
     @GetMapping("/editNilai")
-    public String editNilai(HttpSession httpSession, Model model){
+    public String editNilai(HttpSession httpSession, Model model) {
         Integer idSidang = (Integer) httpSession.getAttribute("idSidang");
         String nip = ((String) httpSession.getAttribute("email")).replace("@dosen.edu", "");
         String namaRole = this.repo.getNamaRole(idSidang, nip);
@@ -46,15 +46,15 @@ public class InputNilaiController {
     }
 
     @PostMapping("/saveNilai")
-    public String saveBobotDosen(@RequestParam Map<String, String> nilaiData, HttpSession httpSession){
+    public String saveBobotDosen(@RequestParam Map<String, String> nilaiData, HttpSession httpSession) {
         Integer idSidang = (Integer) httpSession.getAttribute("idSidang");
         String nip = ((String) httpSession.getAttribute("email")).replace("@dosen.edu", "");
         String namaRole = this.repo.getNamaRole(idSidang, nip);
 
-        for(String key : nilaiData.keySet()){
-            String idKey = key.replace("nilai", ""); 
+        for (String key : nilaiData.keySet()) {
+            String idKey = key.replace("nilai", "");
             Integer idKomp = Integer.valueOf(idKey);
-            BigDecimal newNilai= new BigDecimal(nilaiData.get(key));
+            BigDecimal newNilai = new BigDecimal(nilaiData.get(key));
             this.repo.inputNilai(idSidang, idKomp, newNilai, namaRole);
         }
         return "redirect:/sista/dashboardDosen/kelolaNilai";
