@@ -1,4 +1,4 @@
-package com.example.sista.mahasiswa;
+package com.example.sista.Mahasiswa;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -6,13 +6,13 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class JdbcMahasiswaRepository implements MahasiswaRepository{
+public class JdbcMahasiswaRepository implements MahasiswaRepository {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
     @Override
-    public String getNpmMahasiswa(String email){
+    public String getNpmMahasiswa(String email) {
         String sql = "SELECT npm FROM mahasiswa WHERE email = ?";
 
         if (email == null || email.isEmpty()) {
@@ -26,6 +26,5 @@ public class JdbcMahasiswaRepository implements MahasiswaRepository{
         }
 
     }
-
 
 }

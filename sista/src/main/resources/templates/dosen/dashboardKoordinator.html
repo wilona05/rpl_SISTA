@@ -3,57 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" th:href="@{/css/dashboardKoordinator.css}">
-    <script src="../js/dashboard.js" defer></script>
+    <link rel="stylesheet" th:href="@{/css/dashboard.css}">
+    <script src="@{/js/dashboard.js}" defer></script>
     <title>Dashboard</title>
 </head>
 <body>
-    <div class="dashboard">
-
-        <form class="search-bar" action="/sista/dashboardKoordinator/filteredSidang" method="get">
-            <input type="search" class="search-input" name="filter" placeholder="Search by name or NPM">
-            <button class="search-button" type="submit">
-                <img th:src="@{/images/search.png}" alt="Search Icon">
-            </button>
-        </form>
-
-        <!-- Error Message -->
+    <header class="header halaman-utama">
+        <h1 class="title">Halaman Utama</h1>
+        <button class="daftarkan-sidang-button button" th:onclick="window.location.href='/sista/dashboardKoordinator/daftarSidang'">Daftarkan Sidang Baru</button>
+        <button class="komponen-nilai-button button" th:onclick="window.location.href='/sista/dashboardKoordinator/komponenNilai'">Komponen Nilai</button>
+        <button class="signout-button button" th:onclick="window.location.href='/sista/login'">Sign Out</button>
+    </header>
+    
+    <div class="container">
         <div class="error-message" th:if="${errorMessage}" th:text="${errorMessage}" style="color: red;"></div>
 
-        <!-- Sidang Container -->
-        <div class="sidang-container" th:if="${showContainer}">
-            <div th:each="sidang : ${listSidang}">
-                <button class="sidang-item" th:onclick="'window.location.href=\'/sista/dashboardDosen/infoSidang?id=' + ${sidang.idsidang} + '\''">
-                    <div class="nama-peserta-sidang" th:text="${sidang.nama}">Nama Peserta Sidang</div>
-                    <div class="tanggal-sidang" th:text="${#dates.format(sidang.jadwal, 'dd/MM/yyyy')}">dd/mm/yyyy</div>
-                </button>
-            </div>
-        </div>
-
-        <!-- Role Selection Form -->
-        <form class="lihat-sidang-form" th:action="@{/sista/dashboardKoordinator/lihatSidang}" method="post">
-            <div class="role-pick">
-                <select class="select-an-option" name="pickRole">
+        <form class="lihat-sidang-form" th:action="@{/sista/dashboardKoordinator/lihatSidang}" method="POST">
+            <div class="dropdown role-pick">
+                <select class="select" name="pickRole">
                     <option value="" disabled selected>Lihat sebagai:</option>
-                    <option value="1">Penguji</option>
-                    <option value="2">Pembimbing</option>
+                    <option value=1>Penguji</option>
+                    <option value=2>Pembimbing</option>
                 </select>
+                <button class="button" type="submit">Lihat Sidang</button>
             </div>
-            <button class="lihat-sidang-button">Lihat Sidang</button>
         </form>
-    </div>
-
-    <!-- Header -->
-    <div class="halaman-utama">
-        <div class="header-container">
-            <div class="menu-icon"><a href=""><img th:src="@{/images/logo-sista.png}" class="logo"></a></div>
-            <span class="title-text">Halaman Utama</span>
-            <button class="signout-button" onclick="window.location.href='/sista/logout'">Sign Out</button>
-        </div>
-        <!-- Container for buttons below the title -->
-        <div class="header-buttons">
-            <button class="daftarkan-sidang-button" onclick="window.location.href='/sista/dashboardKoordinator/daftarkanSidang'">Daftarkan Sidang Baru</button>
-            <button class="komponen-nilai-button" onclick="window.location.href='/sista/dashboardKoordinator/komponenNilai'">Komponen Nilai</button>
+        
+        <div class="sidang-container" th:classappend="${showContainer} ? '' : 'hidden'">
+            <div class="sidang" th:each="info : ${listSidang}">
+                <img src="/images/Profile Pict.png">
+                <a class="menu-item" th:onclick="'window.location.href=\'/sista/dashboardKoordinator/infoSidang?id=' + ${info.id} + '\''">
+                    <div class>
+                        <p class="nama-peserta-sidang title" th:text="${info.nama}">Nama Peserta Sidang</p>
+                    <p class="npm-peserta-sidang" th:text="${info.npm}">NPM</p>
+                    <p class="tanggal-sidang subtitle" th:text="${#dates.format(info.jadwal, 'dd/MM/yyyy')}">dd/mm/yyyy</p>
+                    </div>
+                </a>
+            </div>
         </div>
     </div>
 </body>
