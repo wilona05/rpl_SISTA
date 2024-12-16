@@ -65,11 +65,6 @@ public class MahasiswaController {
 
     // }
 
-    // @GetMapping("/lihatBAP")
-    // public String lihatBAP(){
-
-    // }
-
     @GetMapping("/lihatNilai")
     public String lihatNilai(@RequestParam("id") int id, Model model) {
         List<NilaiAkhir> nilaiAkhir = repoNilai.hasilNilaiAkhir(id);
