@@ -4,90 +4,86 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, charset=UTF-8">
   <title>Mendaftarkan Sidang</title>
   <link rel="stylesheet" th:href="@{/css/style.css}">
-  <script>
-    function goToPreviousPage() {
-      window.location.href = 'RegistrasiTA.html';
-    }
-  </script>
 </head>
 
 <body>
   <header class="header">
-    <div class="menu-icon"><a href=""><img th:src="@{/images/logo-sista.png}" class="logo"></a></div>
+    <div class="menu-icon"><a th:href="@{/sista/dashboardKoordinator}"><img th:src="@{/images/logo-sista.png}" class="logo"></a></div>
     <div class="title">Mendaftarkan Sidang</div>
   </header>
   
   <div class="container">
-    <form class="form" action="#" th:object="${sidangTA}">
+    <form class="form" th:action="@{/sista/dashboardKoordinator/daftarSidang}" method="POST" th:object="${sidangTA}">
       <div class="form_group">
         <label>Nama Peserta</label>
-        <input type="text" class="form_control" th:field="*{nama}" name="nama" required>
-        <span class="error" th:if="${fields.hasErrors('nama')}" th:errors="*{nama}"></span>
+        <input type="text" class="form_control" name="nama" required>
       </div>
       <div class="form_group">
         <label>Nomor Pokok Mahasiswa</label>
-        <input type="text" class="form_control" th:field="*{npm}" required>
-        <span class="error" th:if="${fields.hasErrors('npm')}" th:errors="*{npm}"></span>
+        <input type="text" class="form_control" name="npm" required>
       </div>
       <div class="form_group">
         <label>Judul Tugas Akhir</label>
-        <input type="text" class="form_control" th:field="*{judulTA}" required>
-        <span class="error" th:if="${fields.hasErrors('judulTA')}" th:errors="*{judulTA}"></span>
+        <input type="text" class="form_control" name="judulTA" required>
       </div>
       <div class="form_group">
         <label>Jenis Tugas Akhir</label>
-        <div class="radio_group" th:field="*{jenisTA}">
-          <label><input type="radio" class="form_control" name="jenista" value="1" th:checked="*{jenisTA} == 1">1</label>
-          <label><input type="radio" class="form_control" name="jenista" value="2" th:checked="*{jenisTA == 2}">2</label>
+        <div class="radio_group">
+          <label><input type="radio" class="form_control" name="jenisTA" value=1>1</label>
+          <label><input type="radio" class="form_control" name="jenisTA" value=2>2</label>
         </div>
-        <span class="error" th:if="${fields.hasErrors('jenisTA')}" th:errors="*{jenisTA}"></span>
       </div>
       <div class="form_group">
-        <label>Dosen Pembimbing 1</label>
-        <select class="form_control" th:field="*{dosenPembimbing1}">
-          <option value="" disabled selected>Pilih ruangan sidang</option>
-          <option th:each="dosen : ${dosenList}" th:value="${dosen.nip}" th:text="${dosen.nama}"></option>
+        <label>Dosen Pembimbing Utama</label>
+        <select class="form_control" name="dosenPembimbing1" required>
+          <option class="default" value="" disabled selected>Pilih dosen pembimbing</option>
+          <option th:each="dosen : ${dosenList}" th:value="${dosen.nama}" th:text="${dosen.nama}"></option>
         </select>
       </div>
       <div class="form_group">
-        <label>Dosen Pembimbing 2</label>
-        <select class="form_control" th:field="*{dosenPembimbing2}">
-          <option value="" disabled selected>Pilih ruangan sidang</option>
-          <option th:each="dosen : ${dosenList}" th:value="${dosen.nip}" th:text="${dosen.nama}"></option>
+        <label>Dosen Pembimbing Tambahan</label>
+        <select class="form_control" name="dosenPembimbing2">
+          <option class="default" value="-" disabled selected>Pilih dosen pembimbing</option>
+          <option class="default" value="" text="-"></option>
+          <option th:each="dosen : ${dosenList}" th:value="${dosen.nama}" th:text="${dosen.nama}"></option>
         </select>
       </div>
       <div class="form_group">
         <label>Jadwal Sidang</label>
-        <input type="datetime-local" class="form_control" th:field="*{jadwal}" name="jadwal">
-        <span class="error" th:if="${fields.hasErrors('jadwal')}" th:errors="*{jadwal}"></span>
-      </div>
+        <input type="datetime-local" class="form_control" name="jadwal" step="1" required>
+        </div>
       <div class="form_group">
         <label>Ruangan Sidang</label>
-        <select class="form_control" name="tempat" th:field="*{tempat}">
-          <option value="" disabled selected>Pilih ruangan sidang</option>
-          <option th:each="tempat : ${tempatList}" th:value="${tempat}" th:text="${tempat}"></option>
+        <select class="form_control" name="tempat" required>
+          <option class="default" value="-" disabled selected>Pilih ruangan sidang</option>
+          <option value="Ruang 101">Ruang 101</option>
+          <option value="Ruang 102">Ruang 102</option>
+          <option value="Ruang 103">Ruang 103</option>
+          <option value="Ruang 201">Ruang 201</option>
+          <option value="Ruang 202">Ruang 202</option>
+          <option value="Ruang 203">Ruang 203</option>
         </select>
       </div>
       <div class="form_group">
         <label>Dosen Penguji 1</label>
-        <select class="form_control" th:field="*{penguji1}">
-          <option value="" disabled selected>Pilih ruangan sidang</option>
-          <option th:each="penguji : ${pengujiList}" th:value="${penguji.nip}" th:text="${penguji.nama}"></option>
+        <select class="form_control" name="dosenPenguji1" required>
+          <option class="default" value="-" disabled selected>Pilih dosen penguji 1</option>
+          <option th:each="dosen : ${dosenList}" th:value="${dosen.nama}" th:text="${dosen.nama}"></option>
         </select>
       </div>
       <div class="form_group">
         <label>Dosen Penguji 2</label>
-        <select class="form_control" th:field="*{penguji2}">
-          <option value="" disabled selected>Pilih ruangan sidang</option>
-          <option th:each="penguji : ${pengujiList}" th:value="${penguji.nip}" th:text="${penguji.nama}"></option>
+        <select class="form_control" name="dosenPenguji2">
+          <option class="default" value="-" disabled selected>Pilih dosen penguji 2</option>
+          <option th:each="dosen : ${dosenList}" th:value="${dosen.nama}" th:text="${dosen.nama}"></option>
         </select>
       </div>
+      <div class="buttons-container">
+        <input class="button" type="submit" value="Save">
+      </div>
     </form>
-    
-    <div class="buttons-container">
-      <button class="button" onclick="goToPreviousPage()">Previous</button>
-      <input class="button" type="submit" value="Save">
-     </div>
+    <div th:if="${success}" th:text="${success}" style="color: green;"></div>
+    <div th:if="${error}" th:text="${error}" style="color: red; text-align: center;"></div>
   </div>
 </body>
 </html>

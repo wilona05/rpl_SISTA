@@ -44,8 +44,9 @@
             <img src="/images/Profile Pict.png">
             <a th:href="@{informasiAkun?userID={id}(id=${searchedUser.noInduk})}">
                 <div class="data">
-                    <p th:text="${searchedUser.email}"></p>
-                    <p th:text="${searchedUser.role}"></p>
+                    <p class="email" th:text="${searchedUser.email}"></p>
+                    <p class="role" th:text="${searchedUser.nama}"></p>
+                    <p class="role" th:text="${searchedUser.role}"></p>
                 </div>
             </a>
         </div>
@@ -57,8 +58,9 @@
             <img src="/images/Profile Pict.png">
             <a th:href="@{informasiAkun?userID={id}(id=${u.noInduk})}">
                 <div class="data">
-                    <p th:text="${u.email}"></p>
-                    <p th:text="${u.role}"></p>
+                    <p class="email" th:text="${u.email}"></p>
+                    <p class="role" th:text="${u.nama}"></p>
+                    <p class="role" th:text="${u.role}"></p>
                 </div>
             </a>
         </div>

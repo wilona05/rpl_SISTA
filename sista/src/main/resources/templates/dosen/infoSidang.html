@@ -21,47 +21,43 @@
                 <tbody>
                 <tr>
                     <th>Nama</th>
-                    <td th:text="${sidang.namamahasiswa}">John Doe</td>
+                    <td th:text="${sidangTA.nama}">John Doe</td>
                 </tr>
                 <tr>
                     <th>NPM</th>
-                    <td th:text="${sidang.npm}">123456789</td>
-                </tr>
-                <tr>
-                    <th>Email</th>
-                    <td th:text="${sidang.email}">johndoe@example.com</td>
+                    <td th:text="${sidangTA.npm}">123456789</td>
                 </tr>
                 <tr>
                     <th>Judul Tugas Akhir</th>
-                    <td th:text="${sidang.judulta}">Sistem Informasi Akademik</td>
+                    <td th:text="${sidangTA.judulTA}">Sistem Informasi Akademik</td>
                 </tr>
                 <tr>
                     <th>Jenis Tugas Akhir</th>
-                    <td th:text="${sidang.jenista}"></td>
+                    <td th:text="${sidangTA.jenisTA}"></td>
                 </tr>
                 <tr>
                     <th>Jadwal Sidang</th>
-                    <td th:text="${sidang.jadwal}"></td>
+                    <td th:text="${sidangTA.jadwal}"></td>
                 </tr>
                 <tr>
                     <th>Tempat Sidang</th>
-                    <td th:text="${sidang.tempat}">/td>
+                    <td th:text="${sidangTA.tempat}">/td>
                 </tr>
                 <tr>
-                    <th>Dosen Pembimbing</th>
-                    <td th:text="${sidang.pembimbingutama}"></td>
+                    <th>Dosen Pembimbing Utama</th>
+                    <td th:text="${sidangTA.dosenPembimbing1}"></td>
                 </tr>
                 <tr>
                     <th>Dosen Pembimbing Tambahan</th>
-                    <td th:text="${sidang.pembimbingtambahan}"></td>
+                    <td th:text="${sidangTA.dosenPembimbing2}"></td>
                 </tr>
                 <tr>
-                    <th>Dosen Penguji 1</th>
-                    <td th:text="${sidang.ketuapenguji}"></td>
+                    <th>Ketua Dosen Penguji</th>
+                    <td th:text="${sidangTA.dosenPenguji1}"></td>
                 </tr>
                 <tr>
-                    <th>Dosen Penguji 2</th>
-                    <td th:text="${sidang.anggotapenguji}"></td>
+                    <th>Anggota Dosen Penguji</th>
+                    <td th:text="${sidangTA.dosenPenguji2}"></td>
                 </tr>
                 </tbody>
             </table>
@@ -72,7 +68,7 @@
                 <!-- <input type="hidden" name="idSidang" th:value="${sidang.idsidang}" /> -->
                 <button class="button" id="nilai-button">Kelola Nilai</a>
             </form>                
-        </div>
+      </div>
     </main>
 </body>
 </html>
