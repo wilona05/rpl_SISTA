@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="CONTENT-TYPE" content="text/html, charset=UTF-8">
+    <link rel="stylesheet" th:href="@{/css/style-nilai.css}">
+    <title>Komponen Bobot Nilai</title>
+</head>
+<body>
+    <header class="header">
+        <div class="menu-icon"><a th:href="@{/sista/dashboardKoordinator}"><img th:src="@{/images/logo-sista.png}" class="logo"></a></div>
+        <div class="title">Pengaturan Komponen dan Bobot Nilai</div>
+    </header>
+    <div class="container">
+        <form method="POST">
+            <div th:text="${error}" style="color:red;"></div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Komponen</th>
+                        <th>Bobot Penguji</th>
+                        <th>Bobot Pembimbing</th>
+                        <th>Tanggal Berlaku</th>
+                        <td th:if="${edit}" style="border:none;"></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="k : ${komponenNilai}">
+                        <td th:if="!${edit}" th:text="${k.komponen}">Komponen Nilai</td>
+                        <td th:if="!${edit}" th:text="${k.bobotPenguji}">Bobot Penguji</td>
+                        <td th:if="!${edit}" th:text="${k.bobotPembimbing}">Bobot Pembimbing</td>
+                        <td th:if="!${edit}" th:text="${k.tglBerlaku}">Tanggal Berlaku</td>
+                        
+                        <!-- edit -->
+                        <td th:if="${edit}"><input type="text" th:attr="name=${'kompNilai' + k.idKomp}" th:value="${k.komponen}" required></td>
+                        <td th:if="${edit}"><input type="number" th:attr="name=${'bobotPenguji' + k.idKomp}" th:value="${k.bobotPenguji}" required></td>
+                        <td th:if="${edit}"><input type="number" th:attr="name=${'bobotPembimbing' + k.idKomp}" th:value="${k.bobotPembimbing}" required></td>
+                        <td th:if="${edit}"><input type="date" th:attr="name=${'tglBerlaku' + k.idKomp}" th:value="${k.tglBerlaku}" required></td>
+                        <td th:if="${edit}" style="border:none;">
+                            <button type="submit" th:formaction="|/sista/dashboardKoordinator/deleteKomponenNilai?idKomp=${k.idKomp}|" class="deleteBtn">
+                                <img src="/images/icon_delete.png" class="iconDelete">
+                            </button>
+                        </td>
+                    </tr>           
+                <tbody>
+            </table>
+            <div class="buttons-container">
+                <a th:if="!${edit}" class="button" onclick="window.location.href='/sista/dashboardKoordinator/editKomponenNilai'">Edit</a>
+                <a th:if="${edit}" class="button" onclick="window.location.href='/sista/dashboardKoordinator/komponenNilai'">Cancel</a>
+                <button th:if="${edit}" type="submit" class="button" formaction="/sista/dashboardKoordinator/saveKomponenNilai">Save</button>
+                <a class="button" onclick="window.location.href='/sista/dashboardKoordinator/bobotDosen'">Bobot Dosen</a>
+            </div>
+        </form>
+
+        <br><hr><br>
+
+        <!-- input komponen baru -->
+        <form method="POST" action="/sista/dashboardKoordinator/addKomponenNilai">
+            <table class="table" th:if="${edit}">
+                <thead>
+                    <tr >
+                        <th colspan="4">Tambah Komponen Nilai Baru</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="text" name="komponen" placeholder="komponen" required></td>
+                        <td><input type="text" name="bobotPenguji" placeholder="bobotPenguji" required></td>
+                        <td><input type="text" name="bobotPembimbing" placeholder="bobotPembimbing" required></td>
+                        <td><input type="date" name="tglBerlaku" placeholder="tglBerlaku" required></td>
+                        <td style="border: none;">
+                            <button type="submit" class="addBtn">
+                                <img src="/images/icon_add.png" class="iconAdd">
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+</body>
+</html>
