@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="CONTENT-TYPE" content="text/html, charset=UTF-8">
+    <link rel="stylesheet" th:href="@{/css/style-nilai.css}">
+    <title>Nilai Mahasiswa</title>
+</head>
+<body>
+    <header class="header">
+        <div class="menu-icon"><a href=""><img th:src="@{/images/logo-sista.png}" class="logo"></a></div>
+        <div class="title">Pengaturan Komponen dan Bobot Nilai</div>
+    </header>
+    <div class="container">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Dosen</th>
+                    <th>Nilai</th>
+                    <th>Bobot</th>
+                    <th>Nilai Akhir</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="row : ${results}">
+                    <td th:text="${row.dosen}"></td>
+                    <td th:text="${row.nilai}"></td>
+                    <td th:text="${row.bobot}"></td>
+                    <td th:text="${row.nilaiAkhir}"></td>
+                </tr>
+                <tr>
+                    <td colspan="3">Total Nilai</td>
+                    <td th:text=""></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

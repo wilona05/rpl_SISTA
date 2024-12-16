@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Popup Notification</title>
+  <link rel="stylesheet" href="/css/inputCatRevisi.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+          <div class="icon">
+            <div class="icon-inner"></div>
+          </div>
+          <div class="title">Catatan Revisi Sidang TA</div>
+        </div>
+        
+        <!-- Content -->
+        <div class="content">
+          <!-- Text Area Container -->
+          <div class="text-area-container">
+            <!-- Text Area -->
+            <form th:action="@{/sista/dashboardDosen/revisi/submit}" method="post">
+            <h1>Input Catatan Revisi</h1>
+            <textarea rows="15" cols="50" class="text-cat-revisi" th:text="${isiRevisi}" th:value="${isiRevisi}" name="catatanRevisi"></textarea>
+            <!-- Buttons -->
+            <div class="buttons">
+              <button type="submit" class="button save" id="saveButton" th:value="${idSidang}">Save</button>
+            </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      
+  </div>
+
+  <!-- Popup -->
+  <div id="popup" class="popup hidden">
+    <div class="popup-content">
+      <!-- Gambar Check Mark -->
+      <img src="images/green-mark.png" alt="Check Mark" class="check-image">
+      <p>Data Berhasil Disimpan</p>
+      <button id="closePopup">Yes</button>
+    </div>
+  </div>
+  
+
+  <script src="script.js"></script>
+</body>
+</html>

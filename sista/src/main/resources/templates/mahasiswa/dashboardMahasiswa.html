@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/dashboard.css}">
+    <script src="dashboard.js" defer></script>
+    <title>Dashboard</title>
+</head>
+<body>
+    <header class="header halaman-utama">
+        <div class="menu-icon"><a href=""><img th:src="@{/images/logo-sista.png}" class="logo"></a></div>
+        <h1 class="title">Halaman Utama</h1>
+        <button class="signout-button button" onclick="window.location.href='/sista/logout'">Sign Out</button>
+    </header>
+
+    <div class="container hidden">
+        <div class="search-bar">
+            <input type="search" class="search-input" placeholder="Search">
+            <button class="search-button">
+                <img th:src="@{/images/search.png}" alt="Search Icon">
+            </button>
+        </div>
+
+        <div class="dropdown semester">
+            <select class="select">
+                <option value="" disabled selected>Pilih tahun ajaran</option>
+                <option value="1">Ganjil 20xx/20xx</option>
+                <option value="2">Genap 20xx/20xx</option>
+                <option value="3">Ganjil 20xx/20xx</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="sidang-container">
+        <div class="sidang-container2" th:each="sidang : ${listSidang}">
+            <button class="sidang-item" th:onclick="'window.location.href=\'/sista/dashboardMahasiswa/infoSidang?id=' + ${sidang.idsidang} + '\''">
+                <div class="nama-peserta-sidang" th:text="${sidang.nama}">Nama Peserta Sidang</div>
+                <div class="tanggal-sidang" th:text="${#dates.format(sidang.jadwal, 'dd/MM/yyyy')}">dd/mm/yyyy</div>
+            </button>
+        </div>
+    </div>
+
+</body>
+</html>

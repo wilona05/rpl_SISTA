@@ -1,0 +1,213 @@
+/* General Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-style: sans-serif;
+}
+
+body {
+  margin: 0;
+  font-family: Epilogue, sans-serif;
+  background: #03045E;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Header */
+.header {
+  width: 100%;
+  height: 10vh;
+  padding: 10px 20px;
+  position: fixed;
+  top: 0;
+  background: #03045E;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 10;
+}
+
+.icon {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.icon-inner {
+  width: 18px;
+  height: 12px;
+  background: white;
+}
+
+.title {
+  color: white;
+  font-size: 1.5rem;
+  font-weight: 400;
+  text-align: right;
+}
+
+/* Center Content */
+.content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #e9e9e9;
+}
+
+.text-area-container {
+  width: 80%;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.input-box {
+  width: 100%;
+  height: 50vh;
+  padding: 20px;
+  border-radius: 5px;
+  border: 1px solid #AAAAAA;
+  background: white;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  resize: none;
+}
+
+.input-box div {
+  color: black;
+  font-size: 20px;
+  font-weight: 400;
+}
+
+/* Buttons */
+.buttons {
+  margin-top: 10px;
+  display: flex;
+  gap: 10px;
+}
+
+.button {
+  padding: 10px 20px;
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: 0px 2px 1px rgba(170, 170, 170, 0.25);
+  border-radius: 5px;
+  border: 1px solid #AAAAAA;
+  font-size: 2rem;
+  color: black;
+  font-weight: 400;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.button:hover {
+  background: #F0F0F0;
+}
+
+/* Popup */
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 20;
+}
+
+.popup.hidden {
+  display: none;
+}
+
+.popup-content {
+  width: 300px;
+  padding: 20px;
+  background: white;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.popup-content p {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: black;
+  margin-top: 10px;
+}
+
+.popup-content button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  background: #F0F0F0;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.popup-content button:hover {
+  background: #E0E0E0;
+}
+
+.check-icon {
+  margin: auto;
+}
+
+.circle {
+  width: 60px;
+  height: 60px;
+  background: white;
+  border: 2px solid green;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+}
+
+/* Gambar Check Mark */
+.check-image {
+  width: 100px;
+  height: 100px;
+  margin: 10px auto;
+  display: block;
+}
+
+/* Placeholder Style */
+.text-cat-revisi::placeholder {
+  color: #AAAAAA;
+  font-style: italic;
+  font-size: 20px;
+}
+
+.text-area-container h1 {
+  color: black;
+}
+
+.text-cat-revisi {
+  width: 90%;
+  height: 300px;
+  font-size: 20px;
+}

@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Popup Notification</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="/css/inputCatRevisi.css">
 </head>
 <body>
   <div class="container">
@@ -23,13 +23,14 @@
           <!-- Text Area Container -->
           <div class="text-area-container">
             <!-- Text Area -->
-            <textarea id="textArea" class="input-box" placeholder="Input Here" disabled></textarea>
-            
+            <form th:action="@{/sista/dashboardDosen/revisi/submit}" method="post">
+            <h1>Input Catatan Revisi</h1>
+            <textarea rows="15" cols="50" class="text-cat-revisi" th:text="${isiRevisi}" th:value="${isiRevisi}" name="catatanRevisi"></textarea>
             <!-- Buttons -->
             <div class="buttons">
-              <button class="button edit" id="editButton">Edit</button>
-              <button class="button save" id="saveButton">Save</button>
+              <button type="submit" class="button save" id="saveButton" th:value="${idSidang}">Save</button>
             </div>
+            </form>
           </div>
         </div>
       </div>
