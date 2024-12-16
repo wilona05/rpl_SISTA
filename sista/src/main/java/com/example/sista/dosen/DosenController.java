@@ -51,17 +51,17 @@ public class DosenController {
         String email = (String) httpSession.getAttribute("email");
         String nip = repoDosen.getNipDosenbyEmail(email);
         List<SidangTA> listSidang = repoSidang.getSidangItemsByRole(role, nip);
-
+      
         model.addAttribute("showContainer", true);
         model.addAttribute("listSidang", listSidang);
         return "dosen/dashboardDosen";
     }
 
     @GetMapping("/infoSidang")
-    public String getInfoSidang(@RequestParam("id") int id, Model model) {
 
+    public String getInfoSidang(@RequestParam("id") int id, Model model, HttpSession httpSession) {
         List<SidangTA> listSidang = repoSidang.getInfoSidangById(id);
-
+        httpSession.setAttribute("idSidang", id);
         if (listSidang == null) {
             model.addAttribute("errorMessage", "Sidang not found");
             return "error-page";
