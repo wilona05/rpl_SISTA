@@ -1,11 +1,9 @@
 package com.example.sista.Dosen;
 
 import com.example.sista.SidangTA.SidangTARepository;
-import com.example.sista.SidangTA.InfoSidang;
 import com.example.sista.SidangTA.SidangTA;
 
 import jakarta.servlet.http.HttpSession;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -38,8 +36,7 @@ public class DosenController {
 
     @PostMapping("/lihatSidang")
     public String lihatSidang(@RequestParam(name = "pickRole", required = false) Integer role,
-            Model model,
-            HttpSession httpSession) {
+            Model model, HttpSession httpSession) {
 
         if (role == null) {
             model.addAttribute("error", true);
@@ -51,14 +48,13 @@ public class DosenController {
         String email = (String) httpSession.getAttribute("email");
         String nip = repoDosen.getNipDosenbyEmail(email);
         List<SidangTA> listSidang = repoSidang.getSidangItemsByRole(role, nip);
-      
+
         model.addAttribute("showContainer", true);
         model.addAttribute("listSidang", listSidang);
         return "dosen/dashboardDosen";
     }
 
     @GetMapping("/infoSidang")
-
     public String getInfoSidang(@RequestParam("id") int id, Model model, HttpSession httpSession) {
         List<SidangTA> listSidang = repoSidang.getInfoSidangById(id);
         httpSession.setAttribute("idSidang", id);
@@ -67,8 +63,8 @@ public class DosenController {
             return "error-page";
         }
 
-        SidangTA sidang = listSidang.get(0);
-        model.addAttribute("sidang", sidang);
+        SidangTA sidangTA = listSidang.get(0);
+        model.addAttribute("sidangTA", sidangTA);
         return "dosen/infoSidang";
     }
 

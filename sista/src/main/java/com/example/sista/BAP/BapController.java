@@ -34,10 +34,10 @@ public class BapController {
         this.uploadDir = uploadDir;
     }
 
-    @GetMapping("")
-    public String showBapPage(Model model) {// ini harusnya ada req param id sidang tapi itu bergantung sama routing
-                                            // sebelumnya kayaknya soalnya alurnya /sidang?=1/bap
-        int idSidang = 5;
+    @GetMapping("/")
+    public String showBapPage(int idSidang, Model model) {// ini harusnya ada req param id sidang tapi itu bergantung
+                                                          // sama routing
+        // sebelumnya kayaknya soalnya alurnya /sidang?=1/bap
 
         // mengambil data isi bap dan nilai dari database berdasarkan id sidang lalu
         // menambahkannya ke model

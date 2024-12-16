@@ -9,7 +9,7 @@ import lombok.AllArgsConstructor;
 @Data
 @AllArgsConstructor
 public class SidangTA {
-    public Integer id;
+    public Integer idsidang;
     private String nama;
     private String npm;
     // private String email;
@@ -26,11 +26,11 @@ public class SidangTA {
     private String dosenPenguji1; // ketua penguji
     private String dosenPenguji2; // anggota penguji
 
-    public SidangTA(Integer id, String nama, String npm, int jenisTA, String judulTA, Timestamp jadwal,
+    public SidangTA(Integer idsidang, String nama, String npm, int jenisTA, String judulTA, Timestamp jadwal,
             String tempat, String semester, String tahunAjaran, String catatanRevisi, int nilaiKoordinator,
             String dosenPembimbing1, String dosenPembimbing2, String dosenPenguji1,
             String dosenPenguji2) {
-        this.id = id;
+        this.idsidang = idsidang;
         this.nama = nama;
         this.npm = npm;
         // this.email = email;
@@ -48,8 +48,10 @@ public class SidangTA {
         this.dosenPenguji2 = dosenPenguji2;
     }
 
-    public SidangTA(String nama, Timestamp jadwal) {
+    public SidangTA(int idsidang, String nama, String npm, Timestamp jadwal) {
+        this.idsidang = idsidang;
         this.nama = nama;
+        this.npm = npm;
         this.jadwal = jadwal;
     }
 }

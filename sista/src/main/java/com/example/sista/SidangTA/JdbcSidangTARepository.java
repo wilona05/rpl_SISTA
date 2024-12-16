@@ -35,7 +35,8 @@ public class JdbcSidangTARepository implements SidangTARepository {
     // }
 
     public SidangTA mapRowToSidang(ResultSet rs, int rowNum) throws SQLException {
-        return new SidangTA(rs.getString("nama"), rs.getTimestamp("jadwal"));
+        return new SidangTA(rs.getInt("idsidang"), rs.getString("nama"), rs.getString("npm"),
+                rs.getTimestamp("jadwal"));
     }
 
     @Override
@@ -126,7 +127,7 @@ public class JdbcSidangTARepository implements SidangTARepository {
 
     public SidangTA mapRowToInfoSidang(ResultSet rs, int rowNum) throws SQLException {
         return new SidangTA(
-                rs.getInt("id"),
+                rs.getInt("idsidang"),
                 rs.getString("nama"),
                 rs.getString("npm"),
                 rs.getString("judulTA"),
@@ -137,10 +138,10 @@ public class JdbcSidangTARepository implements SidangTARepository {
                 rs.getString("tahunAjaran"),
                 rs.getString("catatanRevisi"),
                 rs.getInt("nilaiKoordinator"),
-                rs.getString("dosenPembimbing1"),
-                rs.getString("dosenPembimbing2"),
-                rs.getString("dosenPenguji1"),
-                rs.getString("dosenPenguji2"));
+                rs.getString("pembimbingutama"),
+                rs.getString("pembimbingtambahan"),
+                rs.getString("ketuapenguji"),
+                rs.getString("anggotapenguji"));
     }
 
     @Override
@@ -161,7 +162,7 @@ public class JdbcSidangTARepository implements SidangTARepository {
 
     @Override
     public List<SidangTA> getSidangByMahasiswa(String npm) {
-        String sql = "SELECT sidangta.*, mahasiswa.nama FROM sidangta JOIN mahasiswa on sidangta.npm = mahasiswa.npm WHERE sidangta.npm = ?";
+        String sql = "SELECT * FROM infosidang WHERE npm = ?";
         return jdbcTemplate.query(sql, this::mapRowToInfoSidang, npm);
     }
 }

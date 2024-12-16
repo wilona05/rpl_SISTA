@@ -7,50 +7,38 @@
     <script src="@{/js/dashboard.js}" defer></script>
     <title>Dashboard</title>
 </head>
-<body>        
+<body>
     <header class="header halaman-utama">
         <h1 class="title">Halaman Utama</h1>
-        <!-- <form th:action="@{/sista/dashboardDosen/lihatSidang}" method="post"><button class="lihat-sidang-button button" onclick="showSidangContainer()">Lihat Sidang</button></form> -->
-        <button class="signout-button button" onclick="window.location.href='/sista/login'">Sign Out</button>
+        <button class="signout-button button" th:onclick="window.location.href='/sista/login'">Sign Out</button>
     </header>
     
     <div class="container">
         <div class="error-message" th:if="${errorMessage}" th:text="${errorMessage}" style="color: red;"></div>
-        
-        <div class="sidang-container" th:classappend="${showContainer} ? '' : 'hidden'">
-    <div class="dashboard">
 
-        <form class="search-bar" action="/sista/dashboardDosen/filteredSidang" method="get">
-            <input type="search" class="search-input" name="filter" placeholder="Search by name or NPM">
-            <button class="search-button" type="submit">
-                <img th:src="@{/images/search.png}" alt="Search Icon">
-            </button>
-        </form>
-
-        <!-- Sidang Container -->
-        <div class="sidang-container">
-            <div th:each="sidang : ${listSidang}">
-                <button class="sidang-item" th:onclick="'window.location.href=\'/sista/dashboardDosen/infoSidang?id=' + ${sidang.idsidang} + '\''">
-                    <div class="nama-peserta-sidang" th:text="${sidang.nama}">Nama Peserta Sidang</div>
-                    <div class="tanggal-sidang" th:text="${#dates.format(sidang.jadwal, 'dd/MM/yyyy')}">dd/mm/yyyy</div>
-                </button>
-            </div>
-        </div>
-        
-        <!-- Error Message -->
-        <div class="error-message" th:if="${error}" th:text="${errorMessage}" style="color: red;"></div>
-        
-        <!-- Role Selection Form -->
-        <form class="lihat-sidang-form" th:action="@{/sista/dashboardDosen/lihatSidang}" method="post">
-            <div class="dropdown role-pick" name="pickRole">
-                <select class="select">
+        <form class="lihat-sidang-form" th:action="@{/sista/dashboardDosen/lihatSidang}" method="POST">
+            <div class="dropdown role-pick">
+                <select class="select" name="pickRole">
                     <option value="" disabled selected>Lihat sebagai:</option>
                     <option value=1>Penguji</option>
                     <option value=2>Pembimbing</option>
                 </select>
-                <button class="button">Lihat Sidang</button>
+                <button class="button" type="submit">Lihat Sidang</button>
             </div>
         </form>
+        
+        <div class="sidang-container" th:classappend="${showContainer} ? '' : 'hidden'">
+            <div class="sidang" th:each="info : ${listSidang}">
+                <img src="/images/Profile Pict.png">
+                <a class="menu-item" th:onclick="'window.location.href=\'/sista/dashboardDosen/infoSidang?id=' + ${info.idsidang} + '\''">
+                    <div class="data">
+                        <p class="nama-peserta-sidang title" th:text="${info.nama}">Nama Peserta Sidang</p>
+                        <p class="npm-peserta-sidang" th:text="${info.npm}">NPM</p>
+                        <p class="tanggal-sidang subtitle" th:text="${#dates.format(info.jadwal, 'dd/MM/yyyy')}">dd/mm/yyyy</p>
+                    </div>
+                </a>
+            </div>
+        </div>
     </div>
 </body>
 </html>

@@ -1,5 +1,6 @@
 package com.example.sista.Mahasiswa;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +12,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.sista.SidangTA.SidangTA;
 import com.example.sista.SidangTA.SidangTARepository;
+import com.example.sista.BAP.nilai;
 import com.example.sista.Dosen.DosenRepository;
-import com.example.sista.SidangTA.InfoSidang;
+import com.example.sista.InputNilai.Nilai;
+import com.example.sista.InputNilai.NilaiAkhir;
+import com.example.sista.InputNilai.NilaiRepository;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -29,6 +33,9 @@ public class MahasiswaController {
     @Autowired
     MahasiswaRepository repoMahasiswa;
 
+    @Autowired
+    NilaiRepository repoNilai;
+
     @GetMapping()
     public String dashboard(Model model, HttpSession httpSession) {
         String email = (String) httpSession.getAttribute("email");
@@ -39,27 +46,38 @@ public class MahasiswaController {
         return "mahasiswa/dashboardMahasiswa";
     }
 
-    // halaman infosidang mahasiswa
-    @GetMapping("infoSidangMahasiswa")
-    public String infoSidang() {
-        return "mahasiswa/infoSidangMahasiswa";
-    }
-
     @GetMapping("/infoSidang")
     public String getInfoSidang(@RequestParam("id") int id, Model model) {
-        // Simulated service call to fetch sidang details by ID
         List<SidangTA> listSidang = repoSidang.getInfoSidangById(id);
 
         if (listSidang == null) {
-            // Handle case where the sidang is not found
             model.addAttribute("errorMessage", "Sidang not found");
-            return "error-page"; // Replace with the appropriate error page
+            return "error-page";
         }
 
-        SidangTA sidang = listSidang.get(0);
-        // Add the sidang details to the model for rendering in the Thymeleaf template
-        model.addAttribute("sidang", sidang);
-        return "mahasiswa/infoSidangMahasiswa"; // Return the Thymeleaf template name
+        SidangTA sidangTA = listSidang.get(0);
+        model.addAttribute("sidangTA", sidangTA);
+        return "mahasiswa/infoSidangMahasiswa";
     }
 
+    // @GetMapping("/catatanRevisi")
+    // public String lihatCatatanRevisi(){
+
+    // }
+
+    @GetMapping("/lihatNilai")
+    public String lihatNilai(@RequestParam("id") int id, Model model) {
+        List<NilaiAkhir> nilaiAkhir = repoNilai.hasilNilaiAkhir(id);
+
+        if (nilaiAkhir == null) {
+            model.addAttribute("errorMessage", "Nilai not found");
+            return "error-page";
+        }
+
+        BigDecimal totalNilai = repoNilai.totalNilai(id);
+
+        model.addAttribute("nilaiAkhir", nilaiAkhir);
+        model.addAttribute("totalNilai", totalNilai);
+        return "mahasiswa/nilaiSidangMhs";
+    }
 }
