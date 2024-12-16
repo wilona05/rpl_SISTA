@@ -63,10 +63,6 @@
             </table>
         </section>
         <div class="buttons-container">
-            <form action="/sista/dashboardKoordinator/editSidang" method="GET" th:if="!${editSidang}">
-                <button class="button" type="submit">Edit</button>
-                <input type="hidden" name="idsidang" th:value="${sidangTA.idsidang}">
-            </form>
             <form method="GET">
                 <!-- <input type="hidden" name="idSidang" th:value="${sidang.idsidang}" /> -->
                 <a class="button" th:action="@{/sista/dashboardDosen/catatanRevisi}" id="catatan-revisi-button">Catatan Revisi</a>
